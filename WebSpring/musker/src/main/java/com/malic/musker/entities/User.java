@@ -13,16 +13,14 @@ public class User {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     @Column(name = "usuario_id")
-    private Long userId;
+    private Long usuario_id;
 
-    @Column(name = "tipo_usuario_id")
-    private String userTypeId;
     @Column(name = "nombre")
-    private String name;
+    private String nombre;
     @Column(name = "apellido")
-    private String surname;
+    private String apellido;
     @Column(name = "fecha_nacimiento")
-    private Date bornDate;
+    private Date fecha_nacimiento;
     @Column(name = "email")
     private String email;
     @Column(name = "username")
@@ -30,14 +28,18 @@ public class User {
     @Column(name = "password")
     private String password;
 
+    @ManyToOne
+    @JoinColumn(name = "tipo_usuario", nullable = false)
+    private UserType tipo_usuario;
+
     public User(HttpServletRequest request){
-        this.userTypeId = "USER";
-        this.name = (String) request.getAttribute("name");
-        this.surname = (String) request.getAttribute("surname");
+        this.tipo_usuario = new UserType(1, "ADMIN");
+        this.nombre = (String) request.getAttribute("name");
+        this.apellido = (String) request.getAttribute("surname");
         this.email = (String) request.getAttribute("email");
         this.username = (String) request.getAttribute("username");
         this.password = String.valueOf(request.getAttribute("password").hashCode());
-        this.bornDate = (Date) request.getAttribute("birthDate");
+        this.fecha_nacimiento = (Date) request.getAttribute("birthDate");
     }
 
     public User() {}
@@ -66,43 +68,43 @@ public class User {
         this.password = password;
     }
 
-    public Long getUserId() {
-        return userId;
+    public Long getUsuario_id() {
+        return usuario_id;
     }
 
-    public String getUserTypeId() {
-        return userTypeId;
+    public void setUsuario_id(Long usuario_id) {
+        this.usuario_id = usuario_id;
     }
 
-    public void setUserTypeId(String userType) {
-        this.userTypeId = userType;
+    public String getNombre() {
+        return nombre;
     }
 
-    public String getName() {
-        return name;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public String getSurname() {
-        return surname;
+    public String getApellido() {
+        return apellido;
     }
 
-    public Date getBornDate() {
-        return bornDate;
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
     }
 
-    public void setUserId(Long id) {
-        this.userId = id;
+    public Date getFecha_nacimiento() {
+        return fecha_nacimiento;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFecha_nacimiento(Date fecha_nacimiento) {
+        this.fecha_nacimiento = fecha_nacimiento;
     }
 
-    public void setSurname(String surname) {
-        this.surname = surname;
+    public UserType getTipo_usuario() {
+        return tipo_usuario;
     }
 
-    public void setBornDate(Date bornDate) {
-        this.bornDate = bornDate;
+    public void setTipo_usuario(UserType tipo_usuario) {
+        this.tipo_usuario = tipo_usuario;
     }
 }

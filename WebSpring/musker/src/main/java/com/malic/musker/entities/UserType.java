@@ -11,24 +11,32 @@ public class UserType {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     @Column(name = "tipo_usuario_id")
-    private Integer userTypeId;
+    private Integer tipo_usuario_id;
     @Column(name = "descripcion")
-    private String description;
+    private String descripcion;
 
-    public void setUserTypeId(Integer id) {
-        this.userTypeId = id;
+    public UserType() {
     }
 
-    public int getUserTypeId() {
-        return userTypeId;
+    public UserType(Integer tipo_usuario_id, String descripcion) {
+        this.tipo_usuario_id = tipo_usuario_id;
+        this.descripcion = descripcion;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public Integer getTipo_usuario_id() {
+        return tipo_usuario_id;
     }
 
-    public String getDescription() {
-        return description;
+    public void setTipo_usuario_id(Integer tipo_usuario_id) {
+        this.tipo_usuario_id = tipo_usuario_id;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
     /*public List<User> getUsers() {

@@ -1,155 +1,156 @@
 create table clase
 (
-    claseId     int          not null
+    clase_id    int          not null
         primary key,
     descripcion varchar(200) null,
     constraint CLASE_claseId_uindex
-        unique (claseId)
+        unique (clase_id)
 );
 
 create table especie
 (
-    especieId   float        not null
+    especie_id  float        not null
         primary key,
-    claseId     int          null,
+    clase_id    int          null,
     descripcion varchar(200) null,
     constraint ESPECIE_especieId_uindex
-        unique (especieId),
+        unique (especie_id),
     constraint ESPECIE_CLASE_fk
-        foreign key (claseId) references clase (claseId)
+        foreign key (clase_id) references clase (clase_id)
 );
 
 create table recinto
 (
-    recintoId        int auto_increment
+    recinto_id        int auto_increment
         primary key,
-    descripcion      varchar(200) null,
-    cantidadAnimales int          null,
+    descripcion       varchar(200) null,
+    cantidad_animales int          null,
     constraint RECINTO_recintoId_uindex
-        unique (recintoId)
+        unique (recinto_id)
 );
 
 create table tipo_estado
 (
-    estadoId    int          not null
+    estado_id   int          not null
         primary key,
     descripcion varchar(200) null,
     constraint TIPO_ESTADO_estadoId_uindex
-        unique (estadoId)
+        unique (estado_id)
 );
 
 create table animal
 (
-    animalId  float auto_increment
+    animal_id  float auto_increment
         primary key,
-    especieId float null,
-    estadoId  int   null,
-    recintoId int   null,
+    especie_id float null,
+    estado_id  int   null,
+    recinto_id int   null,
     constraint ANIMAL_animalId_uindex
-        unique (animalId),
+        unique (animal_id),
     constraint ANIMAL_ESPECIE_fk
-        foreign key (especieId) references especie (especieId),
+        foreign key (especie_id) references especie (especie_id),
     constraint ANIMAL_ESTADO_fk
-        foreign key (estadoId) references tipo_estado (estadoId),
+        foreign key (estado_id) references tipo_estado (estado_id),
     constraint ANIMAL_RECINTO_fk
-        foreign key (recintoId) references recinto (recintoId)
+        foreign key (recinto_id) references recinto (recinto_id)
 );
 
 create table constantes
 (
-    constanteId float auto_increment
+    constante_id float auto_increment
         primary key,
-    animalId    float null,
-    constante   int   null,
-    fecha       date  null,
+    animal_id    float null,
+    constante    int   null,
+    fecha        date  null,
     constraint CONSTANTES_constanteId_uindex
-        unique (constanteId),
+        unique (constante_id),
     constraint CONSTANTES_ANIMAL_fk
-        foreign key (animalId) references animal (animalId)
+        foreign key (animal_id) references animal (animal_id)
 );
 
 create table estancia
 (
-    estanciaId    float auto_increment
+    estancia_id    float auto_increment
         primary key,
-    animalId      float        null,
-    fechaEntrada  date         null,
-    fechaSalida   date         null,
-    motivoEntrada varchar(200) null,
+    animal_id      float        null,
+    fecha_entrada  date         null,
+    fecha_salida   date         null,
+    motivo_entrada varchar(200) null,
     constraint estancia_estanciaId_uindex
-        unique (estanciaId),
+        unique (estancia_id),
     constraint estancia_ANIMAL_fk
-        foreign key (animalId) references animal (animalId)
+        foreign key (animal_id) references animal (animal_id)
 );
 
 create table tipo_usuario
 (
-    tipoUsuarioId int         not null
+    tipo_usuario_id int         not null
         primary key,
-    descripcion   varchar(50) null,
+    descripcion     varchar(50) null,
     constraint TIPO_USUARIO_tipoUsuarioId_uindex
-        unique (tipoUsuarioId)
+        unique (tipo_usuario_id)
 );
 
 create table usuario
 (
-    usuarioId       float auto_increment
+    usuario_id       float auto_increment
         primary key,
-    tipoUsuarioId   int          null,
-    nombre          varchar(30)  null,
-    apellido        varchar(50)  null,
-    email           varchar(100) null,
-    fechaNacimiento date         null,
-    username        varchar(30)  null,
-    password        varchar(128) null,
+    tipo_usuario_id  int          null,
+    nombre           varchar(30)  null,
+    apellido         varchar(50)  null,
+    email            varchar(100) null,
+    fecha_nacimiento date         null,
+    username         varchar(30)  null,
+    password         varchar(128) null,
     constraint USUARIO_usuarioId_uindex
-        unique (usuarioId),
+        unique (usuario_id),
     constraint USUARIO_TIPOUSUARIO_FK
-        foreign key (tipoUsuarioId) references tipo_usuario (tipoUsuarioId)
+        foreign key (tipo_usuario_id) references tipo_usuario (tipo_usuario_id),
+    constraint FKe581tp719p3d7o5u2w9sre10b
+        foreign key (tipo_usuario_id) references tipo_usuario (tipo_usuario_id)
 );
 
 create table avistamiento
 (
-    avistamientoId float auto_increment
+    avistamiento_id float auto_increment
         primary key,
-    usuarioId      float        null,
-    especieId      float        null,
-    descripcion    varchar(200) null,
-    fecha          date         null,
-    localizacion   varchar(200) null,
+    usuario_id      float        null,
+    especie_id      float        null,
+    descripcion     varchar(200) null,
+    fecha           date         null,
+    localizacion    varchar(200) null,
     constraint AVISTAMIENTO_avistamientoId_uindex
-        unique (avistamientoId),
+        unique (avistamiento_id),
     constraint AVISTAMIENTO_ESPECIE_fk
-        foreign key (especieId) references especie (especieId),
+        foreign key (especie_id) references especie (especie_id),
     constraint AVISTAMIENTO_USUARIO_fk
-        foreign key (usuarioId) references usuario (usuarioId)
+        foreign key (usuario_id) references usuario (usuario_id)
 );
 
 create table visita
 (
-    visitaId float auto_increment
+    visita_id float auto_increment
         primary key,
-    guia     float not null,
-    fecha    date  null,
+    guia      float not null,
+    fecha     date  null,
     constraint visita_visitaId_uindex
-        unique (visitaId),
+        unique (visita_id),
     constraint VISITA_GUIA_FK
-        foreign key (guia) references usuario (usuarioId)
+        foreign key (guia) references usuario (usuario_id)
 );
 
 create table reserva
 (
-    reservaId        float auto_increment
+    reserva_id        float auto_increment
         primary key,
-    usuarioId        float not null,
-    visitaId         float not null,
-    cantidadPersonas int   null,
+    usuario_id        float not null,
+    visita_id         float not null,
+    cantidad_personas int   null,
     constraint reserva_reservaId_uindex
-        unique (reservaId),
+        unique (reserva_id),
     constraint RESERVA_USUARIO_fk
-        foreign key (usuarioId) references usuario (usuarioId),
+        foreign key (usuario_id) references usuario (usuario_id),
     constraint RESERVA_VISITA_fk
-        foreign key (visitaId) references visita (visitaId)
+        foreign key (visita_id) references visita (visita_id)
 );
-
 

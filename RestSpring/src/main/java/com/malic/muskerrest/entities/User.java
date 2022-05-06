@@ -1,10 +1,8 @@
-package com.malic.musker.entities;
+package com.malic.muskerrest.entities;
 
 import javax.persistence.*;
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
-import java.sql.Date;
-import java.util.List;
+import java.util.Date;
 
 @Entity
 @Table(name= "usuario")
@@ -29,11 +27,11 @@ public class User {
     private String password;
 
     @ManyToOne
-    @JoinColumn(name = "tipo_usuario", nullable = false)
+    @JoinColumn(name = "tipo_usuario_id", nullable = false)
     private UserType tipo_usuario;
 
     public User(HttpServletRequest request){
-        this.tipo_usuario = new UserType(1, "ADMIN");
+        this.tipo_usuario = new UserType(3, "USUARIO");
         this.nombre = (String) request.getAttribute("name");
         this.apellido = (String) request.getAttribute("surname");
         this.email = (String) request.getAttribute("email");

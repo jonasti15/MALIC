@@ -1,24 +1,23 @@
-package com.malic.musker.security;
+package com.malic.muskerrest.security;
 
-import com.google.gson.Gson;
-import com.malic.musker.api.RestController;
-import com.malic.musker.entities.User;
+import com.malic.muskerrest.dao.user.UserRepository;
+import com.malic.muskerrest.entities.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 
 @Service
 public class MyUserDetailsService implements UserDetailsService {
 
+    @Autowired
+    UserRepository userRepository;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        String uri = "http://localhost:8080/user/username/"+username;
-        User user = new User();
-        user = RestController.RESTgetRequest(uri, User.class);
-
+        User user = userRepository.findByUsername(username);
         if(user == null){
             throw new UsernameNotFoundException("User not found");
         }

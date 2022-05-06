@@ -1,4 +1,4 @@
-package com.malic.musker.security;
+package com.malic.muskerrest.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -24,7 +24,6 @@ import java.util.Arrays;
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     final static int REMEMBER_ME_TIME = 86400;  //1 day
-    public final static int ENCRYPT_STRENGTH = 10;
 
     @Autowired
     UserDetailsService userDetailsService;
@@ -38,11 +37,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 //Filter pages based on the authority or role the user has
-                .antMatchers("/admin").hasRole("ADMIN")
-                .antMatchers("/worker").hasAnyRole("ADMIN", "WORKER")
-                .antMatchers("/normalUser", "/mainPage").authenticated()
-                .antMatchers("/", "/index").permitAll()
-                .anyRequest().authenticated()
+                //.antMatchers("/admin").hasRole("ADMIN")
+                //.antMatchers("/worker").hasAnyRole("ADMIN", "WORKER")
+                //.antMatchers("/normalUser", "/mainPage").authenticated()
+                //.antMatchers("/", "/index").permitAll()
+                //.anyRequest().authenticated()
+                .antMatchers("/*").permitAll()
                 .and()
                 //Login control
                 .formLogin()

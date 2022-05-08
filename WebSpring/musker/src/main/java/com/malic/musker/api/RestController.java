@@ -6,6 +6,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
+
 public class RestController {
 
     public static <T> T RESTgetRequest(String requestUrl, Class<T> returnClass) {

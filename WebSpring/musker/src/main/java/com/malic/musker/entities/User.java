@@ -29,7 +29,7 @@ public class User {
     private String password;
 
     @ManyToOne
-    @JoinColumn(name = "tipo_usuario", nullable = false)
+    @JoinColumn(name = "tipo_usuario_id", nullable = false)
     private UserType tipo_usuario;
 
     public User(HttpServletRequest request){

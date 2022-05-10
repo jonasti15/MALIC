@@ -1,41 +1,53 @@
+<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <title>Log in</title>
+    <title id="Ptitle" text="Login"></title>
+    <link rel="stylesheet" href="/static/css/login.css"/>
 </head>
+
 <body>
-<h1>login</h1>
-
-<div th:if="${param.error}">
-    Invalid username and password.
-</div>
-
-<div th:if="${param.logout}">
-    You have been logged out.
-</div>
-
-<!-- Login Controls -->
-<form name="f" th:action="@{/login_process}" method="post">
-    <div class="form-group">
-        <label for="txtUsername">Username</label>
-        <input type="text" id="txtUsername" name="txtUsername"
-               placeholder="Username">
+    <div class="container mt-3 mb-3 p-3 bg-white border rounded">
+        <div id="login">
+            <div class="container">
+                <div class="notify-messages">
+                    <div class="alert alert-danger" th:if="${param.error}" text="invalid login"></div>
+                    <div class="alert alert-success" th:if="${param.logout}" text="Log out"></div>
+                </div>
+                <div id="login-row" class="row justify-content-center align-items-center">
+                    <div id="login-column" class="col-md-6">
+                        <div id="login-box fluid" class="col-md-12">
+                            <form name="login-form" th:action="@{/login_process}" method="post">
+                                <div class="logo-header col">
+                                    <a href="/index">
+                                        <img src="/images/logo_web.png" alt="MUBook logo with text"
+                                            class="mx-auto d-block img-fluid" />
+                                    </a>
+                                </div>
+                                <div class="form-group">
+                                    <label for="txtUsername" text="Username"></label>
+                                    <input type="text" id="txtUsername" name="txtUsername" placeholder="Username"
+                                        class="form-control" autofocus>
+                                </div>
+                                <label for="txtPassword" th:text="Password"></label>
+                                <input type="password" id="txtPassword" name="txtPassword" placeholder="Password"
+                                    class="form-control">
+                                <div class="form-group">
+                                    <label for="checkRememberMe" class="text-info"><span text="Remember Me"></span> <span>
+                                            <input id="checkRememberMe" name="checkRememberMe"
+                                                type="checkbox"></span></label><br>
+                                    <div class="buttons-div d-flex justify-content-center m-3">
+                                        <input type="submit" name="submit" class="btn btn-login m-2 trackGrafana" grafanaId="12" value="LogIn">
+                                        <a href="/user/add" class="btn salmon text-center m-2 trackGrafana" grafanaId="13"text="Register"></a>
+                                    </div>
+                                </div>
+                            </form>     
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <div class="form-group">
-        <label for="txtPassword">Password</label>
-        <input type="password" id="txtPassword" name="txtPassword"
-               placeholder="Password">
-    </div>
-
-    <div class="form-check">
-        <input type="checkbox" id="checkRememberMe" name="checkRememberMe">
-        <label for="checkRememberMe">Remember me?</label>
-    </div>
-
-    <!-- Login Button -->
-    <div style="margin-top: 12px;">
-        <button type="submit">Log in</button>
-    </div>
-</form>
 </body>
+
 </html>

@@ -22,7 +22,7 @@ public class UserController {
         user.setPassword(encrypt.encode(request.getParameter("password")));
         user.setTipo_usuario(new UserType(3, "USUARIO"));
 
-        String uri = "http://localhost:8080/user/add";
+        String uri = "/user/add";
         RestController.RESTpostRequest(uri, user, User.class);
 
         return "redirect:/home";

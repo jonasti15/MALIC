@@ -30,6 +30,12 @@ public class User {
     @JoinColumn(name = "tipo_usuario_id", nullable = false)
     private UserType tipo_usuario;
 
+    public User (String username, String password, UserType tipo_usuario){
+        this.username = username;
+        this.password = password;
+        this.tipo_usuario = tipo_usuario;
+    }
+
     public User(HttpServletRequest request){
         this.tipo_usuario = new UserType(3, "USUARIO");
         this.nombre = (String) request.getAttribute("name");

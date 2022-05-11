@@ -1,5 +1,7 @@
 package com.malic.musker.entities;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -8,7 +10,8 @@ import java.util.Date;
 public class Estancia {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GenericGenerator(name="estancia" , strategy="increment")
+    @GeneratedValue(generator = "estancia")
     @Column(name = "estancia_id")
     private Long estancia_id;
 

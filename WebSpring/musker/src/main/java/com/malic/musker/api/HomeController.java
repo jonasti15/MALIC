@@ -38,8 +38,6 @@ public class HomeController {
 
     @GetMapping(path = {"/", "/index"})
     public String home() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
         return "index";
     }
 
@@ -69,8 +67,6 @@ public class HomeController {
 
         User user = RestController.RESTgetRequestHeaders("/user/username/"+username, headers, User.class);
 
-        //User user = RestController.RESTpostRequestSelfForm("/login_process", map, User.class);
-
         return "mainPage";
     }
 
@@ -95,27 +91,10 @@ public class HomeController {
         return "userForm";
     }
 
-    @GetMapping("/normalUser")
-    @ResponseBody
-    public String user() {
-        return ("<h1>Welcome User</h1>");
-    }
-
-    @GetMapping("/admin")
-    @ResponseBody
-    public String admin() {
-        return ("<h1>Welcome Admin</h1>");
-    }
-
-    @GetMapping("/worker")
-    @ResponseBody
-    public String worker() {
-        return ("<h1>Welcome worker</h1>");
-    }
-
-    @GetMapping("/mainPage")
-    public String mainPage() {
-        return "mainPage";
+    @GetMapping("/aboutUs")
+    public String aboutUs(Model model){
+        model.addAttribute("navPage", "aboutUs");
+        return "aboutUs";
     }
 
 }

@@ -44,7 +44,7 @@ public class RestController {
         HttpEntity<T> requestEntity = new HttpEntity<>(objToSend, headers);
 
         String url = PATH + requestUrl;
-        ResponseEntity<G> responseEntity = restTemplate.postForEntity(url, requestEntity, returnClass);
+        ResponseEntity<G> responseEntity = restTemplate.exchange(url, HttpMethod.POST, requestEntity, returnClass);
         return  responseEntity.getBody();
     }
 

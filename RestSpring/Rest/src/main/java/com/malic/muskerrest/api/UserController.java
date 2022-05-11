@@ -9,8 +9,10 @@ import com.malic.muskerrest.dao.user.UserDao;
 import com.malic.muskerrest.dao.userType.UserTypeDao;
 import com.malic.muskerrest.entities.User;
 import com.malic.muskerrest.entities.UserType;
+import org.hibernate.engine.jdbc.spi.SqlExceptionHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -24,6 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -49,8 +52,21 @@ public class UserController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<User> addUser(@RequestBody User user){
-        userDao.addUser(user);
+    public ResponseEntity<User> addUser(@RequestBody User user,
+                                            HttpServletResponse response) throws IOException {
+        try{
+            userDao.addUser(user);
+        }catch(Exception e){
+            response.setHeader("error", e.getMessage());
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+
+            Map<String, String> error = new HashMap<>();
+            error.put("error_message", e.getMessage());
+
+            response.setContentType(APPLICATION_JSON_VALUE);
+            new ObjectMapper().writeValue(response.getOutputStream(), error);
+        }
+
         return ResponseEntity.ok(user);
     }
 

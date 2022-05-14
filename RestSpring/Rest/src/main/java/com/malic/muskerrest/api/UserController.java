@@ -19,6 +19,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 
@@ -41,14 +42,27 @@ public class UserController {
     @Autowired
     private UserDao userDao;
 
-    @GetMapping("/user/{id}")
-    public ResponseEntity<User> getUser(@PathVariable long id) {
-        return ResponseEntity.ok(userDao.getUser(id));
+    @GetMapping("/username/{username}")
+    public ResponseEntity<User> getUserByUsername(@PathVariable(name = "username") String username){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String logedUsername = authentication.getName();
+        if(logedUsername.equals(username)){
+            return ResponseEntity.ok(userDao.getUserByUsername(username));
+        }else{
+            return ResponseEntity.badRequest().build();
+        }
     }
 
-    @GetMapping("/username/{username}")
-    public ResponseEntity<User> getUserByUsername(@PathVariable String username){
-        return ResponseEntity.ok(userDao.getUserByUsername(username));
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<User> getUser(@PathVariable(name = "userId") long userId){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String logedUsername = authentication.getName();
+        User user = userDao.getUserByUsername(logedUsername);
+        if(user.getUsuario_id() == userId){
+            return ResponseEntity.ok(user);
+        }else{
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @PostMapping("/add")

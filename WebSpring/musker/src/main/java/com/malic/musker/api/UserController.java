@@ -3,6 +3,9 @@ package com.malic.musker.api;
 import com.malic.musker.entities.User;
 import com.malic.musker.entities.UserType;
 import com.malic.musker.security.SecurityConfiguration;
+import org.springframework.http.HttpHeaders;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -62,17 +65,78 @@ public class UserController {
         return new ModelAndView(returnStr, new ModelMap(model));
     }
 
+    @GetMapping(path="/profile")
+    public String editUser(Model model){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        HttpHeaders header = new HttpHeaders();
+        header.set(HttpHeaders.AUTHORIZATION, "Bearer " + RestController.getRequest().getSession().getAttribute("access_token").toString());
+
+        User user = RestController.RESTgetRequestHeaders("/user/username/"+username, header, User.class);
+
+        if(user != null){
+            model.addAttribute("userEdit", user);
+            return "userProfile";
+        }else{
+            return "/";
+        }
+    }
+
+    @PostMapping(path="/edit")
+    public ModelAndView userEdit(Model model,
+                                 @ModelAttribute User user,
+                                 WebRequest request){
+        String error = "";
+        User bdUser;
+        String returnStr = "";
+
+        HttpHeaders header = new HttpHeaders();
+        header.set(HttpHeaders.AUTHORIZATION, "Bearer " + RestController.getRequest().getSession().getAttribute("access_token").toString());
+
+        bdUser = RestController.RESTgetRequestHeaders("/user/user/" + user.getUsuario_id(), header, User.class);
+
+        if(!passwordsMatch(request)){
+            error = "Password mismatch";
+        }else if(request.getParameter("password").equals("") && request.getParameter("passwordRep").equals("")){
+            user.setPassword(bdUser.getPassword());
+        }else{
+            BCryptPasswordEncoder encrypt = new BCryptPasswordEncoder(SecurityConfiguration.ENCRYPT_STRENGTH);
+            user.setPassword(encrypt.encode(request.getParameter("password")));
+        }
+
+        user.setFecha_nacimiento(bdUser.getFecha_nacimiento());
+        user.setTipo_usuario(bdUser.getTipo_usuario());
+
+        returnStr = "redirect:/logout";
+        String uri = "/user/add";
+        try{
+            user = RestController.RESTpostRequest(uri, user, User.class);
+        }catch (HttpClientErrorException e){
+            if(e.getMessage().contains("username")){
+                error = error + "Username already in use ";
+            }
+            if(e.getMessage().contains("email")){
+                error = error + "Email already in use ";
+            }
+
+            model.addAttribute("error", error);
+            model.addAttribute("userEdit", user);
+            returnStr = "redirect:/userProfile";
+        }
+
+        if(error.length() == 0){
+            RestController.getRequest().getSession().removeAttribute("access_token");
+            RestController.getRequest().getSession().removeAttribute("refresh_token");
+        }
+
+        return new ModelAndView(returnStr, new ModelMap(model));
+    }
+
     @GetMapping(path="/add")
     public String addNewUser (Model model) {
         model.addAttribute("user", new User());
 
         return "register";
-    }
-
-    @GetMapping(path="/all")
-    public @ResponseBody Iterable<User> getAllUsers(Model model) {
-        // This returns a JSON or XML with the users
-        return null;
     }
 
     private boolean passwordsMatch(WebRequest request) {

@@ -35,6 +35,9 @@ public class MyUserDetailsService implements UserDetailsService {
             System.out.println("Error Parsing tokens");
         }
 
+        RestController.getRequest().getSession().setAttribute("access_token", access_token);
+        RestController.getRequest().getSession().setAttribute("refresh_token", refresh_token);
+
         map.add("access_token", access_token);
         map.add("refresh_token", refresh_token);
 

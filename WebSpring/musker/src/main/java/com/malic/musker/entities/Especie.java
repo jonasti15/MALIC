@@ -14,6 +14,9 @@ public class Especie {
     @Column(name = "especie_id")
     private Long especieId;
 
+    @Column(name = "path")
+    private String path;
+
     @Column(name = "descripcion")
     private String descripcion;
 
@@ -23,10 +26,11 @@ public class Especie {
 
     public Especie(){}
 
-    public Especie(Long especieId, String descripcion, Clase clase) {
+    public Especie(Long especieId, String descripcion, Clase clase, String path) {
         this.especieId = especieId;
         this.descripcion = descripcion;
         this.clase = clase;
+        this.path = path;
     }
 
     public Long getEspecieId() {
@@ -51,5 +55,13 @@ public class Especie {
 
     public void setClase(Clase clase) {
         this.clase = clase;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 }

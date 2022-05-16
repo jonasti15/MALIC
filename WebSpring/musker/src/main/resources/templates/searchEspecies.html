@@ -12,14 +12,13 @@
         <div class="container">
             <div class="row row-cols-1 row-cols-xs-2 row-cols-sm-3 row-cols-lg-4 d-flex justify-content-center gap-3">
 
-                <div th:each="estancia: ${estancias}" class=" card col mb-4 shadow-sm p-0">
-                    <a th:href="'/especies/especie/'+${estancia.animal.especie.especieId}" class="text-decoration-none text-dark">
+                <div th:each="especie: ${especies}" class=" card col mb-4 shadow-sm p-0">
+                    <a th:href="'/especies/especie/'+${especie.especieId}" class="text-decoration-none text-dark">
                         <div class="card-body text-center">
-                            <img class="card-img-top img-fluid" th:src="@{${estancia.animal.path}}"
+                            <img class="card-img-top img-fluid" th:src="@{${especie.path}}"
                                  alt="Card image cap">
-                            <h5 class="card-title" th:text="#{especie.especie}  + ${estancia.animal.especie.descripcion}"></h5>
-                            <p class="m-0" th:text="#{especie.motivo} + ${estancia.motivo_entrada}"></p>
-                            <p class="m-0" th:text="#{especie.fecha} + ${estancia.fecha_entrada}"></p>
+                            <h5 class="card-title" th:text="#{especie.especie} + ${especie.descripcion}"></h5>
+                            <p class="m-0" th:text="#{especie.clase} + ${especie.clase.descripcion}"></p>
                         </div>
                     </a>
                 </div>

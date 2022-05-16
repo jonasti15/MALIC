@@ -21,6 +21,7 @@ public class SearchController {
         estancias = RestController.RESTgetRequestListHeaders("/estancias/shelter", new HttpHeaders(), Estancia.class);
 
         model.addAttribute("estancias", estancias);
+        model.addAttribute("navPage", "animals");
 
         return "searchAnimals";
     }
@@ -31,8 +32,9 @@ public class SearchController {
 
         species = RestController.RESTgetRequestListHeaders("/especies/all", new HttpHeaders(), Especie.class);
 
-        model.addAttribute("species", species);
+        model.addAttribute("especies", species);
+        model.addAttribute("navPage", "species");
 
-        return "/";
+        return "searchEspecies";
     }
 }

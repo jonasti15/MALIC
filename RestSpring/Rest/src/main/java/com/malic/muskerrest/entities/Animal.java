@@ -14,6 +14,9 @@ public class Animal {
     @Column(name = "animal_id")
     private Long animal_id;
 
+    @Column(name = "path")
+    private String path;
+
     @ManyToOne
     @JoinColumn(name = "especie_id", nullable = false)
     private Especie especie;
@@ -28,11 +31,12 @@ public class Animal {
 
     public Animal(){}
 
-    public Animal(Long animal_id, Especie especie, TipoEstado estado, Recinto recinto_id) {
+    public Animal(Long animal_id, Especie especie, TipoEstado estado, Recinto recinto_id, String path) {
         this.animal_id = animal_id;
         this.especie = especie;
         this.estado = estado;
         this.recinto_id = recinto_id;
+        this.path = path;
     }
 
     public Long getAnimal_id() {
@@ -65,5 +69,13 @@ public class Animal {
 
     public void setRecinto_id(Recinto recinto_id) {
         this.recinto_id = recinto_id;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 }

@@ -1,6 +1,7 @@
 package com.malic.musker.api;
 
 import com.google.gson.Gson;
+import com.malic.musker.entities.News;
 import com.malic.musker.entities.User;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -16,6 +17,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.context.request.WebRequest;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Controller
 public class HomeController {
@@ -24,7 +26,12 @@ public class HomeController {
     AuthenticationManager authenticationManager;
 
     @GetMapping(path = {"/", "/index"})
-    public String home() {
+    public String home(Model model) {
+        model.addAttribute("navPage", "index");
+        List<News> news = RestController.RESTgetRequestListHeaders("/news/all", new HttpHeaders(), News.class);
+
+        model.addAttribute("news", news);
+
         return "index";
     }
 

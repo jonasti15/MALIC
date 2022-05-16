@@ -1,5 +1,6 @@
 package com.malic.musker.api;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.*;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
@@ -8,6 +9,9 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class RestController {
     public static String PATH = "http://localhost:8080";
@@ -35,6 +39,22 @@ public class RestController {
         ResponseEntity<T> responseEntity = restTemplate.exchange(url, HttpMethod.GET, requestEntity, returnClass);
 
         return responseEntity.getBody();
+    }
+
+    public static <T> List<T> RESTgetRequestListHeaders(String requestUrl, HttpHeaders headers, Class<T> returnClass){
+        RestTemplate restTemplate = new RestTemplate();
+
+        String url = PATH + requestUrl;
+
+        HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
+
+        ResponseEntity<Object[]> responseEntity = restTemplate.getForEntity(url, Object[].class);
+        Object[] objects = responseEntity.getBody();
+
+        ObjectMapper mapper = new ObjectMapper();
+        return Arrays.stream(objects)
+                .map(object -> mapper.convertValue(object, returnClass))
+                .collect(Collectors.toList());
     }
 
     public static <T, G> G RESTpostRequest(String requestUrl, T objToSend, Class<G> returnClass) {

@@ -19,7 +19,7 @@ public class Estancia {
     private Date fecha_entrada;
 
     @Column(name = "fecha_salida")
-    private Date fecha_salida;
+    private Date fechaSalida;
 
     @Column(name = "motivo_entrada")
     private String motivo_entrada;
@@ -31,10 +31,10 @@ public class Estancia {
     public Estancia() {
     }
 
-    public Estancia(Long estancia_id, Date fecha_entrada, Date fecha_salida, String motivo_entrada, Animal animal) {
+    public Estancia(Long estancia_id, Date fecha_entrada, Date fechaSalida, String motivo_entrada, Animal animal) {
         this.estancia_id = estancia_id;
         this.fecha_entrada = fecha_entrada;
-        this.fecha_salida = fecha_salida;
+        this.fechaSalida = fechaSalida;
         this.motivo_entrada = motivo_entrada;
         this.animal = animal;
     }
@@ -55,12 +55,12 @@ public class Estancia {
         this.fecha_entrada = fecha_entrada;
     }
 
-    public Date getFecha_salida() {
-        return fecha_salida;
+    public Date getFechaSalida() {
+        return fechaSalida;
     }
 
-    public void setFecha_salida(Date fecha_salida) {
-        this.fecha_salida = fecha_salida;
+    public void setFechaSalida(Date fechaSalida) {
+        this.fechaSalida = fechaSalida;
     }
 
     public String getMotivo_entrada() {

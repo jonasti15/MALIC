@@ -66,7 +66,8 @@ public class UserController {
     }
 
     @GetMapping(path="/profile")
-    public String editUser(Model model){
+    public String editUser(Model model,
+                           @RequestParam(value = "error", required = false) String error){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
         HttpHeaders header = new HttpHeaders();
@@ -76,6 +77,7 @@ public class UserController {
 
         if(user != null){
             model.addAttribute("userEdit", user);
+            model.addAttribute("error", error);
             return "userProfile";
         }else{
             return "/";
@@ -88,7 +90,7 @@ public class UserController {
                                  WebRequest request){
         String error = "";
         User bdUser;
-        String returnStr = "";
+        String returnStr = "redirect:/";
 
         HttpHeaders header = new HttpHeaders();
         header.set(HttpHeaders.AUTHORIZATION, "Bearer " + RestController.getRequest().getSession().getAttribute("access_token").toString());
@@ -97,36 +99,38 @@ public class UserController {
 
         if(!passwordsMatch(request)){
             error = "Password mismatch";
+            model.addAttribute("userEdit", user);
+            returnStr = "redirect:/user/profile?error="+error;
         }else if(request.getParameter("password").equals("") && request.getParameter("passwordRep").equals("")){
             user.setPassword(bdUser.getPassword());
         }else{
             BCryptPasswordEncoder encrypt = new BCryptPasswordEncoder(SecurityConfiguration.ENCRYPT_STRENGTH);
             user.setPassword(encrypt.encode(request.getParameter("password")));
+            returnStr = "redirect:/logout";
+        }
+
+        if(!user.getUsername().equals(bdUser.getUsername()) && error.length() == 0){
+            returnStr = "redirect:/logout";
         }
 
         user.setFecha_nacimiento(bdUser.getFecha_nacimiento());
         user.setTipo_usuario(bdUser.getTipo_usuario());
 
-        returnStr = "redirect:/logout";
-        String uri = "/user/add";
-        try{
-            user = RestController.RESTpostRequest(uri, user, User.class);
-        }catch (HttpClientErrorException e){
-            if(e.getMessage().contains("username")){
-                error = error + "Username already in use ";
-            }
-            if(e.getMessage().contains("email")){
-                error = error + "Email already in use ";
-            }
-
-            model.addAttribute("error", error);
-            model.addAttribute("userEdit", user);
-            returnStr = "redirect:/userProfile";
-        }
-
         if(error.length() == 0){
-            RestController.getRequest().getSession().removeAttribute("access_token");
-            RestController.getRequest().getSession().removeAttribute("refresh_token");
+            String uri = "/user/add";
+            try{
+                user = RestController.RESTpostRequest(uri, user, User.class);
+            }catch (HttpClientErrorException e){
+                if(e.getMessage().contains("username")){
+                    error = error + "Username already in use ";
+                }
+                if(e.getMessage().contains("email")){
+                    error = error + "Email already in use ";
+                }
+
+                model.addAttribute("userEdit", user);
+                returnStr = "redirect:/user/profile?error="+error;
+            }
         }
 
         return new ModelAndView(returnStr, new ModelMap(model));

@@ -12,5 +12,5 @@ public interface EstanciaDao {
     void deleteEstancia(long id);
     void deleteEstancia(Estancia estancia);
     void addEstancia(Estancia estancia);
-
+    List<Estancia> getActiveEstancias();
 }

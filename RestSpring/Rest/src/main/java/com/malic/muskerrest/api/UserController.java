@@ -45,8 +45,8 @@ public class UserController {
     @GetMapping("/username/{username}")
     public ResponseEntity<User> getUserByUsername(@PathVariable(name = "username") String username){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String logedUsername = authentication.getName();
-        if(logedUsername.equals(username)){
+        String loggedUsername = authentication.getName();
+        if(loggedUsername.equals(username)){
             return ResponseEntity.ok(userDao.getUserByUsername(username));
         }else{
             return ResponseEntity.badRequest().build();
@@ -56,8 +56,8 @@ public class UserController {
     @GetMapping("/user/{userId}")
     public ResponseEntity<User> getUser(@PathVariable(name = "userId") long userId){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String logedUsername = authentication.getName();
-        User user = userDao.getUserByUsername(logedUsername);
+        String loggedUsername = authentication.getName();
+        User user = userDao.getUserByUsername(loggedUsername);
         if(user.getUsuario_id() == userId){
             return ResponseEntity.ok(user);
         }else{

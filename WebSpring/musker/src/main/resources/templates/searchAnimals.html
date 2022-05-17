@@ -19,7 +19,7 @@
                                  alt="Card image cap">
                             <h5 class="card-title" th:text="#{especie.especie}  + ${estancia.animal.especie.descripcion}"></h5>
                             <p class="m-0" th:text="#{especie.motivo} + ${estancia.motivo_entrada}"></p>
-                            <p class="m-0" th:text="#{especie.fecha} + ${estancia.fecha_entrada}"></p>
+                            <p class="m-0" th:text="#{especie.fecha} + ${#dates.format(estancia.fecha_entrada, 'yyyy-MM-dd')}"></p>
                         </div>
                     </a>
                 </div>

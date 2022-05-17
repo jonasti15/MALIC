@@ -102,6 +102,12 @@
             <li class="nav-item">
               <a class="nav-link text-white trackGrafana" grafanaId="4" th:classappend="${navPage eq 'aboutUs'}? active" th:href="@{/aboutUs}" th:text="#{menu.aboutUs}"></a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link text-white trackGrafana" grafanaId="5" th:classappend="${navPage eq 'avistamiento'}? active" th:href="@{/}" th:text="#{menu.avistamiento}"></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white trackGrafana" grafanaId="6" th:classappend="${navPage eq 'visitas'}? active" sec:authorize= "isAuthenticated()" th:href="@{/visitas/all}" th:text="#{menu.visita}"></a>
+            </li>
             <hr>
             <li sec:authorize= "hasRole('USER')"><a class="nav-link text-white d-lg-none" href="/reservations/all" th:text="#{menu.myReservations}"></a></li>
             <li sec:authorize= "isAuthenticated()"><a class="nav-link text-white d-lg-none" href="/user/profile" th:text="#{menu.myProfile}"></a></li>

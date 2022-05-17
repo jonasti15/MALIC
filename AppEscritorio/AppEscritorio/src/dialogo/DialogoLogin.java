@@ -113,7 +113,7 @@ public class DialogoLogin extends JDialog {
 		panelGrid.setBackground(Color.white);
 		panelGrid.add(new JLabel(new ImageIcon("images/MUsker.png")));
 		panelGrid.add(crearTextField(usuario, "Usuario"));
-		panelGrid.add(crearTextField(password, "Contraseña"));
+		panelGrid.add(crearTextField(password, "Contrasena"));
 
 		panel.add(panelGrid);
 		panel.add(crearBotonConfirmar());

@@ -1,9 +1,6 @@
 package interfaz;
 
 import java.awt.Color;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
@@ -11,23 +8,13 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-import javax.swing.Box;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JSplitPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import controladores.ControladorMUsker;
 import dialogo.DialogoLogin;
-import elementos.ListaIncidencias;
-import elementos.Permisos;
 import elementos.User;
 import paneles.PanelPrincipal;
 
@@ -45,19 +32,17 @@ public class MUsker extends JFrame implements WindowListener{
 	User user;
 	
 	public static JButton botonAlerta;
-	
-	public static ListaIncidencias listaIncidencias;
-	
-	ControladorMUsker controlador;
-	
+
+
+
+
 	public MUsker() {
 		super("MUsker");
 		DialogoLogin login = new DialogoLogin(this, "MUsker Login", true);
 		user = login.getUserLoged();
-		controlador = new ControladorMUsker(this);
 		
 		pDisplay = new JScrollPane();
-		pDisplay.setViewportView(new PanelPrincipal());
+		pDisplay.setViewportView(new PanelPrincipal(this));
 		pDisplay.setBorder(null);
 		
 		Toolkit toolkit = Toolkit.getDefaultToolkit();

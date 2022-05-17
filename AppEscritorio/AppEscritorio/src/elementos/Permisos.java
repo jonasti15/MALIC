@@ -12,8 +12,9 @@ public enum Permisos {
 	
 	public static Permisos getPermiso(String nombre) {
 		switch(nombre) {
-		case "T":
-		case "WORKER": return WORKER;
+		case "W":
+		case "worker": return WORKER;
+
 		default: return null;
 		}
 	}

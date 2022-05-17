@@ -5,57 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9fddde68-8528-4f80-9145-d347c18a8061" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../POPBL_nodered(Primer_import).json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/amqp-client-5.11.0.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ice-3.7.3.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/slf4j-api-1.7.25.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/slf4j-simple-1.7.25.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Constantes.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ControllerJSON.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/GestorAlarmas.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/GestorConstantes.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/PublisherConstantes.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/Constantes.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/ControllerJSON.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/GestorAlarmas.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/GestorConstantes$MiConsumer.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/GestorConstantes.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/PublisherConstantes.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../SimulacionAnimales/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../SimulacionAnimales/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../SimulacionAnimales/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../SimulacionAnimales/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../SimulacionAnimales/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../SimulacionAnimales/SimulacionAnimales.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../SimulacionAnimales/lib/amqp-client-5.11.0.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../SimulacionAnimales/lib/ice-3.7.3.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../SimulacionAnimales/lib/slf4j-api-1.7.25.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../SimulacionAnimales/lib/slf4j-simple-1.7.25.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../SimulacionAnimales/out/production/SimulacionAnimales/Animal.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../SimulacionAnimales/out/production/SimulacionAnimales/Constantes.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../SimulacionAnimales/out/production/SimulacionAnimales/Monitor$MiConsumer.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../SimulacionAnimales/out/production/SimulacionAnimales/Monitor.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../SimulacionAnimales/out/production/SimulacionAnimales/Publisher.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../SimulacionAnimales/out/production/SimulacionAnimales/dsf.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../SimulacionAnimales/src/Animal.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../SimulacionAnimales/src/Constantes.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../SimulacionAnimales/src/Monitor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../SimulacionAnimales/src/Publisher.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../SimulacionAnimales/src/dsf.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../publicarMensaje.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Diagramas/LoHecho.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Diagramas/Node_red.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Diagramas/POPBL_nodered(Primer_import).json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../../.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../RestSpring/Rest/src/main/java/com/malic/muskerrest/api/ConstantesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../RestSpring/Rest/src/main/java/com/malic/muskerrest/api/ConstantesController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../RestSpring/Rest/src/main/java/com/malic/muskerrest/dao/constantes/ConstantesDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../RestSpring/Rest/src/main/java/com/malic/muskerrest/dao/constantes/ConstantesDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../RestSpring/Rest/src/main/java/com/malic/muskerrest/entities/Constantes.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../RestSpring/Rest/src/main/java/com/malic/muskerrest/entities/Constantes.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../RestSpring/Rest/src/main/java/com/malic/muskerrest/security/SecurityConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../RestSpring/Rest/src/main/java/com/malic/muskerrest/security/SecurityConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../RestSpring/Rest/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../../RestSpring/Rest/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../POPBL_nodered(Primer_import).json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -138,7 +93,7 @@
       <updated>1652254698569</updated>
       <workItem from="1652254699865" duration="7370000" />
       <workItem from="1652682796578" duration="3761000" />
-      <workItem from="1652769327405" duration="5822000" />
+      <workItem from="1652769327405" duration="7482000" />
     </task>
     <servers />
   </component>

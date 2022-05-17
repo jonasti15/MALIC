@@ -1,0 +1,10 @@
+Primer diagrama.
+------------
+Recibir unas constantes, convertirlo a json.
+Por un lado sumarle la fecha y mandarlo al Servidor REST.
+Por otro lado clasificar el estado del animal.
+------------
+
+Segundo diagrama
+------------
+Simula un sensor de los animales, que manda constantes.

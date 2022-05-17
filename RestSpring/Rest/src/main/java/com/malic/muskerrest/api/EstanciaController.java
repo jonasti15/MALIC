@@ -28,4 +28,9 @@ public class EstanciaController {
         return ResponseEntity.ok(estanciaDao.getEstancia(id));
     }
 
+    @GetMapping("/shelter")
+    public ResponseEntity<List<Estancia>> getAllAnimalsShelter(){
+        return ResponseEntity.ok(estanciaDao.getActiveEstancias());
+    }
+
 }

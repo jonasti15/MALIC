@@ -1,6 +1,7 @@
 package com.malic.muskerrest.api;
 
 import com.malic.muskerrest.dao.visita.VisitaDao;
+import com.malic.muskerrest.entities.User;
 import com.malic.muskerrest.entities.Visita;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,11 +20,31 @@ public class VisitaController {
 
     @GetMapping("/all")
     public ResponseEntity<List<Visita>> getAllVisita(){
-        return ResponseEntity.ok(visitaDao.getAllVisitas());
+        List<Visita> visitas = visitaDao.getFechaAfterDate();
+
+        for(Visita v : visitas){
+            User user = new User();
+            user.setUsuario_id(v.getGuia().getUsuario_id());
+            user.setNombre(v.getGuia().getNombre());
+            user.setApellido(v.getGuia().getApellido());
+            v.setGuia(user);
+        }
+
+        return ResponseEntity.ok(visitas);
     }
 
     @GetMapping("/visita/{id}")
     public ResponseEntity<Visita> getVisita(@PathVariable int id){
-        return ResponseEntity.ok(visitaDao.getVisita(id));
+        Visita visita = visitaDao.getVisita(id);
+        if(visita != null){
+            User user = new User();
+
+            user.setUsuario_id(visita.getGuia().getUsuario_id());
+            user.setNombre(visita.getGuia().getNombre());
+            user.setApellido(visita.getGuia().getApellido());
+            visita.setGuia(user);
+        }
+
+        return ResponseEntity.ok(visita);
     }
 }

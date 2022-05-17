@@ -1,5 +1,7 @@
 package com.malic.muskerrest.entities;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 
 @Entity
@@ -7,9 +9,13 @@ import javax.persistence.*;
 public class Animal {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GenericGenerator(name="animal" , strategy="increment")
+    @GeneratedValue(generator = "animal")
     @Column(name = "animal_id")
     private Long animal_id;
+
+    @Column(name = "path")
+    private String path;
 
     @ManyToOne
     @JoinColumn(name = "especie_id", nullable = false)
@@ -25,11 +31,12 @@ public class Animal {
 
     public Animal(){}
 
-    public Animal(Long animal_id, Especie especie, TipoEstado estado, Recinto recinto_id) {
+    public Animal(Long animal_id, Especie especie, TipoEstado estado, Recinto recinto_id, String path) {
         this.animal_id = animal_id;
         this.especie = especie;
         this.estado = estado;
         this.recinto_id = recinto_id;
+        this.path = path;
     }
 
     public Long getAnimal_id() {
@@ -62,5 +69,13 @@ public class Animal {
 
     public void setRecinto_id(Recinto recinto_id) {
         this.recinto_id = recinto_id;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 }

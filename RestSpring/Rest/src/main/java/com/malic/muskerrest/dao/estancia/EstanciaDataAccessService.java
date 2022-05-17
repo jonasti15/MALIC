@@ -41,4 +41,9 @@ public class EstanciaDataAccessService implements EstanciaDao{
     public void addEstancia(Estancia estancia) {
         repository.save(estancia);
     }
+
+    @Override
+    public List<Estancia> getActiveEstancias() {
+        return repository.getEstanciasByFechaSalidaIsNull();
+    }
 }

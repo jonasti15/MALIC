@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+
+<head th:replace="include.html :: headerfiles">
+    <title id="Ptitle">Search</title>
+</head>
+
+<body>
+    <header th:replace="include.html :: headercontent"></header>
+
+    <div class="py-5">
+        <div class="container">
+            <div class="row row-cols-1 row-cols-xs-2 row-cols-sm-3 row-cols-lg-4 d-flex justify-content-center gap-3">
+
+                <div th:each="visita: ${visitas}" class=" card col mb-4 shadow-sm p-0">
+                    <a th:href="'/reservas/visita/'+${visita.visitaId}" class="text-decoration-none text-dark">
+                        <div class="card-body text-center">
+                            <h5 class="card-title" th:text="#{visita.visita} + ' ' + ${visita.visitaId}"></h5>
+                            <p class="m-0" th:text="#{visita.descripcion} + ': ' + ${visita.descripcion}"></p>
+                            <p class="m-0" th:text="#{visita.fecha} + ': ' +  ${#dates.format(visita.fecha, 'yyyy-MM-dd')}"></p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <footer th:replace="include.html :: footercontent"></footer>
+
+</body>

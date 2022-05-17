@@ -1,5 +1,7 @@
 package com.malic.musker.entities;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 
 @Entity
@@ -7,7 +9,8 @@ import javax.persistence.*;
 public class Reserva {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GenericGenerator(name="reserva" , strategy="increment")
+    @GeneratedValue(generator = "reserva")
     @Column(name = "reserva_id")
     private Long reserva_id;
 

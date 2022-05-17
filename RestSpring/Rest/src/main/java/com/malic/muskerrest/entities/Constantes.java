@@ -1,5 +1,7 @@
 package com.malic.muskerrest.entities;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -8,7 +10,8 @@ import java.util.Date;
 public class Constantes {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GenericGenerator(name="constantes" , strategy="increment")
+    @GeneratedValue(generator = "constantes")
     @Column(name = "constante_id")
     private Long constante_id;
 

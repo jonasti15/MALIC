@@ -1,12 +1,15 @@
 package com.malic.musker.entities;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name= "tipo_estado")
 public class TipoEstado {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GenericGenerator(name="tipo_estado" , strategy="increment")
+    @GeneratedValue(generator = "tipo_estado")
     @Column(name = "estado_id")
     private Integer estado_id;
     @Column(name = "descripcion")

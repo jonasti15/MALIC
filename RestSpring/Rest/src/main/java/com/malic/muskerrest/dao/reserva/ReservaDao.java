@@ -12,5 +12,6 @@ public interface ReservaDao {
     void deleteReserva(Reserva reserva);
     void deleteReserva(Long id);
     void addReserva(Reserva reserva);
+    int countPersonsasVisita(Long visitaId);
 
 }

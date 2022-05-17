@@ -27,6 +27,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     final static int REMEMBER_ME_TIME = 86400;  //1 day
     public final static int ENCRYPT_STRENGTH = 10;
 
+    private final static String[] ANY_USER_MATCHERS = {
+            "/","/index","/home","/login","/login_process","/logout", "/aboutUs","/user/add",
+            "/css/**","/images/**","/js/**", "../language/**", "/search/animals", "/search/species", "/especies/**", "/visitas/**", "/reservas/**"};
+
     @Autowired
     UserDetailsService userDetailsService;
 
@@ -39,10 +43,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 //Filter pages based on the authority or role the user has
+                .antMatchers(ANY_USER_MATCHERS).permitAll()
                 .antMatchers("/admin").hasRole("ADMIN")
                 .antMatchers("/worker").hasAnyRole("ADMIN", "WORKER")
                 .antMatchers("/normalUser", "/mainPage").authenticated()
-                .antMatchers("/", "/index").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 //Login control
@@ -51,6 +55,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .loginProcessingUrl("/login_process")
                 .usernameParameter("txtUsername")
                 .passwordParameter("txtPassword")
+                .failureUrl("/login?error")
+                .defaultSuccessUrl("/", true)
                 .and()
                 //Logout control
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))

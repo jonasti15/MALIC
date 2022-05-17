@@ -1,0 +1,58 @@
+:root{
+    --mugreen-very-soft: #B1D8B7;
+    --mugreen-soft: #94C973;
+    --mugreen: #76B947;
+    --mugreen-hard: #2F5233;
+    --musalmon: #EE6C4D;
+}
+
+a{
+    color: black !important;
+}
+
+.nav-item {
+    margin-left: 0.5vw;
+    margin-right: 0.5vw;
+
+}
+
+.navbar-nav > li > a.active{
+    color: var(--musalmon) !important;
+    font-weight: 600;
+}
+
+.navbar{
+    background-color: var(--mugreen);
+}
+
+.nav-item.language a {
+    padding: 0.5rem; 
+    display: inline-block;
+    width: 30%;
+    text-align: center;
+}
+
+
+.nav-item.language a {
+    padding: 0.5rem; 
+    display: inline-block;
+    width: 30%;
+    text-align: center;
+}
+
+.menu-items a{
+    font: 16px/30px Arial, Helvetica, sans-serif;
+    padding:10px;
+}
+
+.menu-items a:hover{
+    font-size: 110%;
+}
+/*  BIG SCREEN  */
+
+@media (min-width: 990px){
+
+    li:last-child{
+        right: 0 !important;
+    }
+}

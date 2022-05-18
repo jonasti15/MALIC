@@ -1,6 +1,4 @@
-package com.malic.muskerrest.entities;
-
-import org.hibernate.annotations.GenericGenerator;
+package elementos;
 
 import javax.persistence.*;
 import javax.servlet.http.HttpServletRequest;
@@ -11,8 +9,7 @@ import java.util.Date;
 public class User {
 
     @Id
-    @GenericGenerator(name="usuario" , strategy="increment")
-    @GeneratedValue(generator = "usuario")
+    @GeneratedValue(strategy= GenerationType.AUTO)
     @Column(name = "usuario_id")
     private Long usuario_id;
 
@@ -50,6 +47,10 @@ public class User {
     }
 
     public User() {}
+
+    public User(String user) {
+        this.username=user;
+    }
 
     public String getEmail() {
         return email;

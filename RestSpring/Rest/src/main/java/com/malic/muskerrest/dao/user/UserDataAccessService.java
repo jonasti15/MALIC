@@ -46,4 +46,9 @@ public class UserDataAccessService implements UserDao {
     public User getUserByUsername(String username) {
         return repository.findByUsername(username);
     }
+
+    @Override
+    public List<User> getUsersByUserType(int id) {
+        return repository.findUsersByTipoUsuario_TipoUsuarioId(id);
+    }
 }

@@ -84,6 +84,12 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
+    @GetMapping("/userType/{userTypeId}")
+    public ResponseEntity<List<User>> getUserByUserType(@PathVariable("userTypeId") String id){
+        List<User>user = userDao.getUsersByUserType(Integer.parseInt(id));
+        return ResponseEntity.ok(user);
+    }
+
     @GetMapping("/refresh")
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String authorizationHeader = request.getHeader(AUTHORIZATION);
@@ -99,7 +105,7 @@ public class UserController {
                         .withSubject(user.getUsername())
                         .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
                         .withIssuer(request.getRequestURL().toString())
-                        .withClaim("roles", user.getTipo_usuario().getDescripcion())
+                        .withClaim("roles", user.getTipoUsuario().getDescripcion())
                         .sign(algorithm);
 
                 Map<String, String> tokens = new HashMap<>();

@@ -1,5 +1,7 @@
 package com.malic.musker.entities;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +11,8 @@ import java.util.List;
 public class UserType {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GenericGenerator(name="tipo_usuario" , strategy="increment")
+    @GeneratedValue(generator = "tipo_usuario")
     @Column(name = "tipo_usuario_id")
     private Integer tipo_usuario_id;
     @Column(name = "descripcion")

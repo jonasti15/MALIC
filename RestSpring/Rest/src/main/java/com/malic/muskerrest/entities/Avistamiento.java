@@ -1,5 +1,7 @@
 package com.malic.muskerrest.entities;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -8,7 +10,8 @@ import java.util.Date;
 public class Avistamiento {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GenericGenerator(name="avistamiento" , strategy="increment")
+    @GeneratedValue(generator = "avistamiento")
     @Column(name = "avistamiento_id")
     private Long avistamiento_id;
 

@@ -1,5 +1,7 @@
 package com.malic.muskerrest.entities;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -8,31 +10,36 @@ import java.util.Date;
 public class Visita {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GenericGenerator(name="visita" , strategy="increment")
+    @GeneratedValue(generator = "visita")
     @Column(name = "visita_id")
-    private Long visita_id;
+    private Long visitaId;
 
     @Column(name = "fecha")
     private Date fecha;
 
+    @Column(name = "descripcion")
+    private String descripcion;
+
     @ManyToOne
     @JoinColumn(name = "guia", nullable = false)
-    private User user;
+    private User guia;
 
     public Visita(){}
 
-    public Visita(Long visita_id, Date fecha, User user) {
-        this.visita_id = visita_id;
+    public Visita(Long visitaId, Date fecha, User guia, String descripcion) {
+        this.visitaId = visitaId;
         this.fecha = fecha;
-        this.user = user;
+        this.guia = guia;
+        this.descripcion = descripcion;
     }
 
-    public Long getVisita_id() {
-        return visita_id;
+    public Long getVisitaId() {
+        return visitaId;
     }
 
-    public void setVisita_id(Long visita_id) {
-        this.visita_id = visita_id;
+    public void setVisitaId(Long visitaId) {
+        this.visitaId = visitaId;
     }
 
     public Date getFecha() {
@@ -43,11 +50,19 @@ public class Visita {
         this.fecha = fecha;
     }
 
-    public User getUser() {
-        return user;
+    public User getGuia() {
+        return guia;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setGuia(User guia) {
+        this.guia = guia;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 }

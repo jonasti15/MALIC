@@ -1,5 +1,7 @@
 package com.malic.muskerrest.entities;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
@@ -9,7 +11,8 @@ import java.util.Date;
 public class User {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GenericGenerator(name="usuario" , strategy="increment")
+    @GeneratedValue(generator = "usuario")
     @Column(name = "usuario_id")
     private Long usuario_id;
 

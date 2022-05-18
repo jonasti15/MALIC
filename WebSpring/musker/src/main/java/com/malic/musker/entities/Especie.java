@@ -1,5 +1,7 @@
 package com.malic.musker.entities;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 
 @Entity
@@ -7,9 +9,13 @@ import javax.persistence.*;
 public class Especie {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GenericGenerator(name="especie" , strategy="increment")
+    @GeneratedValue(generator = "especie")
     @Column(name = "especie_id")
-    private Long especie_id;
+    private Long especieId;
+
+    @Column(name = "path")
+    private String path;
 
     @Column(name = "descripcion")
     private String descripcion;
@@ -20,18 +26,19 @@ public class Especie {
 
     public Especie(){}
 
-    public Especie(Long especie_id, String descripcion, Clase clase) {
-        this.especie_id = especie_id;
+    public Especie(Long especieId, String descripcion, Clase clase, String path) {
+        this.especieId = especieId;
         this.descripcion = descripcion;
         this.clase = clase;
+        this.path = path;
     }
 
-    public Long getEspecie_id() {
-        return especie_id;
+    public Long getEspecieId() {
+        return especieId;
     }
 
-    public void setEspecie_id(Long especie_id) {
-        this.especie_id = especie_id;
+    public void setEspecieId(Long especieId) {
+        this.especieId = especieId;
     }
 
     public String getDescripcion() {
@@ -48,5 +55,13 @@ public class Especie {
 
     public void setClase(Clase clase) {
         this.clase = clase;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 }

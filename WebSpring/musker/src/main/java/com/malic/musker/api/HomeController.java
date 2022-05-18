@@ -1,21 +1,13 @@
 package com.malic.musker.api;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
+import com.malic.musker.entities.News;
 import com.malic.musker.entities.User;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.annotation.web.configurers.UrlAuthorizationConfigurer;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
@@ -25,10 +17,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.context.request.WebRequest;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
-import static org.springframework.security.web.context.HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY;
-
+import java.util.List;
 
 @Controller
 public class HomeController {
@@ -37,8 +26,11 @@ public class HomeController {
     AuthenticationManager authenticationManager;
 
     @GetMapping(path = {"/", "/index"})
-    public String home() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    public String home(Model model) {
+        model.addAttribute("navPage", "index");
+        List<News> news = RestController.RESTgetRequestListHeaders("/news/all", new HttpHeaders(), News.class);
+
+        model.addAttribute("news", news);
 
         return "index";
     }
@@ -69,8 +61,6 @@ public class HomeController {
 
         User user = RestController.RESTgetRequestHeaders("/user/username/"+username, headers, User.class);
 
-        //User user = RestController.RESTpostRequestSelfForm("/login_process", map, User.class);
-
         return "mainPage";
     }
 
@@ -95,27 +85,10 @@ public class HomeController {
         return "userForm";
     }
 
-    @GetMapping("/normalUser")
-    @ResponseBody
-    public String user() {
-        return ("<h1>Welcome User</h1>");
-    }
-
-    @GetMapping("/admin")
-    @ResponseBody
-    public String admin() {
-        return ("<h1>Welcome Admin</h1>");
-    }
-
-    @GetMapping("/worker")
-    @ResponseBody
-    public String worker() {
-        return ("<h1>Welcome worker</h1>");
-    }
-
-    @GetMapping("/mainPage")
-    public String mainPage() {
-        return "mainPage";
+    @GetMapping("/aboutUs")
+    public String aboutUs(Model model){
+        model.addAttribute("navPage", "aboutUs");
+        return "aboutUs";
     }
 
 }

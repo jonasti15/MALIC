@@ -9,14 +9,17 @@ import com.malic.muskerrest.dao.user.UserDao;
 import com.malic.muskerrest.dao.userType.UserTypeDao;
 import com.malic.muskerrest.entities.User;
 import com.malic.muskerrest.entities.UserType;
+import org.hibernate.engine.jdbc.spi.SqlExceptionHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 
@@ -24,6 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -38,19 +42,45 @@ public class UserController {
     @Autowired
     private UserDao userDao;
 
-    @GetMapping("/user/{id}")
-    public ResponseEntity<User> getUser(@PathVariable long id) {
-        return ResponseEntity.ok(userDao.getUser(id));
+    @GetMapping("/username/{username}")
+    public ResponseEntity<User> getUserByUsername(@PathVariable(name = "username") String username){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String loggedUsername = authentication.getName();
+        if(loggedUsername.equals(username)){
+            return ResponseEntity.ok(userDao.getUserByUsername(username));
+        }else{
+            return ResponseEntity.badRequest().build();
+        }
     }
 
-    @GetMapping("/username/{username}")
-    public ResponseEntity<User> getUserByUsername(@PathVariable String username){
-        return ResponseEntity.ok(userDao.getUserByUsername(username));
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<User> getUser(@PathVariable(name = "userId") long userId){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String loggedUsername = authentication.getName();
+        User user = userDao.getUserByUsername(loggedUsername);
+        if(user.getUsuario_id() == userId){
+            return ResponseEntity.ok(user);
+        }else{
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @PostMapping("/add")
-    public ResponseEntity<User> addUser(@RequestBody User user){
-        userDao.addUser(user);
+    public ResponseEntity<User> addUser(@RequestBody User user,
+                                            HttpServletResponse response) throws IOException {
+        try{
+            userDao.addUser(user);
+        }catch(Exception e){
+            response.setHeader("error", e.getMessage());
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+
+            Map<String, String> error = new HashMap<>();
+            error.put("error_message", e.getMessage());
+
+            response.setContentType(APPLICATION_JSON_VALUE);
+            new ObjectMapper().writeValue(response.getOutputStream(), error);
+        }
+
         return ResponseEntity.ok(user);
     }
 

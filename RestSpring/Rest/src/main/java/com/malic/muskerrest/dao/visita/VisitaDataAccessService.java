@@ -41,4 +41,11 @@ public class VisitaDataAccessService implements VisitaDao{
     public void addVisita(Visita visita) {
         repository.save(visita);
     }
+
+    @Override
+    public List<Visita> getFechaAfterDate() {
+        java.util.Date utilDate = new  java.util.Date();
+        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+        return repository.findAllByFechaAfterOrderByFechaAsc(sqlDate);
+    }
 }

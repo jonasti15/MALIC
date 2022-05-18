@@ -41,4 +41,9 @@ public class ReservaDataAccessService implements ReservaDao{
     public void addReserva(Reserva reserva) {
         repository.save(reserva);
     }
+
+    @Override
+    public int countPersonsasVisita(Long visitaId) {
+        return repository.countCantidadPersonas(visitaId);
+    }
 }

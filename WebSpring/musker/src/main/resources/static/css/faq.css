@@ -1,0 +1,21 @@
+:root{
+    --mugreen-very-soft: #B1D8B7;
+    --mugreen-soft: #94C973;
+    --mugreen: #76B947;
+    --mugreen-hard: #2F5233;
+    --musalmon: #EE6C4D;
+}
+
+.salmon{
+    background-color: var(--musalmon);
+    color: black;
+}
+
+.container-faq{
+    background-color: var(--mugreen-soft);
+}
+
+#create-faq-btn{
+    float: right;
+}
+

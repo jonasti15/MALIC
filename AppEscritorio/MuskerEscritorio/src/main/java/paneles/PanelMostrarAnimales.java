@@ -56,6 +56,7 @@ public class PanelMostrarAnimales extends JPanel  {
 
         this.renderer=new RenderTablaAnimales();
         this.tablaModel=new ModeloTablaAnimales();
+        this.tablaModel.setAnimales(controlador.getAnimales());
         this.colum=new ModeloColumnasTablaAnimales(renderer);
         tabla = new JTable(tablaModel, colum);
         tabla.addMouseListener(new java.awt.event.MouseAdapter() {

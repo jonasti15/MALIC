@@ -1,5 +1,7 @@
 package elementos;
 
+
+
 import javax.persistence.*;
 
 @Entity
@@ -7,9 +9,12 @@ import javax.persistence.*;
 public class Animal {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(generator = "animal")
     @Column(name = "animal_id")
     private Long animal_id;
+
+    @Column(name = "path")
+    private String path;
 
     @ManyToOne
     @JoinColumn(name = "especie_id", nullable = false)
@@ -25,14 +30,19 @@ public class Animal {
 
     public Animal(){}
 
+    public Animal(Long animal_id, Especie especie, TipoEstado estado, Recinto recinto_id, String path) {
+        this.animal_id = animal_id;
+        this.especie = especie;
+        this.estado = estado;
+        this.recinto_id = recinto_id;
+        this.path = path;
+    }
     public Animal(Long animal_id, Especie especie, TipoEstado estado, Recinto recinto_id) {
         this.animal_id = animal_id;
         this.especie = especie;
         this.estado = estado;
         this.recinto_id = recinto_id;
     }
-
-
 
     public Long getAnimal_id() {
         return animal_id;
@@ -64,6 +74,14 @@ public class Animal {
 
     public void setRecinto_id(Recinto recinto_id) {
         this.recinto_id = recinto_id;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
     public Object getFieldAt(int columna) {
         switch (columna){

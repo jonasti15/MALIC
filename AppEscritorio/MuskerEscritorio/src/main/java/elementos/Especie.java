@@ -1,5 +1,7 @@
 package elementos;
 
+
+
 import javax.persistence.*;
 
 @Entity
@@ -7,9 +9,10 @@ import javax.persistence.*;
 public class Especie {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(generator = "especie")
     @Column(name = "especie_id")
-    private Long especie_id;
+    private Long especieId;
+
 
     @Column(name = "descripcion")
     private String descripcion;
@@ -20,18 +23,18 @@ public class Especie {
 
     public Especie(){}
 
-    public Especie(Long especie_id, String descripcion, Clase clase) {
-        this.especie_id = especie_id;
+    public Especie(Long especieId, String descripcion, Clase clase) {
+        this.especieId = especieId;
         this.descripcion = descripcion;
         this.clase = clase;
     }
 
-    public Long getEspecie_id() {
-        return especie_id;
+    public Long getEspecieId() {
+        return especieId;
     }
 
-    public void setEspecie_id(Long especie_id) {
-        this.especie_id = especie_id;
+    public void setEspecieId(Long especieId) {
+        this.especieId = especieId;
     }
 
     public String getDescripcion() {
@@ -48,10 +51,5 @@ public class Especie {
 
     public void setClase(Clase clase) {
         this.clase = clase;
-    }
-
-    @Override
-    public String toString() {
-        return this.getDescripcion();
     }
 }

@@ -16,9 +16,17 @@ public class ModeloTablaAnimales extends AbstractTableModel {
     }
 
     private void inicializar() {
-        for(int i=0;i<10;i++){
+        /* for(int i=0;i<10;i++){
             this.animales.add(new Animal((long)i, new Especie((long)i, "Especie"+ i,new Clase(i, "Clase "+i)), new TipoEstado(i, "Estado "+i), new Recinto(i, "Recinto "+i,i)));
-        }
+        }*/
+    }
+
+    public List<Animal> getAnimales() {
+        return animales;
+    }
+
+    public void setAnimales(List<Animal> animales) {
+        this.animales = animales;
     }
 
     @Override

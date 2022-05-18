@@ -1,4 +1,4 @@
-package com.malic.muskerrest.entities;
+package elementos;
 
 import javax.persistence.*;
 import javax.servlet.http.HttpServletRequest;
@@ -47,6 +47,10 @@ public class User {
     }
 
     public User() {}
+
+    public User(String user) {
+        this.username=user;
+    }
 
     public String getEmail() {
         return email;

@@ -1,13 +1,21 @@
 package controladores;
 
-import dialogo.DialogoAnadirAnimal;
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.GenericType;
+import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.api.client.config.DefaultClientConfig;
 import dialogo.DialogoAnadirVisita;
-import dialogo.DialogoEditarAnimal;
 import dialogo.DialogoEditarVisita;
-import elementos.*;
+import elementos.User;
+import elementos.Visita;
 
 import javax.swing.*;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ControladorVisitas {
     JFrame ventana;
@@ -31,12 +39,23 @@ public class ControladorVisitas {
     public void eliminar(Visita visita) {
         //llamar a REST para eliminar visita
     }
+    public List<User> getListTrabajadores() {
+        List<User> lista = new ArrayList<>();
+        WebResource webResource = client.resource(REST_SERVICE_URL)
+                .path("/userType/"+2);
+        ClientResponse clientResponse = webResource.accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
+        if (clientResponse.getStatus() == Response.Status.OK.getStatusCode()) {
+            return clientResponse.getEntity(new GenericType<List<User>>(){});
+        } else {
+            return null;
+        }
+    }
 
 
     public User[] getListaUsuarios() {
         User[] lista = new User[0];
-        //llamar a REST para obtener l lista
-
+        List<User> listTrabajadores=getListTrabajadores();
+        lista= (User[]) listTrabajadores.toArray();
         return lista;
     }
 

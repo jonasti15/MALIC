@@ -1,4 +1,4 @@
-package com.malic.muskerrest.entities;
+package elementos;
 
 import javax.persistence.*;
 

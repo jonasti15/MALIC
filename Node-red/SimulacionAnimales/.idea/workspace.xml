@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="03675c6a-c920-4701-85f7-47ae4cdf3a2e" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../ProyectoSimulacion/lib/amqp-client-5.11.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ProyectoSimulacion/lib/ice-3.7.3.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ProyectoSimulacion/lib/slf4j-api-1.7.25.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ProyectoSimulacion/lib/slf4j-simple-1.7.25.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ProyectoSimulacion/src/main/java/Constantes.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ProyectoSimulacion/src/main/java/ControllerJSON.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ProyectoSimulacion/src/main/java/GestorAlarmas.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ProyectoSimulacion/src/main/java/GestorConstantes.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ProyectoSimulacion/src/main/java/PublisherConstantes.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/amqp-client-5.11.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ice-3.7.3.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/slf4j-api-1.7.25.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/slf4j-simple-1.7.25.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Animal.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Constantes.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Monitor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Publisher.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="28mQYQtA1ePtjgeXXzTKYBCu3dS" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/lib" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Universidad\II.3\Semestre2\POPBL6\MALIC\Node-red\SimulacionAnimales" />
+      <recent name="D:\Universidad\II.3\Semestre2\POPBL6\MALIC\Node-red\SimulacionAnimales\src" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.Monitor">
+    <configuration name="Monitor" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Monitor" />
+      <module name="SimulacionAnimales" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Publisher" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Publisher" />
+      <module name="SimulacionAnimales" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Publisher" />
+        <item itemvalue="Application.Monitor" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="03675c6a-c920-4701-85f7-47ae4cdf3a2e" name="Changes" comment="" />
+      <created>1651819332931</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1651819332931</updated>
+      <workItem from="1651819334577" duration="2099000" />
+      <workItem from="1651919609571" duration="403000" />
+      <workItem from="1652087125380" duration="5139000" />
+      <workItem from="1652166675249" duration="1271000" />
+      <workItem from="1652169065282" duration="7095000" />
+      <workItem from="1652250468280" duration="6776000" />
+      <workItem from="1652265902568" duration="639000" />
+      <workItem from="1652682754254" duration="47000" />
+      <workItem from="1652682969903" duration="789000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

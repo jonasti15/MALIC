@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name= "constantes")
+@Table(name = "constantes")
 public class Constantes {
 
     @Id
@@ -18,6 +18,18 @@ public class Constantes {
     @Column(name = "constante")
     private Integer constante;
 
+    @Column(name = "latidos")
+    private Integer latidos;
+
+    @Column(name = "presion")
+    private Integer presion;
+
+    @Column(name = "temperatura")
+    private Integer temperatura;
+
+    @Column(name = "frrespiracion")
+    private Integer frrespiracion;
+
     @Column(name = "fecha")
     private Date fecha;
 
@@ -28,9 +40,14 @@ public class Constantes {
     public Constantes() {
     }
 
-    public Constantes(Long constante_id, Integer constante, Date fecha, Animal animal) {
+    public Constantes(Long constante_id, Integer constante, Integer latidos, Integer presion, Integer temperatura,
+                      Integer frrespiracion, Date fecha, Animal animal) {
         this.constante_id = constante_id;
         this.constante = constante;
+        this.latidos = latidos;
+        this.presion = presion;
+        this.temperatura = temperatura;
+        this.frrespiracion = frrespiracion;
         this.fecha = fecha;
         this.animal = animal;
     }
@@ -65,5 +82,51 @@ public class Constantes {
 
     public void setAnimal(Animal animal) {
         this.animal = animal;
+    }
+
+    public Integer getLatidos() {
+        return latidos;
+    }
+
+    public void setLatidos(Integer latidos) {
+        this.latidos = latidos;
+    }
+
+    public Integer getPresion() {
+        return presion;
+    }
+
+    public void setPresion(Integer presion) {
+        this.presion = presion;
+    }
+
+    public Integer getTemperatura() {
+        return temperatura;
+    }
+
+    public void setTemperatura(Integer temperatura) {
+        this.temperatura = temperatura;
+    }
+
+    public Integer getFrrespiracion() {
+        return frrespiracion;
+    }
+
+    public void setFrrespiracion(Integer frrespiracion) {
+        this.frrespiracion = frrespiracion;
+    }
+
+    @Override
+    public String toString() {
+        return "Constantes{" +
+                "constante_id=" + constante_id +
+                ", constante=" + constante +
+                ", latidos=" + latidos +
+                ", presion=" + presion +
+                ", temperatura=" + temperatura +
+                ", frrespiracion=" + frrespiracion +
+                ", fecha=" + fecha +
+                ", animal=" + animal +
+                '}';
     }
 }

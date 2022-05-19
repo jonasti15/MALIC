@@ -12,5 +12,4 @@ public interface ConstantesDao {
     void deleteConstantes(long id);
     void deleteConstantes(Constantes constante);
     void addConstantes(Constantes constante);
-
 }

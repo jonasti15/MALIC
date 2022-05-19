@@ -32,6 +32,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             "/visitas/**", "/reservas/**","/recintos/**","/tipoestado/**"};
 
     final static int REMEMBER_ME_TIME = 86400;  //1 day
+    private final static String[] ANY_USER_MATCHERS = {
+            "/user/refresh", "/user/add", "/animals/**", "/estancias/**", "/consejos/**", "/especies/**", "/constantes/**"};
 
     @Autowired
     UserDetailsService userDetailsService;

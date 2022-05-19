@@ -17,9 +17,10 @@ import java.util.Date;
 public class DialogoAnadirVisita extends JDialog implements ActionListener {
 
     public final static int DEFAULT_WIDTH = 900;
-    public final static int DEFAULT_HEIGHT = 700;
+    public final static int DEFAULT_HEIGHT = 900;
     private static final Color COLORFONDO = new Color(177,216,183);
     private static final Color COLORLETRA = new Color(47, 82, 51);
+     JFrame ventana;
     ControladorVisitas controlador;
     public JComboBox txUser;
     public JTextField desc;
@@ -28,6 +29,7 @@ public class DialogoAnadirVisita extends JDialog implements ActionListener {
 
     public DialogoAnadirVisita(JFrame ventana, String titulo, boolean modo, ControladorVisitas controlador){
         super(ventana, titulo, modo);
+        this.ventana=ventana;
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         int width = (int) toolkit.getScreenSize().getWidth();
         int height = (int) toolkit.getScreenSize().getHeight();
@@ -114,7 +116,8 @@ public class DialogoAnadirVisita extends JDialog implements ActionListener {
                 c1.set(Calendar.YEAR, datePicker.getModel().getYear());
                 Date date=c1.getTime();
                 java.sql.Date datesql=new java.sql.Date(date.getTime());
-                controlador.anadirVisita(datesql, (User) this.txUser.getSelectedItem());
+                controlador.anadirVisita(datesql, (User) this.txUser.getSelectedItem(),desc.getText());
+                this.ventana.repaint();
                 this.dispose();
                 break;
 

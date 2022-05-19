@@ -20,8 +20,8 @@ public class PanelPrincipal extends JScrollPane{
 		this.setBackground(Color.white);
 		this.setBorder(null);
 		this.getVerticalScrollBar().setUnitIncrement(20);
-		this.controlador=new ControladorAnimales(mUsker);
-		this.controladorVisitas=new ControladorVisitas(mUsker);
+		this.controlador=new ControladorAnimales(mUsker, this);
+		this.controladorVisitas=new ControladorVisitas(mUsker, this);
 		this.controladorPantallaPrincipal =new ControladorPantallaPrincipal(this, mUsker, controlador, controladorVisitas);
 		this.menu=new PanelMenu(controladorPantallaPrincipal);
 
@@ -29,7 +29,19 @@ public class PanelPrincipal extends JScrollPane{
 		this.setBackground(Color.white);
 	}
 
+	public ControladorPantallaPrincipal getControladorPantallaPrincipal() {
+		return controladorPantallaPrincipal;
+	}
 
+	public PanelMenu getMenu() {
+		return menu;
+	}
 
+	public ControladorAnimales getControlador() {
+		return controlador;
+	}
 
+	public ControladorVisitas getControladorVisitas() {
+		return controladorVisitas;
+	}
 }

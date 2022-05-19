@@ -9,7 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class DialogoInfoAnimal extends JDialog implements ActionListener {
-    public final static int DEFAULT_WIDTH = 1200;
+    public final static int DEFAULT_WIDTH = 900;
     public final static int DEFAULT_HEIGHT = 700;
     private static final Color COLORFONDO = new Color(177,216,183);
     private static final Color COLORLETRA = new Color(47, 82, 51);
@@ -54,6 +54,7 @@ public class DialogoInfoAnimal extends JDialog implements ActionListener {
 
     private Component anadirDato(String nombre) {
         JLabel label=new JLabel(nombre);
+        label.setHorizontalAlignment(SwingConstants.CENTER);
         label.setForeground(COLORLETRA);
         return label;
     }
@@ -84,11 +85,13 @@ public class DialogoInfoAnimal extends JDialog implements ActionListener {
             case "editar":
                 this.dispose();
                 controlador.editar(this.animal);
-
+                this.dispose();
                 break;
 
             case "eliminar":
+
                 controlador.eliminar(this.animal);
+                this.dispose();
                 break;
         }
     }

@@ -7,13 +7,17 @@ import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.json.JSONConfiguration;
+import com.sun.jersey.core.util.MultivaluedMapImpl;
 import dialogo.DialogoAnadirAnimal;
 import dialogo.DialogoEditarAnimal;
 import elementos.*;
+import paneles.PanelPrincipal;
 
 import javax.swing.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,8 +27,10 @@ public class ControladorAnimales  {
     DialogoEditarAnimal dialogoEditarAnimal;
     private static final String REST_SERVICE_URL = "http://localhost:8080";
     private  Client client;
-    public ControladorAnimales(JFrame mUsker) {
+    PanelPrincipal panel;
+    public ControladorAnimales(JFrame mUsker, PanelPrincipal panelPrincipal) {
         this.ventana=mUsker;
+        this.panel=panelPrincipal;
         ClientConfig clientConfig = new DefaultClientConfig();
         clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);  // <----- set the json configuration POJO MAPPING for JSON reponse paring
         client = Client.create(clientConfig);
@@ -50,7 +56,14 @@ public class ControladorAnimales  {
     }
 
     public void eliminar(Animal animal) {
-        //llamar a REST para eliminar animal
+        WebResource webResource = client.resource(REST_SERVICE_URL).path("/animals/delete").path(String.valueOf(animal.getAnimal_id()));
+        ClientResponse clientResponse = webResource.type(MediaType.TEXT_PLAIN_TYPE).delete(ClientResponse.class);
+        panel.getControladorPantallaPrincipal().recargarAnimales();
+        if (clientResponse.getStatus() == Response.Status.OK.getStatusCode()) {
+            System.out.println("El animal ha sido eliminado correctamente.");
+        } else {
+            System.out.println("La llamada no ha sido correcta.");
+        }
     }
 
 
@@ -117,11 +130,36 @@ public class ControladorAnimales  {
 
 
     public void editarAnimal(Long animal_id, Especie especie, TipoEstado estado, Recinto recinto) {
-        //llamar a REST para editar animal
+        Animal animal=new Animal();
+        animal.setAnimal_id(animal_id);
+        animal.setEspecie(especie);
+        animal.setEstado(estado);
+        animal.setRecinto_id(recinto);
+        WebResource webResource = client.resource(REST_SERVICE_URL).path("/animals/edit");
+        ClientResponse clientResponse = webResource.type(MediaType.APPLICATION_JSON).post(ClientResponse.class, animal);
+        panel.getControladorPantallaPrincipal().recargarAnimales();
+        if (clientResponse.getStatus() == Response.Status.OK.getStatusCode()) {
+            System.out.println("Se ha editado un objeto.");
+
+        } else {
+            System.out.println("La llamada no ha sido correcta.");
+        }
     }
 
     public void anadirAnimal(Especie especie, TipoEstado estado, Recinto recinto) {
-        //llamar a REST para anadir animal
+        Animal animal=new Animal();
+        animal.setEspecie(especie);
+        animal.setEstado(estado);
+        animal.setRecinto_id(recinto);
+        WebResource webResource = client.resource(REST_SERVICE_URL).path("/animals/add");
+        ClientResponse clientResponse = webResource.type(MediaType.APPLICATION_JSON).post(ClientResponse.class, animal);
+        panel.getControladorPantallaPrincipal().recargarAnimales();
+        if (clientResponse.getStatus() == Response.Status.OK.getStatusCode()) {
+            System.out.println("Se ha creado un objeto nuevo.");
+
+        } else {
+            System.out.println("La llamada no ha sido correcta.");
+        }
     }
 
 

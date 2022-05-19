@@ -17,7 +17,7 @@ import java.util.Calendar;
 public class DialogoEditarVisita extends JDialog implements ActionListener {
 
     public final static int DEFAULT_WIDTH = 900;
-    public final static int DEFAULT_HEIGHT = 700;
+    public final static int DEFAULT_HEIGHT = 900;
     private static final Color COLORFONDO = new Color(177,216,183);
     private static final Color COLORLETRA = new Color(47, 82, 51);
     ControladorVisitas controlador;
@@ -25,6 +25,7 @@ public class DialogoEditarVisita extends JDialog implements ActionListener {
     public JComboBox txUser;
     public JTextField fecha;
     JDatePickerImpl datePicker;
+    JTextField desc;
     public DialogoEditarVisita(JFrame ventana, String titulo, boolean modo, ControladorVisitas controlador, Visita visita){
         super(ventana, titulo, modo);
         this.controlador=controlador;
@@ -57,11 +58,14 @@ public class DialogoEditarVisita extends JDialog implements ActionListener {
         datePicker = new JDatePickerImpl(datePanel);
 
         panel.add(datePanel);
-        JPanel panelUser=new JPanel(new GridLayout(1,2,50,50));
+        JPanel panelUser=new JPanel(new GridLayout(2,4,50,50));
         panelUser.add(anadirDato("Guia: "));
         User[] listaUsers=controlador.getListaUsuarios();
         txUser=new JComboBox(listaUsers);
         panelUser.add(txUser);
+        panelUser.add(anadirDato("Descripcion: "));
+        desc=new JTextField(visita.getDescripcion());
+        panelUser.add(desc);
         panelUser.setBorder(BorderFactory.createEmptyBorder(100,0,100,0));
         panelUser.setBackground(COLORFONDO);
         panel.add(panelUser);
@@ -109,7 +113,7 @@ public class DialogoEditarVisita extends JDialog implements ActionListener {
                 c1.set(Calendar.YEAR, datePicker.getModel().getYear());
                 java.util.Date date=c1.getTime();
                 Date datesql=new Date(date.getTime());
-                controlador.editarVisita(this.visita.getVisitaId(),(Date) Date.valueOf(this.fecha.getText()), (User) this.txUser.getSelectedItem());
+                controlador.editarVisita(this.visita.getVisitaId(),datesql, (User) this.txUser.getSelectedItem(), desc.getText());
                 this.dispose();
                 break;
             case "cancelar":

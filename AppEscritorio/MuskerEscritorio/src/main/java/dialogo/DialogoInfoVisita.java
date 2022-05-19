@@ -41,10 +41,11 @@ public class DialogoInfoVisita extends JDialog implements ActionListener {
     }
 
     private Component crearPanelInfo() {
-        JPanel panel =new JPanel(new GridLayout(2,1));
+        JPanel panel =new JPanel(new GridLayout(3,1));
         panel.setBackground(COLORFONDO);
-        panel.add(anadirDato("Fecha: "+visita.getFecha().getTime()));
-        panel.add(anadirDato("Guia: "+visita.getGuia().getNombre()));
+        panel.add(anadirDato("Fecha: "+visita.getFecha().toLocalDate().getYear()+"-"+visita.getFecha().toLocalDate().getMonthValue()+"-"+visita.getFecha().toLocalDate().getDayOfMonth()));
+        panel.add(anadirDato("Guia: "+visita.getGuia().getNombre()+" "+visita.getGuia().getApellido()));
+        panel.add(anadirDato("Descripcion: "+visita.getDescripcion()));
 
         return panel;
     }
@@ -80,7 +81,6 @@ public class DialogoInfoVisita extends JDialog implements ActionListener {
         String accion = evt.getActionCommand();
         switch(accion) {
             case "editar":
-                this.dispose();
                 controlador.editar(this.visita);
                 this.dispose();
                 break;

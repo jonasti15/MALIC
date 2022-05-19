@@ -55,6 +55,6 @@ public class Especie {
 
     @Override
     public String toString() {
-        return especieId +" " + descripcion;
+        return descripcion;
     }
 }

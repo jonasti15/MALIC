@@ -62,7 +62,7 @@
           <img src="/images/profile.png" alt="mdo" width="32" height="32" class="rounded-circle">
         </a>
         <ul class="dropdown-menu text-small" aria-labelledby="dropdownProfile">
-          <li sec:authorize= "hasRole('USER')"><a class="dropdown-item trackGrafana" grafanaId="10" href="/reservations/all" th:text="#{menu.myReservations}"></a></li>
+          <li sec:authorize= "hasRole('USER')"><a class="dropdown-item trackGrafana" grafanaId="10" href="/reservas/user" th:text="#{menu.myReservations}"></a></li>
           <li sec:authorize= "isAuthenticated()"><a class="dropdown-item trackGrafana" grafanaId="11" href="/user/profile" th:text="#{menu.myProfile}"></a></li>
           <li sec:authorize= "isAuthenticated()">
             <hr class="dropdown-divider">

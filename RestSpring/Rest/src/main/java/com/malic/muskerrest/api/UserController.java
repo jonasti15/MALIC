@@ -58,7 +58,7 @@ public class UserController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String loggedUsername = authentication.getName();
         User user = userDao.getUserByUsername(loggedUsername);
-        if(user.getUsuario_id() == userId){
+        if(user.getUserId() == userId){
             return ResponseEntity.ok(user);
         }else{
             return ResponseEntity.badRequest().build();

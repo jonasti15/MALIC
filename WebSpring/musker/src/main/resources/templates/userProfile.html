@@ -13,7 +13,7 @@
             <div class="col-md-3 border-right">
                 <div class="d-flex flex-column align-items-center text-center p-3 py-5">
                     <span class="font-weight-bold" th:text="${userEdit.username}"></span>
-                    <span class="text-black-50" th:text="#{profile.id}"><span class="user-id" th:text="${userEdit.usuario_id}"></span> </span>
+                    <span class="text-black-50" th:text="#{profile.id}"><span class="user-id" th:text="${userEdit.userId}"></span> </span>
                     <span> </span>
                 </div>
             </div>
@@ -26,8 +26,8 @@
                         </div>
                         <div class="row mt-1">
                             <div class="col-md-6"><label class="labels" th:text="#{profile.id}"></label><input type="text"
-                                    class="form-control" th:field="*{usuario_id}"
-                                    th:attr="value=${userEdit.usuario_id != null? userEdit.usuario_id:''}" readonly></div>
+                                    class="form-control" th:field="*{userId}"
+                                    th:attr="value=${userEdit.userId != null? userEdit.userId:''}" readonly></div>
                         </div>
                         <div class="row mt-2">
                             <div class="col-md-6"><label class="labels" th:text="#{profile.name}"></label><input type="text"

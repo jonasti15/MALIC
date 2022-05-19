@@ -52,4 +52,9 @@ public class Especie {
     public void setClase(Clase clase) {
         this.clase = clase;
     }
+
+    @Override
+    public String toString() {
+        return especieId +" " + descripcion;
+    }
 }

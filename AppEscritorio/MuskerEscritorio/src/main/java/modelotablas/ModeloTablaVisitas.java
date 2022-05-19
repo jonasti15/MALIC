@@ -21,9 +21,17 @@ public class ModeloTablaVisitas  extends AbstractTableModel {
     }
 
     private void inicializar() {
-        for(int i=0;i<100;i++){
+        /*for(int i=0;i<100;i++){
             this.visitas.add(new Visita((long)i,new Date(LocalDate.now().getYear(),LocalDate.now().getMonthValue(), LocalDate.now().getDayOfMonth()), new User("User "+i,"123",new UserType(2,"Worker"))));
-        }
+        }*/
+    }
+
+    public List<Visita> getVisitas() {
+        return visitas;
+    }
+
+    public void setVisitas(List<Visita> visitas) {
+        this.visitas = visitas;
     }
 
     @Override

@@ -20,14 +20,10 @@ public class VisitaController {
 
     @GetMapping("/all")
     public ResponseEntity<List<Visita>> getAllVisita(){
-        List<Visita> visitas = visitaDao.getFechaAfterDate();
+        List<Visita> visitas = visitaDao.getVisitasDisponibles();
 
         for(Visita v : visitas){
-            User user = new User();
-            user.setUsuario_id(v.getGuia().getUsuario_id());
-            user.setNombre(v.getGuia().getNombre());
-            user.setApellido(v.getGuia().getApellido());
-            v.setGuia(user);
+            v.setGuia(cleanGuia(v.getGuia()));
         }
 
         return ResponseEntity.ok(visitas);
@@ -37,14 +33,19 @@ public class VisitaController {
     public ResponseEntity<Visita> getVisita(@PathVariable int id){
         Visita visita = visitaDao.getVisita(id);
         if(visita != null){
-            User user = new User();
-
-            user.setUsuario_id(visita.getGuia().getUsuario_id());
-            user.setNombre(visita.getGuia().getNombre());
-            user.setApellido(visita.getGuia().getApellido());
-            visita.setGuia(user);
+            visita.setGuia(cleanGuia(visita.getGuia()));
         }
 
         return ResponseEntity.ok(visita);
+    }
+
+    public static User cleanGuia(User user){
+        User newUser = new User();
+
+        newUser.setUserId(user.getUserId());
+        newUser.setNombre(user.getNombre());
+        newUser.setApellido(user.getApellido());
+
+        return newUser;
     }
 }

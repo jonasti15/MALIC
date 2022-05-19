@@ -22,7 +22,7 @@ public class DialogoAnadirVisita extends JDialog implements ActionListener {
     private static final Color COLORLETRA = new Color(47, 82, 51);
     ControladorVisitas controlador;
     public JComboBox txUser;
-    public JTextField fecha;
+    public JTextField desc;
     JDatePickerImpl datePicker;
 
 
@@ -57,11 +57,14 @@ public class DialogoAnadirVisita extends JDialog implements ActionListener {
         datePicker = new JDatePickerImpl(datePanel);
 
         panel.add(datePanel);
-        JPanel panelUser=new JPanel(new GridLayout(1,2,50,50));
+        JPanel panelUser=new JPanel(new GridLayout(2,4,50,50));
         panelUser.add(anadirDato("Guia: "));
         User[] listaUsers=controlador.getListaUsuarios();
         txUser=new JComboBox(listaUsers);
+        desc=new JTextField("");
         panelUser.add(txUser);
+        panelUser.add(anadirDato("Descripcion: "));
+        panelUser.add(desc);
         panelUser.setBorder(BorderFactory.createEmptyBorder(100,0,100,0));
         panelUser.setBackground(COLORFONDO);
         panel.add(panelUser);

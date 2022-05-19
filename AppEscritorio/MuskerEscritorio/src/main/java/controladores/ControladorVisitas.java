@@ -82,8 +82,17 @@ public class ControladorVisitas {
         //llamar a REST para editar Visita
     }
 
-    public void anadirVisita(Date fecha, User guia) {
-        //llamar a REST para anadir Visita
+    public void anadirVisita(Date fecha, User guia, String desc) {
+        Visita visita=new Visita();
+        visita.setFecha();
+        WebResource webResource = client.resource(REST_SERVICE_URL).path("crearJson");
+        ClientResponse clientResponse = webResource.type(MediaType.APPLICATION_JSON).post(ClientResponse.class, pelicula2);
+
+        if (clientResponse.getStatus() == Response.Status.CREATED.getStatusCode()) {
+            System.out.println("Se ha creado un objeto nuevo.");
+        } else {
+            System.out.println("La llamada no ha sido correcta.");
+        }
     }
 
 

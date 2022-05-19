@@ -33,6 +33,16 @@ public class VisitaController {
 
         return ResponseEntity.ok(visitas);
     }
+    @GetMapping("/editables")
+    public ResponseEntity<List<Visita>> getAllVisitaEditables(){
+        List<Visita> visitas = visitaDao.getAllVisitas();
+
+        for(Visita v : visitas){
+            v.setGuia(cleanGuia(v.getGuia()));
+        }
+
+        return ResponseEntity.ok(visitas);
+    }
     @PostMapping("/edit")
     public ResponseEntity<Visita> editAnimal(@RequestBody Visita visita,
                                              HttpServletResponse response) throws IOException {

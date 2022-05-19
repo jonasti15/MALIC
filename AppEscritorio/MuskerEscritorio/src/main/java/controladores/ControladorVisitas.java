@@ -78,7 +78,7 @@ public class ControladorVisitas {
 
     public List<Visita> getListVisitas() {
         WebResource webResource = client.resource(REST_SERVICE_URL)
-                .path("/visitas/all");
+                .path("/visitas/editables");
         ClientResponse clientResponse = webResource.accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
         if (clientResponse.getStatus() == Response.Status.OK.getStatusCode()) {
             return clientResponse.getEntity(new GenericType<List<Visita>>(){});

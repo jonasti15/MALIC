@@ -4,10 +4,7 @@ import com.malic.muskerrest.dao.constantes.ConstantesDao;
 import com.malic.muskerrest.entities.Constantes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,4 +25,10 @@ public class ConstantesController {
         return ResponseEntity.ok(constantesDao.getConstantes(id));
     }
 
+    @PostMapping("/post")
+    @ResponseBody
+    public void postConstantes(@RequestBody Constantes constantes){
+        System.out.println(constantes);
+        constantesDao.addConstantes(constantes);
+    }
 }

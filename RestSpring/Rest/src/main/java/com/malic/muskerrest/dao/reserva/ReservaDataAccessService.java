@@ -46,4 +46,11 @@ public class ReservaDataAccessService implements ReservaDao{
     public int countPersonsasVisita(Long visitaId) {
         return repository.countCantidadPersonas(visitaId);
     }
+
+    @Override
+    public List<Reserva> getReservasByUserAndFecha(Long userId) {
+        java.util.Date utilDate = new  java.util.Date();
+        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+        return repository.findReservasByUser_UserIdAndVisita_FechaGreaterThanEqual(userId, sqlDate);
+    }
 }

@@ -12,6 +12,6 @@ public interface VisitaDao {
     void deleteVisita(long id);
     void deleteVisita(Visita visita);
     void addVisita(Visita visita);
-    List<Visita> getFechaAfterDate();
+    List<Visita> getVisitasDisponibles();
 
 }

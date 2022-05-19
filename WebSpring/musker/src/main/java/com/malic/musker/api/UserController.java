@@ -95,7 +95,7 @@ public class UserController {
         HttpHeaders header = new HttpHeaders();
         header.set(HttpHeaders.AUTHORIZATION, "Bearer " + RestController.getRequest().getSession().getAttribute("access_token").toString());
 
-        bdUser = RestController.RESTgetRequestHeaders("/user/user/" + user.getUsuario_id(), header, User.class);
+        bdUser = RestController.RESTgetRequestHeaders("/user/user/" + user.getUserId(), header, User.class);
 
         if(!passwordsMatch(request)){
             error = "Password mismatch";

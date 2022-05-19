@@ -47,7 +47,8 @@ public class RestController {
 
         HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
 
-        ResponseEntity<Object[]> responseEntity = restTemplate.getForEntity(url, Object[].class);
+        //ResponseEntity<Object[]> responseEntity = restTemplate.getForEntity(url, Object[].class);
+        ResponseEntity<Object[]> responseEntity = restTemplate.exchange(url, HttpMethod.GET, requestEntity, Object[].class);
         Object[] objects = responseEntity.getBody();
 
         ObjectMapper mapper = new ObjectMapper();
@@ -64,6 +65,17 @@ public class RestController {
 
         String url = PATH + requestUrl;
         ResponseEntity<G> responseEntity = restTemplate.exchange(url, HttpMethod.POST, requestEntity, returnClass);
+        return  responseEntity.getBody();
+    }
+
+    public static <T, G> G RESTdeleteRequest(String requestUrl, T objToSend, Class<G> returnClass) {
+        HttpHeaders headers = new HttpHeaders();
+        RestTemplate restTemplate = new RestTemplate();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<T> requestEntity = new HttpEntity<>(objToSend, headers);
+
+        String url = PATH + requestUrl;
+        ResponseEntity<G> responseEntity = restTemplate.exchange(url, HttpMethod.DELETE, requestEntity, returnClass);
         return  responseEntity.getBody();
     }
 

@@ -11,7 +11,7 @@ public class User {
     @Id
     @GeneratedValue(generator = "usuario")
     @Column(name = "usuario_id")
-    private Long usuario_id;
+    private Long userId;
 
     @Column(name = "nombre")
     private String nombre;
@@ -76,12 +76,12 @@ public class User {
         this.password = password;
     }
 
-    public Long getUsuario_id() {
-        return usuario_id;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUsuario_id(Long usuario_id) {
-        this.usuario_id = usuario_id;
+    public void setUserId(Long usuario_id) {
+        this.userId = usuario_id;
     }
 
     public String getNombre() {

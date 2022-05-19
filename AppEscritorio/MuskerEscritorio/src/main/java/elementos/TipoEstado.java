@@ -37,6 +37,6 @@ public class TipoEstado {
 
     @Override
     public String toString() {
-        return estado_id +": " + descripcion;
+        return descripcion;
     }
 }

@@ -68,7 +68,7 @@ public class Visita {
         switch (columna){
             case 0: return visitaId;
             case 1: return fecha;
-            case 2: return guia.getNombre();
+            case 2: return guia.getNombre()+" "+guia.getApellido();
             default: return null;
         }
     }

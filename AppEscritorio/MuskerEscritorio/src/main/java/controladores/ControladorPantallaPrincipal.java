@@ -17,33 +17,48 @@ public class ControladorPantallaPrincipal implements ActionListener {
     JFrame MUsker;
     ControladorAnimales controlador;
     ControladorVisitas controladorVisitas;
+    JPanel actual;
 
     public ControladorPantallaPrincipal(PanelPrincipal panel, MUsker mUsker, ControladorAnimales controlador, ControladorVisitas controladorVisitas) {
         this.panelActual = panel;
         this.MUsker=mUsker;
         this.controlador=controlador;
         this.controladorVisitas=controladorVisitas;
+
     }
+    void recargarVisitas(){
+        actual = new PanelMostrarVisitas(this, this.MUsker, controladorVisitas);
+        this.panelActual.setViewportView(actual);
+    }
+    void recargarAnimales(){
+        actual = new PanelMostrarAnimales(this, this.MUsker, controlador);
+        this.panelActual.setViewportView(actual);
+    }
+    void recargarAlertas(){
+        actual = new PanelAlertas(this, this.MUsker);
+        this.panelActual.setViewportView(actual);
+    }
+
 
     public void actionPerformed(ActionEvent evt) {
         String accion = evt.getActionCommand();
         switch(accion) {
             case "mostrarAnimales":
                 System.out.println("Mostrar animales");
-                PanelMostrarAnimales panelMostrarAnimales = new PanelMostrarAnimales(this, this.MUsker, controlador);
-                this.panelActual.setViewportView(panelMostrarAnimales);
+                actual = new PanelMostrarAnimales(this, this.MUsker, controlador);
+                this.panelActual.setViewportView(actual);
                 break;
             case "alertas":
-                PanelAlertas panelAlertas = new PanelAlertas(this, this.MUsker);
-                this.panelActual.setViewportView(panelAlertas);
+                actual = new PanelAlertas(this, this.MUsker);
+                this.panelActual.setViewportView(actual);
                 break;
             case "mostrarVisitas":
-                PanelMostrarVisitas panelMostrarVisitas = new PanelMostrarVisitas(this, this.MUsker, controladorVisitas);
-                this.panelActual.setViewportView(panelMostrarVisitas);
+                actual = new PanelMostrarVisitas(this, this.MUsker, controladorVisitas);
+                this.panelActual.setViewportView(actual);
                 break;
             case "MUskerBarra":
-                PanelMenu menu =new PanelMenu(this);
-                this.panelActual.setViewportView(menu);
+                actual =new PanelMenu(this);
+                this.panelActual.setViewportView(actual);
                 break;
             case "masAnimales":
                 this.controlador.anadirAnimal();

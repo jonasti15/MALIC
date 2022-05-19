@@ -4,17 +4,18 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.malic.muskerrest.dao.animal.AnimalDao;
 import com.malic.muskerrest.dao.estancia.EstanciaDao;
 import com.malic.muskerrest.entities.Animal;
+import com.malic.muskerrest.entities.Visita;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.PathParam;
+import java.io.IOException;
+import java.util.*;
 import java.util.stream.Collectors;
+
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
 @RequestMapping(path = "/animals")
@@ -32,5 +33,61 @@ public class AnimalController {
     public ResponseEntity<Animal> getAnimal(@PathVariable int id){
         return ResponseEntity.ok(animalDao.getAnimal(id));
     }
+
+    @PostMapping("/add")
+    public ResponseEntity<Animal> addAnimal(@RequestBody Animal animal,
+                                          HttpServletResponse response) throws IOException {
+        try{
+            animalDao.addAnimal(animal);
+        }catch(Exception e){
+            response.setHeader("error", e.getMessage());
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+
+            Map<String, String> error = new HashMap<>();
+            error.put("error_message", e.getMessage());
+
+            response.setContentType(APPLICATION_JSON_VALUE);
+            new ObjectMapper().writeValue(response.getOutputStream(), error);
+        }
+
+        return ResponseEntity.ok(animal);
+    }
+    @PostMapping("/edit")
+    public ResponseEntity<Animal> editAnimal(@RequestBody Animal animal,
+                                            HttpServletResponse response) throws IOException {
+        try{
+            animalDao.editAnimal(animal);
+        }catch(Exception e){
+            response.setHeader("error", e.getMessage());
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+
+            Map<String, String> error = new HashMap<>();
+            error.put("error_message", e.getMessage());
+
+            response.setContentType(APPLICATION_JSON_VALUE);
+            new ObjectMapper().writeValue(response.getOutputStream(), error);
+        }
+
+        return ResponseEntity.ok(animal);
+    }
+    @RequestMapping(value="/delete/{id}", method=RequestMethod.DELETE)
+    public ResponseEntity<Animal> editAnimal(@PathVariable(value="id")  Long id_animal,
+                                             HttpServletResponse response) throws IOException {
+        try{
+            animalDao.deleteAnimal(id_animal);
+        }catch(Exception e){
+            response.setHeader("error", e.getMessage());
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+
+            Map<String, String> error = new HashMap<>();
+            error.put("error_message", e.getMessage());
+
+            response.setContentType(APPLICATION_JSON_VALUE);
+            new ObjectMapper().writeValue(response.getOutputStream(), error);
+        }
+
+        return ResponseEntity.ok().build();
+    }
+
 
 }

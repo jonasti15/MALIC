@@ -44,7 +44,7 @@ public class DialogoInfoVisita extends JDialog implements ActionListener {
         JPanel panel =new JPanel(new GridLayout(2,1));
         panel.setBackground(COLORFONDO);
         panel.add(anadirDato("Fecha: "+visita.getFecha().getTime()));
-        panel.add(anadirDato("Guia: "+visita.getUser().getNombre()));
+        panel.add(anadirDato("Guia: "+visita.getGuia().getNombre()));
 
         return panel;
     }

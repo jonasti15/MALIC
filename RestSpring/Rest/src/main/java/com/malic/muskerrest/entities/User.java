@@ -114,4 +114,5 @@ public class User {
     public void setTipoUsuario(UserType tipoUsuario) {
         this.tipoUsuario = tipoUsuario;
     }
+
 }

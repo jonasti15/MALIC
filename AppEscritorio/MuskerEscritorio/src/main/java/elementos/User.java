@@ -9,7 +9,7 @@ import java.util.Date;
 public class User {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(generator = "usuario")
     @Column(name = "usuario_id")
     private Long usuario_id;
 
@@ -114,5 +114,10 @@ public class User {
 
     public void setTipoUsuario(UserType tipoUsuario) {
         this.tipoUsuario = tipoUsuario;
+    }
+
+    @Override
+    public String toString() {
+        return username;
     }
 }

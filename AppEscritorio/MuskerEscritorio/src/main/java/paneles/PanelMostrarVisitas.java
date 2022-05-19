@@ -57,6 +57,7 @@ public class PanelMostrarVisitas extends JPanel {
         panel.setBorder(BorderFactory.createLineBorder(Color.white));
         this.renderer=new RenderTablaVisitas();
         this.tablaModel=new ModeloTablaVisitas();
+        this.tablaModel.setVisitas(controlador.getListVisitas());
         this.colum=new ModeloColumnasTablaVisitas(renderer);
 
         tabla = new JTable(tablaModel, colum);

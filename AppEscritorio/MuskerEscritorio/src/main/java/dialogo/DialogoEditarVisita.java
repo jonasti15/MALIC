@@ -109,7 +109,7 @@ public class DialogoEditarVisita extends JDialog implements ActionListener {
                 c1.set(Calendar.YEAR, datePicker.getModel().getYear());
                 java.util.Date date=c1.getTime();
                 Date datesql=new Date(date.getTime());
-                controlador.editarVisita(this.visita.getVisita_id(),(Date) Date.valueOf(this.fecha.getText()), (User) this.txUser.getSelectedItem());
+                controlador.editarVisita(this.visita.getVisitaId(),(Date) Date.valueOf(this.fecha.getText()), (User) this.txUser.getSelectedItem());
                 this.dispose();
                 break;
             case "cancelar":

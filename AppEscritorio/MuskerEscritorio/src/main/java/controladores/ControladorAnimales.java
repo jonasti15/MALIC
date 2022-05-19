@@ -21,10 +21,13 @@ public class ControladorAnimales  {
     JFrame ventana;
     DialogoAnadirAnimal dialogoAnadirAnimal;
     DialogoEditarAnimal dialogoEditarAnimal;
-    private static final String REST_SERVICE_URL = "http://localhost:8080/animals";
+    private static final String REST_SERVICE_URL = "http://localhost:8080";
     private  Client client;
     public ControladorAnimales(JFrame mUsker) {
         this.ventana=mUsker;
+        ClientConfig clientConfig = new DefaultClientConfig();
+        clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);  // <----- set the json configuration POJO MAPPING for JSON reponse paring
+        client = Client.create(clientConfig);
     }
 
     public void anadirAnimal() {
@@ -36,11 +39,8 @@ public class ControladorAnimales  {
 
     }
     public List<Animal> getAnimales(){
-        ClientConfig clientConfig = new DefaultClientConfig();
-        clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);  // <----- set the json configuration POJO MAPPING for JSON reponse paring
-        client = Client.create(clientConfig);
         WebResource webResource = client.resource(REST_SERVICE_URL)
-                .path("/all");
+                .path("/animals/all");
         ClientResponse clientResponse = webResource.accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
         if (clientResponse.getStatus() == Response.Status.OK.getStatusCode()) {
             return clientResponse.getEntity(new GenericType<List<Animal>>(){});
@@ -55,23 +55,64 @@ public class ControladorAnimales  {
 
 
     public Especie[] getListaEspecies() {
-        Especie[] lista = new Especie[0];
-        //llamar a REST para obtener l lista
 
-        return lista;
+        List<Especie> lista=getListEspecies();
+        Especie[] especies = new Especie[lista.size()];
+        for(int i =0;i<lista.size();i++){
+            especies[i]=lista.get(i);
+        }
+        return especies;
+    }
+    public List<Especie> getListEspecies() {
+        WebResource webResource = client.resource(REST_SERVICE_URL)
+                .path("/especies/all");
+        ClientResponse clientResponse = webResource.accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
+        if (clientResponse.getStatus() == Response.Status.OK.getStatusCode()) {
+            return clientResponse.getEntity(new GenericType<List<Especie>>(){});
+        } else {
+            return null;
+        }
     }
 
-    public TipoEstado[] getListaEstados() {
-        TipoEstado[] lista = new TipoEstado[0];
-        //llamar a REST para obtener l lista
 
-        return lista;
+    public TipoEstado[] getListaEstados() {
+
+        List<TipoEstado> lista=getListEstados();
+        TipoEstado[] estados = new TipoEstado[lista.size()];
+        for(int i =0;i<lista.size();i++){
+            estados[i]=lista.get(i);
+        }
+        return estados;
+    }
+    public List<TipoEstado> getListEstados() {
+        WebResource webResource = client.resource(REST_SERVICE_URL)
+                .path("/tipoestado/all");
+        ClientResponse clientResponse = webResource.accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
+        if (clientResponse.getStatus() == Response.Status.OK.getStatusCode()) {
+            return clientResponse.getEntity(new GenericType<List<TipoEstado>>(){});
+        } else {
+            return null;
+        }
     }
 
     public Recinto[] getListaRecintos() {
-        Recinto[] lista = new Recinto[0];
-        //llamar a REST para obtener l lista
-        return lista;
+        List<Recinto> lista=getListRecintos();
+        Recinto[] recintos = new Recinto[lista.size()];
+        for(int i =0;i<lista.size();i++){
+            recintos[i]=lista.get(i);
+        }
+        return recintos;
+    }
+
+    public List<Recinto> getListRecintos() {
+        WebResource webResource = client.resource(REST_SERVICE_URL)
+                .path("/recintos/all");
+        ClientResponse clientResponse = webResource.accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
+        if (clientResponse.getStatus() == Response.Status.OK.getStatusCode()) {
+            return clientResponse.getEntity(new GenericType<List<Recinto>>(){});
+        } else {
+            return null;
+        }
     }
 
 

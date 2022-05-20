@@ -11,20 +11,26 @@ public class RenderTablaAvistamientos extends DefaultTableCellRenderer {
                                                    int column) {
 
         JLabel componente = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-
+        table.setRowHeight(30);
         switch (column) {
             case 0:
                 componente.setHorizontalAlignment(CENTER);
+                componente.setFont(new Font("Serif", Font.PLAIN, 20));
             case 1:
                 componente.setHorizontalAlignment(CENTER);
+                componente.setFont(new Font("Serif", Font.PLAIN, 20));
             case 2:
                 componente.setHorizontalAlignment(CENTER);
+                componente.setFont(new Font("Serif", Font.PLAIN, 20));
             case 3:
                 componente.setHorizontalAlignment(CENTER);
+                componente.setFont(new Font("Serif", Font.PLAIN, 20));
             case 4:
                 componente.setHorizontalAlignment(CENTER);
+                componente.setFont(new Font("Serif", Font.PLAIN, 20));
             case 5:
                 componente.setHorizontalAlignment(CENTER);
+                componente.setFont(new Font("Serif", Font.PLAIN, 20));
         }
 
         return componente;

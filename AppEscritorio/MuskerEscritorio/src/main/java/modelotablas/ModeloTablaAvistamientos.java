@@ -4,6 +4,7 @@ import elementos.*;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -17,8 +18,11 @@ public class ModeloTablaAvistamientos extends AbstractTableModel {
     }
 
     private void inicializar() {
+        Calendar c1 = Calendar.getInstance();
+        java.util.Date date=c1.getTime();
+        java.sql.Date datesql=new java.sql.Date(date.getTime());
         for(int i=0;i<10;i++){
-            this.avistamientos.add(new Avistamiento((long)i,"Avistamiento numero "+i,new Date(2020,2,2),"Localizacion "+i,new User("User "+i,"123",new UserType(2,"Worker")), new Especie((long)i, "Especie"+ i,new Clase(i, "Clase "+i))));
+            this.avistamientos.add(new Avistamiento((long)i,"Avistamiento numero "+i,datesql,"Localizacion "+i,new User("User "+i,"123",new UserType(2,"Worker")), new Especie((long)i, "Especie"+ i,new Clase(i, "Clase "+i))));
         }
     }
 

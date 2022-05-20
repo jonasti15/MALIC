@@ -75,6 +75,7 @@ public class DialogoEditarVisita extends JDialog implements ActionListener {
 
     private Component anadirDato(String nombre) {
         JLabel label=new JLabel(nombre);
+        label.setFont(new Font("Serif", Font.PLAIN, 20));
         label.setForeground(COLORLETRA);
         label.setHorizontalAlignment(SwingConstants.CENTER);
         return label;

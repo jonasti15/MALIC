@@ -38,7 +38,7 @@ public class DialogoInfoAvistamiento extends JDialog {
         JPanel panel =new JPanel(new GridLayout(4,1));
         panel.setBackground(COLORFONDO);
         panel.add(anadirDato("ID del animal: "+alerta.getAvistamiento_id()));
-        panel.add(anadirDato("Fecha: "+alerta.getFecha().getTime()));
+        panel.add(anadirDato("Fecha: "+alerta.getFecha().toLocalDate().getYear()+"-"+alerta.getFecha().toLocalDate().getMonthValue()+"-"+alerta.getFecha().toLocalDate().getDayOfMonth()));
         panel.add(anadirDato("Descripcion: "+alerta.getDescripcion()));
         panel.add(anadirDato("Especie: "+alerta.getEspecie().getDescripcion()));
         panel.add(anadirDato("Localizacion: "+alerta.getLocalizacion()));
@@ -48,6 +48,7 @@ public class DialogoInfoAvistamiento extends JDialog {
 
     private Component anadirDato(String nombre) {
         JLabel label=new JLabel(nombre);
+        label.setFont(new Font("Serif", Font.PLAIN, 20));
         label.setHorizontalAlignment(SwingConstants.CENTER);
         label.setForeground(COLORLETRA);
         return label;

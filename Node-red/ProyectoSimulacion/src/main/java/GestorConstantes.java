@@ -30,6 +30,7 @@ public class GestorConstantes {
             connection = factory.newConnection();
             channel = connection.createChannel();
             channel.exchangeDeclare(EXCHANGE_DATOS, "direct", true);
+            channel.queueDeclare(QUEUE_DATOS, true, false, false, null);
             channel.queueBind(QUEUE_DATOS, EXCHANGE_DATOS, "");
 
             MiConsumer consumer = new MiConsumer(channel);

@@ -47,6 +47,7 @@ public class DialogoInfoAlerta extends JDialog {
 
     private Component anadirDato(String nombre) {
         JLabel label=new JLabel(nombre);
+        label.setFont(new Font("Serif", Font.PLAIN, 20));
         label.setHorizontalAlignment(SwingConstants.CENTER);
         label.setForeground(COLORLETRA);
         return label;

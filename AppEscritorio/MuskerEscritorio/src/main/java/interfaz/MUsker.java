@@ -13,7 +13,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class MUsker extends JFrame implements WindowListener{
-
+	private static final Color COLORFONDO = new Color(177,216,183);
+	private static final Color COLORTOOLBAR = new Color(118, 185, 71);
+	private static final Color COLORLETRA = new Color(47, 82, 51);
 	public final static int DEFAULT_WIDTH = 1000;
 	public final static int DEFAULT_HEIGHT = 600;
 	public static Connection conn = null;
@@ -22,9 +24,10 @@ public class MUsker extends JFrame implements WindowListener{
 	public static String pass;
 	private static final String url = "jdbc:mysql://localhost:3306/musker";
 	JScrollPane pDisplay;
-	
+	JPanel alertas;
 	User user;
-	
+	JLabel labelAlertas;
+	int numAlertas=0;
 	public static JButton botonAlerta;
 
 
@@ -36,7 +39,7 @@ public class MUsker extends JFrame implements WindowListener{
 		user = login.getUserLoged();
 		
 		pDisplay = new JScrollPane();
-		pDisplay.setViewportView(new PanelPrincipal(this));
+		pDisplay.setViewportView(crearPanel());
 		pDisplay.setBorder(null);
 		
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
@@ -57,7 +60,36 @@ public class MUsker extends JFrame implements WindowListener{
 			this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		}
 	}
-	
+
+	private Component crearPanel() {
+		JPanel panel=new JPanel(new BorderLayout(0,0));
+		JScrollPane pPrincipal= new PanelPrincipal(this);
+		alertas=new JPanel(new BorderLayout(20,0));
+		alertas.setBorder(BorderFactory.createEmptyBorder(0,0,0,10));
+		alertas.add(crearLabelAlertas());
+		panel.add(pPrincipal, BorderLayout.CENTER);
+		panel.add(alertas, BorderLayout.NORTH);
+		alertas.setBackground(COLORTOOLBAR);
+		return panel;
+	}
+
+	private Component crearLabelAlertas() {
+		labelAlertas=new JLabel(numAlertas+" Alertas");
+		labelAlertas.setFont(new Font("Serif", Font.BOLD, 20));
+		labelAlertas.setHorizontalAlignment(SwingConstants.CENTER);
+		labelAlertas.setForeground(COLORLETRA);
+		return labelAlertas;
+	}
+	void alertar(){
+		labelAlertas.setForeground(Color.white);
+		alertas.setBackground(Color.red);
+	}
+	void desAlertar(){
+		labelAlertas.setForeground(COLORLETRA);
+		alertas.setBackground(COLORTOOLBAR);
+	}
+
+
 	public static void connectToDB() {
 		try {
 			Class.forName(driver);

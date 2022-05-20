@@ -8,6 +8,7 @@
 		<version>2.6.1</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
+	<packaging>war</packaging>
 	<groupId>com.malic</groupId>
 	<artifactId>musker</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
@@ -28,6 +29,11 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+				<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>	
 		</dependency>
 
 		<dependency>
@@ -66,6 +72,7 @@
     </dependencies>
 
 	<build>
+		<finalName>musker</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

@@ -101,11 +101,13 @@ public class UserController {
                 DecodedJWT decodedJWT = verifier.verify(refresh_token);
                 String username = decodedJWT.getSubject();
                 User user = userDao.getUserByUsername(username);
+                List<String> authorities = new ArrayList<>();
+                authorities.add("ROLE_" + user.getTipo_usuario().getDescripcion());
                 String access_token = JWT.create()
                         .withSubject(user.getUsername())
                         .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
                         .withIssuer(request.getRequestURL().toString())
-                        .withClaim("roles", user.getTipoUsuario().getDescripcion())
+                        .withClaim("roles", authorities)
                         .sign(algorithm);
 
                 Map<String, String> tokens = new HashMap<>();

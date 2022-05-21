@@ -28,6 +28,7 @@ public class VisitaController {
             error = "Error inesperado";
         }else{
             returnStr = "/visitas";
+            model.addAttribute("navPage", "visitas");
             model.addAttribute("visitas", visitas);
         }
 

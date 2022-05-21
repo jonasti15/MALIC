@@ -29,7 +29,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final static String[] ANY_USER_MATCHERS = {
             "/user/refresh", "/user/add", "/animals/**", "/estancias/**", "/consejos/**", "/especies/**", "/news/**",
-            "/visitas/**", "/reservas/**"};
+            "/visitas/**", "/reservas/**", "/avistamientos/**"};
 
     final static int REMEMBER_ME_TIME = 86400;  //1 day
 

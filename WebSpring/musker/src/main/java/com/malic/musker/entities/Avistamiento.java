@@ -25,22 +25,17 @@ public class Avistamiento {
     private String localizacion;
 
     @ManyToOne
-    @JoinColumn(name = "usuario_id", nullable = true)
-    private User user;
-
-    @ManyToOne
     @JoinColumn(name = "especie_id", nullable = false)
     private Especie especie;
 
     public Avistamiento() {
     }
 
-    public Avistamiento(Long avistamiento_id, String descripcion, Date fecha, String localizacion, User user, Especie especie) {
+    public Avistamiento(Long avistamiento_id, String descripcion, Date fecha, String localizacion, Especie especie) {
         this.avistamiento_id = avistamiento_id;
         this.descripcion = descripcion;
         this.fecha = fecha;
         this.localizacion = localizacion;
-        this.user = user;
         this.especie = especie;
     }
 
@@ -74,14 +69,6 @@ public class Avistamiento {
 
     public void setLocalizacion(String localizacion) {
         this.localizacion = localizacion;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public Especie getEspecie() {

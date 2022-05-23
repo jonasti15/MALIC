@@ -57,8 +57,21 @@ public class RestController {
 
         HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
 
-        ResponseEntity<Object[]> responseEntity = restTemplate.exchange(url, HttpMethod.GET, requestEntity, Object[].class);
-        Object[] objects = responseEntity.getBody();
+        Object[] objects = new Object[0];
+        try {
+            ResponseEntity<Object[]> responseEntity = restTemplate.exchange(url, HttpMethod.GET, requestEntity, Object[].class);
+            objects = responseEntity.getBody();
+        } catch (Exception e) {
+            if (e.getMessage().contains("Token has expired")) {
+                if(refreshAccessToken().equals("")){
+                    HttpHeaders newHeaders = new HttpHeaders();
+                    newHeaders.set(HttpHeaders.AUTHORIZATION, "Bearer " + RestController.getRequest().getSession().getAttribute("access_token").toString());
+                    return RestController.RESTgetRequestListHeaders(url.substring(PATH.length()), newHeaders, returnClass);
+                }else{
+                    throw new CustomException();
+                }
+            }
+        }
 
         ObjectMapper mapper = new ObjectMapper();
         return Arrays.stream(objects)

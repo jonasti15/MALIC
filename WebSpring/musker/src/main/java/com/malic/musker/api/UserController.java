@@ -15,6 +15,8 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.security.SecureRandom;
+
 @Controller
 @RequestMapping(path="/user")
 public class UserController {
@@ -29,6 +31,7 @@ public class UserController {
         BCryptPasswordEncoder encrypt = new BCryptPasswordEncoder(SecurityConfiguration.ENCRYPT_STRENGTH);
         user.setPassword(encrypt.encode(request.getParameter("password")));
         user.setTipo_usuario(new UserType(3, "USUARIO"));
+        setRandomProfile(user);
 
         if(!passwordsMatch(request)){
             error = "Password mismatch ";
@@ -115,6 +118,7 @@ public class UserController {
 
         user.setFecha_nacimiento(bdUser.getFecha_nacimiento());
         user.setTipo_usuario(bdUser.getTipo_usuario());
+        user.setProfileImg(bdUser.getProfileImg());
 
         if(error.length() == 0){
             String uri = "/user/add";
@@ -151,6 +155,12 @@ public class UserController {
             match = false;
         }
         return match;
+    }
+
+    private void setRandomProfile(User user) {
+        SecureRandom rand = new SecureRandom();
+        int image = rand.nextInt(13);
+        user.setProfileImg("/images/userProfiles/"+image+".png");
     }
 
 }

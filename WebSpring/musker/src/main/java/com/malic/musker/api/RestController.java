@@ -2,7 +2,6 @@ package com.malic.musker.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.malic.musker.exception.CustomException;
-import com.malic.musker.exception.CustomExceptionController;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.http.*;
@@ -11,7 +10,6 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.naming.AuthenticationException;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.List;

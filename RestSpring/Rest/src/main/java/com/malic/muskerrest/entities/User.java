@@ -28,6 +28,8 @@ public class User {
     private String username;
     @Column(name = "password")
     private String password;
+    @Column(name = "profile_img")
+    private String profileImg;
 
     @ManyToOne
     @JoinColumn(name = "tipo_usuario_id", nullable = false)
@@ -47,6 +49,7 @@ public class User {
         this.username = (String) request.getAttribute("username");
         this.password = String.valueOf(request.getAttribute("password").hashCode());
         this.fecha_nacimiento = (Date) request.getAttribute("birthDate");
+        this.profileImg = (String) request.getAttribute("profile_img");
     }
 
     public User() {}
@@ -107,8 +110,16 @@ public class User {
         this.fecha_nacimiento = fecha_nacimiento;
     }
 
-    public UserType getTipoUsuario() {
-        return tipoUsuario;
+    public String getProfileImg() {
+        return profileImg;
+    }
+
+    public void setProfileImg(String profileImg) {
+        this.profileImg = profileImg;
+    }
+
+    public UserType getTipo_usuario() {
+        return tipo_usuario;
     }
 
     public void setTipoUsuario(UserType tipoUsuario) {

@@ -1,5 +1,6 @@
 package com.malic.musker.api;
 
+import com.google.gson.Gson;
 import com.malic.musker.entities.Avistamiento;
 import com.malic.musker.entities.Especie;
 import org.springframework.http.HttpHeaders;
@@ -11,9 +12,10 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.*;
 import java.util.Date;
 import java.util.List;
 
@@ -46,16 +48,42 @@ public class AvistamientoController {
 
     @PostMapping(path="/foto")
     public ModelAndView getSpecieWithImg(Model model,
-                                         @RequestParam(value = "img", required = true) MultipartFile file) {
+                                         @RequestParam(value = "img", required = true) MultipartFile file) throws IOException {
         String returnStr = "redirect:/avistamientos/add";
 
-        byte [] byteArr= new byte[0];
-        try {
-            byteArr = file.getBytes();
-            InputStream inputStream = new ByteArrayInputStream(byteArr);
-        } catch (IOException e) {
-            e.printStackTrace();
+        BufferedImage bImage = ImageIO.read(file.getInputStream());
+        Image img = bImage.getScaledInstance(255, 255, Image.SCALE_DEFAULT);
+        BufferedImage bOutputImg = new BufferedImage(255, 255, BufferedImage.TYPE_INT_RGB);
+        bOutputImg.getGraphics().drawImage(img, 0, 0, null);
+        int w = bOutputImg.getWidth();
+        int h = bOutputImg.getHeight();
+
+        int[] dataBuffInt = bOutputImg.getRGB(0, 0, w, h, null, 0, w);
+
+        int [][][] colors = new int[255][255][3];
+
+        int index = 0;
+        int i = 0;
+        int j = 0;
+        int k = 0;
+
+        for(Integer in : dataBuffInt){
+            Color c = new Color(in);
+            colors[k][j][0] = c.getRed();
+            colors[k][j][1] = c.getGreen();
+            colors[k][j][2] = c.getBlue();
+
+            j++;
+
+            if(j == 255){
+                j = 0;
+                k++;
+            }
         }
+
+        Gson gson = new Gson();
+        String json = gson.toJson(colors, int[][][].class);
+        String mensaje = "{'data':" + json+"}";
 
         //Aqui le paso al rest de IA el array de bytes y me devuelve el nombre de la especie
         String response = "Gorrion";

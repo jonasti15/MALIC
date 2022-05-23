@@ -80,7 +80,7 @@ public class UserController {
             model.addAttribute("error", error);
             return "userProfile";
         }else{
-            return "/";
+            return "index";
         }
     }
 

@@ -117,12 +117,12 @@ public class UserController {
                 response.setContentType(APPLICATION_JSON_VALUE);
                 new ObjectMapper().writeValue(response.getOutputStream(), tokens);
             }catch(Exception e){
-                System.out.println("Error logging in: " + e.getMessage());
+                System.out.println("Refresh token expired: " + e.getMessage());
                 response.setHeader("error", e.getMessage());
                 response.setStatus(HttpServletResponse.SC_FORBIDDEN);
 
                 Map<String, String> error = new HashMap<>();
-                error.put("error_message", e.getMessage());
+                error.put("error_message", "Refresh token expired");
 
                 response.setContentType(APPLICATION_JSON_VALUE);
                 new ObjectMapper().writeValue(response.getOutputStream(), error);
@@ -130,13 +130,6 @@ public class UserController {
         }else{
             throw new RuntimeException("Refresh Token is missing");
         }
-    }
-
-    @GetMapping("/prueba")
-    public void pruebas(){
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
-        System.out.println("hola");
     }
 
 

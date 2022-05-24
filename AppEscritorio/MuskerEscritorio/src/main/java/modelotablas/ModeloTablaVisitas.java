@@ -17,13 +17,6 @@ public class ModeloTablaVisitas  extends AbstractTableModel {
 
     public ModeloTablaVisitas() {
         visitas = new ArrayList<>();
-        inicializar();
-    }
-
-    private void inicializar() {
-        /*for(int i=0;i<100;i++){
-            this.visitas.add(new Visita((long)i,new Date(LocalDate.now().getYear(),LocalDate.now().getMonthValue(), LocalDate.now().getDayOfMonth()), new User("User "+i,"123",new UserType(2,"Worker"))));
-        }*/
     }
 
     public List<Visita> getVisitas() {

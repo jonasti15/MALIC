@@ -87,8 +87,8 @@ public class Animal {
         switch (columna){
             case 0: return animal_id;
             case 1: return getEspecie().getDescripcion();
-            case 2: return getEstado().getDescripcion();
-            case 3: return getRecinto_id().getRecinto_id();
+            case 2: return getRecinto_id().getRecinto_id();
+            case 3: return getEstado().getDescripcion();
             default: return null;
         }
     }
@@ -97,8 +97,8 @@ public class Animal {
         switch (indice){
             case 0: return Integer.class;
             case 1: return String.class;
-            case 2: return String.class;
-            case 3: return Integer.class;
+            case 2: return Integer.class;
+            case 3: return String.class;
             default: return String.class;
         }
     }

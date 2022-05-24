@@ -28,9 +28,7 @@ public class RenderTablaAvistamientos extends DefaultTableCellRenderer {
             case 4:
                 componente.setHorizontalAlignment(CENTER);
                 componente.setFont(new Font("Serif", Font.PLAIN, 20));
-            case 5:
-                componente.setHorizontalAlignment(CENTER);
-                componente.setFont(new Font("Serif", Font.PLAIN, 20));
+
         }
 
         return componente;

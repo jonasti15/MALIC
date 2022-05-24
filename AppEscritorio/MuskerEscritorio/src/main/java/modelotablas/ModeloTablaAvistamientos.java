@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 public class ModeloTablaAvistamientos extends AbstractTableModel {
-    final static String [] NOMBRE_COLUMNAS = {"ID", "Fecha", "Descripcion", "Especie","Localizacion","Usuario"};
+    final static String [] NOMBRE_COLUMNAS = {"ID", "Fecha", "Descripcion", "Especie","Localizacion"};
     List<Avistamiento> avistamientos;
 
     public ModeloTablaAvistamientos(List<Avistamiento>lista) {

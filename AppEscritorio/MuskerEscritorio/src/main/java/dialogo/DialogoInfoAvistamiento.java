@@ -4,6 +4,7 @@ import elementos.Avistamiento;
 
 import javax.swing.*;
 import java.awt.*;
+import java.text.SimpleDateFormat;
 
 public class DialogoInfoAvistamiento extends JDialog {
     public final static int DEFAULT_WIDTH = 900;
@@ -35,14 +36,14 @@ public class DialogoInfoAvistamiento extends JDialog {
     }
 
     private Component crearPanelInfo() {
+
         JPanel panel =new JPanel(new GridLayout(4,1));
         panel.setBackground(COLORFONDO);
         panel.add(anadirDato("ID del animal: "+alerta.getAvistamiento_id()));
-        panel.add(anadirDato("Fecha: "+alerta.getFecha().toLocalDate().getYear()+"-"+alerta.getFecha().toLocalDate().getMonthValue()+"-"+alerta.getFecha().toLocalDate().getDayOfMonth()));
+        panel.add(anadirDato("Fecha: " + alerta.getFechaString()));
         panel.add(anadirDato("Descripcion: "+alerta.getDescripcion()));
         panel.add(anadirDato("Especie: "+alerta.getEspecie().getDescripcion()));
         panel.add(anadirDato("Localizacion: "+alerta.getLocalizacion()));
-        panel.add(anadirDato("Usuario: "+alerta.getUser().getNombre()));
         return panel;
     }
 

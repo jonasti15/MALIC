@@ -1,6 +1,7 @@
 package interfaz;
 
 import RabbitMQ.HiloConsumidor;
+import RabbitMQ.HiloConsumidorAvistamientos;
 import controladores.ControladorAlertas;
 import dialogo.DialogoLogin;
 import elementos.User;
@@ -64,7 +65,9 @@ public class MUsker extends JFrame implements WindowListener{
 			this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 			HiloConsumidor consumidor=new HiloConsumidor(controladorAlertas);
+			HiloConsumidorAvistamientos consumidorAvistamientos=new HiloConsumidorAvistamientos(controladorAlertas);
 			consumidor.start();
+			consumidorAvistamientos.start();
 		}
 	}
 

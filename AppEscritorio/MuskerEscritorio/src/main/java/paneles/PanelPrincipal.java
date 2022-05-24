@@ -1,5 +1,6 @@
 package paneles;
 
+import controladores.ControladorAlertas;
 import controladores.ControladorAnimales;
 import controladores.ControladorPantallaPrincipal;
 import controladores.ControladorVisitas;
@@ -15,14 +16,16 @@ public class PanelPrincipal extends JScrollPane{
 	PanelMenu menu;
 	ControladorAnimales controlador;
 	ControladorVisitas controladorVisitas;
-	public PanelPrincipal(MUsker mUsker) {
+	ControladorAlertas controladorAlertas;
+	public PanelPrincipal(MUsker mUsker, ControladorAlertas controladorAlertas) {
 		super(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		this.setBackground(Color.white);
 		this.setBorder(null);
 		this.getVerticalScrollBar().setUnitIncrement(20);
 		this.controlador=new ControladorAnimales(mUsker, this);
 		this.controladorVisitas=new ControladorVisitas(mUsker, this);
-		this.controladorPantallaPrincipal =new ControladorPantallaPrincipal(this, mUsker, controlador, controladorVisitas);
+		this.controladorAlertas=controladorAlertas;
+		this.controladorPantallaPrincipal =new ControladorPantallaPrincipal(this, mUsker, controlador, controladorVisitas, controladorAlertas);
 		this.menu=new PanelMenu(controladorPantallaPrincipal);
 
 		this.setViewportView(menu);

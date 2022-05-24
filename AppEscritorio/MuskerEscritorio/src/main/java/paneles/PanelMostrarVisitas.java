@@ -61,6 +61,7 @@ public class PanelMostrarVisitas extends JPanel {
         this.colum=new ModeloColumnasTablaVisitas(renderer);
 
         tabla = new JTable(tablaModel, colum);
+        tabla.setBackground(Color.white);
         tabla.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {

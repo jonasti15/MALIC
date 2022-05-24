@@ -16,7 +16,6 @@ import java.util.List;
 import java.util.concurrent.TimeoutException;
 
 public class HiloConsumidorAvistamientos extends Thread{
-    List<Constantes> constantesList;
     ConnectionFactory factory;
     ControllerJSON controllerJSON;
     ControladorAlertas controladorAlertas;
@@ -24,7 +23,6 @@ public class HiloConsumidorAvistamientos extends Thread{
     private final static String EXCHANGE_DATOS = "avistamiento";
     public HiloConsumidorAvistamientos(ControladorAlertas controladorAlertas){
         this.controladorAlertas=controladorAlertas;
-        constantesList = new ArrayList<>();
         factory = new ConnectionFactory();
         controllerJSON = new ControllerJSON();
         factory.setHost("localhost");
@@ -80,12 +78,6 @@ public class HiloConsumidorAvistamientos extends Thread{
                                        AMQP.BasicProperties properties, byte[] body) {
 
                 String message = new String(body, StandardCharsets.UTF_8);
-
-                /*Constantes constante=controllerJSON.generateConstantes(message);
-                Animal animalAfectado=controladorAlertas.getAnimal(constante.getAnimalId());
-                TipoEstado estado= controladorAlertas.getEstado();
-                Alerta alerta=new Alerta(animalAfectado.getAnimal_id(), animalAfectado.getEspecie(),  );
-                System.out.println("recibido: " + message);*/
                 Avistamiento avistamiento = controllerJSON.generateAvistamiento(message);
                 controladorAlertas.avistamientoHandler(avistamiento);
                 System.out.println("Avistamiento");

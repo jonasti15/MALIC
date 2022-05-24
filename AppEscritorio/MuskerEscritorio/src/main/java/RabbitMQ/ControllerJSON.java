@@ -1,8 +1,8 @@
 package RabbitMQ;
 
 import com.google.gson.Gson;
-import elementos.Avistamiento;
-import elementos.Especie;
+import controladores.ControladorAlertas;
+import elementos.*;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -32,7 +32,27 @@ public class ControllerJSON {
         return avistamiento;
     }
 
-    public String generateConstantesJSON(Constantes constantes) {
-        return gson.toJson(constantes);
+    public Alerta generateAlerta(String json, ControladorAlertas controladorAlertas) {
+        JSONObject obj = null;
+        Alerta alerta = new Alerta();
+        try {
+            obj = new JSONObject(json);
+            alerta.setAnimal_id(obj.getLong("animalId"));
+            Animal animal=controladorAlertas.getAnimal(alerta.getAnimal_id());
+
+            TipoEstado estadoactual= controladorAlertas.getEstado(Long.valueOf(obj.getString("estadoActual")));
+
+
+            alerta.setEstado(animal.getEstado());
+            alerta.setEstadoNuevo(estadoactual);
+            alerta.setRecinto_id(animal.getRecinto_id());
+            alerta.setEspecie(animal.getEspecie());
+            animal.setEstado(estadoactual);
+            controladorAlertas.editarAnimal(animal.getAnimal_id(), animal.getEspecie(), animal.getEstado(), animal.getRecinto_id());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return alerta;
     }
 }

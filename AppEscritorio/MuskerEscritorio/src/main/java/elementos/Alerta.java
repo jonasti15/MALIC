@@ -5,13 +5,42 @@ public class Alerta {
     Long animal_id;
     Especie especie;
     TipoEstado estado;
+    TipoEstado estadoNuevo;
     Recinto recinto_id;
 
-    public Alerta(Long animal_id, Especie especie, TipoEstado estado, Recinto recinto_id) {
+    public Alerta(Long animal_id, Especie especie, TipoEstado estado,TipoEstado estadoNuevo,  Recinto recinto_id) {
         this.animal_id = animal_id;
         this.especie = especie;
         this.estado = estado;
+        this.estadoNuevo=estadoNuevo;
         this.recinto_id = recinto_id;
+    }
+
+    public Alerta() {
+    }
+
+    public void setAnimal_id(Long animal_id) {
+        this.animal_id = animal_id;
+    }
+
+    public void setEspecie(Especie especie) {
+        this.especie = especie;
+    }
+
+    public void setEstado(TipoEstado estado) {
+        this.estado = estado;
+    }
+
+    public void setRecinto_id(Recinto recinto_id) {
+        this.recinto_id = recinto_id;
+    }
+
+    public TipoEstado getEstadoNuevo() {
+        return estadoNuevo;
+    }
+
+    public void setEstadoNuevo(TipoEstado estadoNuevo) {
+        this.estadoNuevo = estadoNuevo;
     }
 
     public Long getAnimal_id() {
@@ -33,7 +62,7 @@ public class Alerta {
         switch (columna){
             case 0: return animal_id;
             case 1: return getEspecie().getDescripcion();
-            case 2: return getEstado().getDescripcion();
+            case 2: return getEstadoNuevo().getDescripcion();
             case 3: return getRecinto_id().getRecinto_id();
             default: return null;
         }

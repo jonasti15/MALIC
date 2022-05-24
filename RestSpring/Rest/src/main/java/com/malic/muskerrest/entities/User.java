@@ -118,8 +118,8 @@ public class User {
         this.profileImg = profileImg;
     }
 
-    public UserType getTipo_usuario() {
-        return tipo_usuario;
+    public UserType getTipoUsuario() {
+        return tipoUsuario;
     }
 
     public void setTipoUsuario(UserType tipoUsuario) {

@@ -1,4 +1,4 @@
-package com.malic.muskerrest.comunication;
+package com.malic.musker.comunication;
 
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
@@ -9,8 +9,8 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class MQConfig {
-    public static final String QUEUE_DATOS = "colaDatos";
-    public final static String EXCHANGE_DATOS = "simuladorAnimales";
+    public static final String QUEUE_DATOS = "colaAvistamientos";
+    public final static String EXCHANGE_DATOS = "avistamiento";
 
     @Bean
     public Queue queue(){

@@ -102,7 +102,7 @@ public class UserController {
                 String username = decodedJWT.getSubject();
                 User user = userDao.getUserByUsername(username);
                 List<String> authorities = new ArrayList<>();
-                authorities.add("ROLE_" + user.getTipo_usuario().getDescripcion());
+                authorities.add("ROLE_" + user.getTipoUsuario().getDescripcion());
                 String access_token = JWT.create()
                         .withSubject(user.getUsername())
                         .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))

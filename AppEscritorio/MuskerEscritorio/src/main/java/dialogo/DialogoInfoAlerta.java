@@ -57,11 +57,12 @@ public class DialogoInfoAlerta extends JDialog implements ActionListener {
     }
 
     private Component crearPanelInfo() {
-        JPanel panel =new JPanel(new GridLayout(4,1));
+        JPanel panel =new JPanel(new GridLayout(5,1));
         panel.setBackground(COLORFONDO);
         panel.add(anadirDato("ID del animal: "+alerta.getAnimal_id()));
         panel.add(anadirDato("Especie: "+alerta.getEspecie().getDescripcion()));
-        panel.add(anadirDato("Estado: "+alerta.getEstado()));
+        panel.add(anadirDato("Estado anterior: "+alerta.getEstado()));
+        panel.add(anadirDato("Estado actual: "+alerta.getEstadoNuevo()));
         panel.add(anadirDato("Recinto: "+alerta.getRecinto_id().getRecinto_id()+" "+alerta.getRecinto_id().getDescripcion()));
 
         return panel;

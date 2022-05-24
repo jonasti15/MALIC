@@ -7,10 +7,7 @@ import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.json.JSONConfiguration;
-import elementos.Alerta;
-import elementos.Animal;
-import elementos.Avistamiento;
-import elementos.Especie;
+import elementos.*;
 import interfaz.MUsker;
 
 import javax.swing.*;
@@ -42,7 +39,7 @@ public class ControladorAlertas {
     }
 
 
-    public Animal getAnimal(int id) {
+    public Animal getAnimal(Long id) {
         WebResource webResource = client.resource(REST_SERVICE_URL)
                 .path("/animals/animal")
                 .path(String.valueOf(id));
@@ -96,6 +93,34 @@ public class ControladorAlertas {
         this.listaAvistamientos.add(avistamiento);
         if(!this.ventana.isAlertado()){
             this.ventana.alertar();
+        }
+    }
+
+    public TipoEstado getEstado(Long id) {
+        WebResource webResource = client.resource(REST_SERVICE_URL)
+                .path("/tipoestado/type")
+                .path(String.valueOf(id));
+        ClientResponse clientResponse = webResource.accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
+
+        if (clientResponse.getStatus() == Response.Status.OK.getStatusCode()) {
+            return clientResponse.getEntity(new GenericType<TipoEstado>(){});
+        } else {
+            return null;
+        }
+    }
+    public void editarAnimal(Long animal_id, Especie especie, TipoEstado estado, Recinto recinto) {
+        Animal animal=new Animal();
+        animal.setAnimal_id(animal_id);
+        animal.setEspecie(especie);
+        animal.setEstado(estado);
+        animal.setRecinto_id(recinto);
+        WebResource webResource = client.resource(REST_SERVICE_URL).path("/animals/edit");
+        ClientResponse clientResponse = webResource.type(MediaType.APPLICATION_JSON).post(ClientResponse.class, animal);
+        if (clientResponse.getStatus() == Response.Status.OK.getStatusCode()) {
+            System.out.println("Se ha editado un objeto.");
+
+        } else {
+            System.out.println("La llamada no ha sido correcta.");
         }
     }
 }

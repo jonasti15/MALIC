@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.concurrent.TimeoutException;
 
 public class HiloConsumidor extends Thread{
-    List<Constantes> constantesList;
     ConnectionFactory factory;
     ControllerJSON controllerJSON;
     ControladorAlertas controladorAlertas;
@@ -21,7 +20,6 @@ public class HiloConsumidor extends Thread{
     private final static String EXCHANGE_DATOS = "alarma";
     public HiloConsumidor(ControladorAlertas controladorAlertas){
         this.controladorAlertas=controladorAlertas;
-        constantesList = new ArrayList<>();
         factory = new ConnectionFactory();
         controllerJSON = new ControllerJSON();
         factory.setHost("localhost");
@@ -76,16 +74,11 @@ public class HiloConsumidor extends Thread{
             public void handleDelivery(String consumerTag, Envelope envelope,
                                        AMQP.BasicProperties properties, byte[] body) {
 
-                /* String message = new String(body, StandardCharsets.UTF_8);
-                Constantes constante=controllerJSON.generateConstantes(message);
-                Animal animalAfectado=controladorAlertas.getAnimal(constante.getAnimalId());
-                TipoEstado estado= controladorAlertas.getEstado();
-                Alerta alerta=new Alerta(animalAfectado.getAnimal_id(), animalAfectado.getEspecie(),  );
-                System.out.println("recibido: " + message);*/
-                Animal animal=controladorAlertas.getAnimal(1);
-                Alerta alerta= new Alerta(animal.getAnimal_id(), animal.getEspecie(),animal.getEstado(), animal.getRecinto_id());
+                 String message = new String(body, StandardCharsets.UTF_8);
+                Alerta alerta=controllerJSON.generateAlerta(message, controladorAlertas);
+
                 controladorAlertas.alertaHandler(alerta);
-                System.out.println("Alerta");
+                System.out.println("Alerta: "+ message);
             }
         }
 }

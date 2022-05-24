@@ -32,7 +32,7 @@ public class PanelMostrarAvistamientos extends JScrollPane {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 int row = tabla.rowAtPoint(evt.getPoint());
                 Avistamiento alerta=tablaModel.getAvistamiento(row);
-                DialogoInfoAvistamiento dialogoInfoAvistamiento=new DialogoInfoAvistamiento(MUsker,"Avistamiento: "+alerta.getEspecie(),false, alerta);
+                DialogoInfoAvistamiento dialogoInfoAvistamiento=new DialogoInfoAvistamiento(MUsker,"Avistamiento: "+alerta.getEspecie(),false, alerta,controlador );
             }
         });
         tabla.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);

@@ -66,7 +66,7 @@ public class PanelAlertas extends JPanel implements ActionListener {
 
         double tamanopantalla= Toolkit.getDefaultToolkit().getScreenSize().getWidth();
         double tamanoseparador=(tamanopantalla/2)-40;
-        pagina=new JLabel("Alertas");
+        pagina=new JLabel("Alertas     ");
         pagina.setForeground(COLORLETRA);
         barraBotones.add(pagina);
         barraBotones.addSeparator(new Dimension((int) tamanoseparador,0));
@@ -115,7 +115,7 @@ public class PanelAlertas extends JPanel implements ActionListener {
                 this.botonMostrarAlertas.setEnabled(false);
                 panelMostrarAlertas= new PanelMostrarAlertas(controladorAlertas);
                 this.panelContenido.setViewportView(panelMostrarAlertas);
-                pagina.setText("Alertas");
+                pagina.setText("Alertas     ");
                 break;
 
         }

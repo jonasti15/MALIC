@@ -31,7 +31,7 @@ public class MUsker extends JFrame implements WindowListener{
 	User user;
 	JLabel labelAlertas;
 	ControladorAlertas controladorAlertas;
-	int numAlertas=0;
+	boolean  alertado;
 	public static JButton botonAlerta;
 
 
@@ -40,7 +40,7 @@ public class MUsker extends JFrame implements WindowListener{
 	public MUsker() {
 		super("MUsker");
 		DialogoLogin login = new DialogoLogin(this, "MUsker Login", true);
-
+		this.alertado=false;
 		user = login.getUserLoged();
 		this.controladorAlertas=new ControladorAlertas(this);
 		pDisplay = new JScrollPane();
@@ -63,7 +63,6 @@ public class MUsker extends JFrame implements WindowListener{
 			this.setBackground(new Color(177,216,183));
 			this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 			this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
 			HiloConsumidor consumidor=new HiloConsumidor(controladorAlertas);
 			HiloConsumidorAvistamientos consumidorAvistamientos=new HiloConsumidorAvistamientos(controladorAlertas);
 			consumidor.start();
@@ -81,12 +80,12 @@ public class MUsker extends JFrame implements WindowListener{
 		this.labelAlertas = labelAlertas;
 	}
 
-	public int getNumAlertas() {
-		return numAlertas;
+	public boolean isAlertado() {
+		return alertado;
 	}
 
-	public void setNumAlertas(int numAlertas) {
-		this.numAlertas = numAlertas;
+	public void setAlertado(boolean alertado) {
+		this.alertado = alertado;
 	}
 
 	private Component crearPanel() {
@@ -102,19 +101,24 @@ public class MUsker extends JFrame implements WindowListener{
 	}
 
 	private Component crearLabelAlertas() {
-		labelAlertas=new JLabel(numAlertas+" Alertas");
+		labelAlertas=new JLabel("No hay alertas");
 		labelAlertas.setFont(new Font("Serif", Font.BOLD, 20));
 		labelAlertas.setHorizontalAlignment(SwingConstants.CENTER);
 		labelAlertas.setForeground(COLORLETRA);
+
 		return labelAlertas;
 	}
-	public void alertar(){
-		labelAlertas.setForeground(Color.white);
+	synchronized public void alertar(){
+		alertado=true;
 		alertas.setBackground(Color.red);
+		labelAlertas.setForeground(Color.white);
+		labelAlertas.setText("Alerta");
 	}
-	public void desAlertar(){
-		labelAlertas.setForeground(COLORLETRA);
+	 synchronized public void desAlertar(){
+		alertado=false;
 		alertas.setBackground(COLORTOOLBAR);
+		labelAlertas.setForeground(COLORLETRA);
+		labelAlertas.setText("No hay alertas");
 	}
 
 

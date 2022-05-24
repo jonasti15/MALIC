@@ -73,27 +73,29 @@ public class ControladorAlertas {
 
     public void alertaHandler(Alerta alerta) {
         this.listaAlertas.add(alerta);
-        String [] palabras =this.ventana.getLabelAlertas().getText().split(" ");
-        int num= listaAlertas.size();
-        this.ventana.getLabelAlertas().setText(num+" "+palabras[1]);
-        this.ventana.alertar();
+        if(!this.ventana.isAlertado()){
+            this.ventana.alertar();
+        }
+
     }
 
     public void quitarAlerta(Alerta alerta) {
         this.listaAlertas.remove(alerta);
-        String [] palabras =this.ventana.getLabelAlertas().getText().split(" ");
-        int num= listaAlertas.size();
-        this.ventana.getLabelAlertas().setText(num+" "+palabras[1]);
-        if(num==0){
+        if(this.listaAvistamientos.size()+this.listaAlertas.size()==0){
+            this.ventana.desAlertar();
+        }
+    }
+    public void quitarAvistamiento(Avistamiento avistamiento) {
+        this.listaAvistamientos.remove(avistamiento);
+        if(this.listaAvistamientos.size()+this.listaAlertas.size()==0){
             this.ventana.desAlertar();
         }
     }
 
     public void avistamientoHandler(Avistamiento avistamiento) {
         this.listaAvistamientos.add(avistamiento);
-        String [] palabras =this.ventana.getLabelAlertas().getText().split(" ");
-        int num= listaAlertas.size();
-        this.ventana.getLabelAlertas().setText(num+" "+palabras[1]);
-        this.ventana.alertar();
+        if(!this.ventana.isAlertado()){
+            this.ventana.alertar();
+        }
     }
 }

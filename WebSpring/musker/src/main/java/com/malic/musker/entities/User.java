@@ -35,10 +35,10 @@ public class User {
 
     @ManyToOne
     @JoinColumn(name = "tipo_usuario_id", nullable = false)
-    private UserType tipo_usuario;
+    private UserType tipoUsuario;
 
     public User(HttpServletRequest request){
-        this.tipo_usuario = new UserType(1, "USER");
+        this.tipoUsuario = new UserType(1, "USER");
         this.nombre = (String) request.getAttribute("name");
         this.apellido = (String) request.getAttribute("surname");
         this.email = (String) request.getAttribute("email");
@@ -114,11 +114,11 @@ public class User {
         this.profileImg = profileImg;
     }
 
-    public UserType getTipo_usuario() {
-        return tipo_usuario;
+    public UserType getTipoUsuario() {
+        return tipoUsuario;
     }
 
-    public void setTipo_usuario(UserType tipo_usuario) {
-        this.tipo_usuario = tipo_usuario;
+    public void setTipoUsuario(UserType tipoUsuario) {
+        this.tipoUsuario = tipoUsuario;
     }
 }

@@ -30,7 +30,7 @@ public class UserController {
 
         BCryptPasswordEncoder encrypt = new BCryptPasswordEncoder(SecurityConfiguration.ENCRYPT_STRENGTH);
         user.setPassword(encrypt.encode(request.getParameter("password")));
-        user.setTipo_usuario(new UserType(3, "USUARIO"));
+        user.setTipoUsuario(new UserType(3, "USUARIO"));
         setRandomProfile(user);
 
         if(!passwordsMatch(request)){
@@ -117,7 +117,7 @@ public class UserController {
         }
 
         user.setFecha_nacimiento(bdUser.getFecha_nacimiento());
-        user.setTipo_usuario(bdUser.getTipo_usuario());
+        user.setTipoUsuario(bdUser.getTipoUsuario());
         user.setProfileImg(bdUser.getProfileImg());
 
         if(error.length() == 0){

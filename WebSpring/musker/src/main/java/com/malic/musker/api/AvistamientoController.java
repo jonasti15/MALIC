@@ -1,8 +1,10 @@
 package com.malic.musker.api;
 
 import com.google.gson.Gson;
+import com.malic.musker.comunication.MessagePublisher;
 import com.malic.musker.entities.Avistamiento;
 import com.malic.musker.entities.Especie;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +24,9 @@ import java.util.List;
 @Controller
 @RequestMapping("/avistamientos")
 public class AvistamientoController {
+
+    @Autowired
+    MessagePublisher publisher;
 
     @GetMapping(path="/add")
     public String avistamientoForm(Model model,
@@ -123,6 +128,9 @@ public class AvistamientoController {
             avistamiento.setFecha(new Date());
             avistamiento.setEspecie(especie);
             Avistamiento avistamientoCreado = RestController.RESTpostRequest("/avistamientos/add", avistamiento, Avistamiento.class);
+
+            publisher.publishMessage(avistamiento);
+
             returnStr = "redirect:/especies/especie/"+especie.getEspecieId();
         }else{
             returnStr = "redirect:/avistamientos/add?error="+error;

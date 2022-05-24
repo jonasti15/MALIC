@@ -10,6 +10,7 @@ import com.sun.jersey.api.json.JSONConfiguration;
 import elementos.Alerta;
 import elementos.Animal;
 import elementos.Avistamiento;
+import elementos.Especie;
 import interfaz.MUsker;
 
 import javax.swing.*;
@@ -21,11 +22,14 @@ import java.util.List;
 public class ControladorAlertas {
     MUsker ventana;
     List<Alerta>listaAlertas;
+    List<Avistamiento>listaAvistamientos;
     private static final String REST_SERVICE_URL = "http://localhost:8080";
     private Client client;
     public ControladorAlertas(MUsker mUsker) {
         this.ventana=mUsker;
         this.listaAlertas=new ArrayList<>();
+        this.listaAvistamientos=new ArrayList<>();
+
         ClientConfig clientConfig = new DefaultClientConfig();
         clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);  // <----- set the json configuration POJO MAPPING for JSON reponse paring
         client = Client.create(clientConfig);
@@ -33,14 +37,7 @@ public class ControladorAlertas {
 
 
     public List<Avistamiento> getAvistamientos(){
-        WebResource webResource = client.resource(REST_SERVICE_URL)
-                .path("/avistamientos/all");
-        ClientResponse clientResponse = webResource.accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
-        if (clientResponse.getStatus() == Response.Status.OK.getStatusCode()) {
-            return clientResponse.getEntity(new GenericType<List<Avistamiento>>(){});
-        } else {
-            return null;
-        }
+        return listaAvistamientos;
 
     }
 
@@ -53,6 +50,18 @@ public class ControladorAlertas {
 
         if (clientResponse.getStatus() == Response.Status.OK.getStatusCode()) {
             return clientResponse.getEntity(new GenericType<Animal>(){});
+        } else {
+            return null;
+        }
+    }
+    public Especie getEspecie(int id) {
+        WebResource webResource = client.resource(REST_SERVICE_URL)
+                .path("/especies/especie")
+                .path(String.valueOf(id));
+        ClientResponse clientResponse = webResource.accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
+
+        if (clientResponse.getStatus() == Response.Status.OK.getStatusCode()) {
+            return clientResponse.getEntity(new GenericType<Especie>(){});
         } else {
             return null;
         }
@@ -78,5 +87,13 @@ public class ControladorAlertas {
         if(num==0){
             this.ventana.desAlertar();
         }
+    }
+
+    public void avistamientoHandler(Avistamiento avistamiento) {
+        this.listaAvistamientos.add(avistamiento);
+        String [] palabras =this.ventana.getLabelAlertas().getText().split(" ");
+        int num= listaAlertas.size();
+        this.ventana.getLabelAlertas().setText(num+" "+palabras[1]);
+        this.ventana.alertar();
     }
 }

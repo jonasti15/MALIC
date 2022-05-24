@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ModeloTablaAnimales extends AbstractTableModel {
-    final static String [] NOMBRE_COLUMNAS = {"ID", "Especie", "Estado", "Recinto"};
+    final static String [] NOMBRE_COLUMNAS = {"ID", "Especie", "Recinto", "Estado"};
     List<Animal> animales;
 
     public ModeloTablaAnimales() {

@@ -10,15 +10,8 @@ public class ModeloTablaAlertas extends AbstractTableModel {
     final static String [] NOMBRE_COLUMNAS = {"ID", "Especie", "Estado", "Recinto"};
     List<Alerta> alertas;
 
-    public ModeloTablaAlertas() {
-        alertas = new ArrayList<>();
-        inicializar();
-    }
-
-    private void inicializar() {
-        for(int i=0;i<10;i++){
-            this.alertas.add(new Alerta((long)i, new Especie((long)i, "Especie"+ i,new Clase(i, "Clase "+i)), new TipoEstado(i, "Estado "+i), new Recinto(i, "Recinto "+i,i)));
-        }
+    public ModeloTablaAlertas(List<Alerta> alertas) {
+        this.alertas = alertas;
     }
 
     @Override

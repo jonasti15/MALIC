@@ -1,5 +1,7 @@
 package interfaz;
 
+import RabbitMQ.HiloConsumidor;
+import controladores.ControladorAlertas;
 import dialogo.DialogoLogin;
 import elementos.User;
 import paneles.PanelPrincipal;
@@ -27,6 +29,7 @@ public class MUsker extends JFrame implements WindowListener{
 	JPanel alertas;
 	User user;
 	JLabel labelAlertas;
+	ControladorAlertas controladorAlertas;
 	int numAlertas=0;
 	public static JButton botonAlerta;
 
@@ -36,12 +39,13 @@ public class MUsker extends JFrame implements WindowListener{
 	public MUsker() {
 		super("MUsker");
 		DialogoLogin login = new DialogoLogin(this, "MUsker Login", true);
+
 		user = login.getUserLoged();
-		
+		this.controladorAlertas=new ControladorAlertas(this);
 		pDisplay = new JScrollPane();
 		pDisplay.setViewportView(crearPanel());
 		pDisplay.setBorder(null);
-		
+
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		int width = (int)toolkit.getScreenSize().getWidth();
 		int height = (int)toolkit.getScreenSize().getHeight();
@@ -58,12 +62,33 @@ public class MUsker extends JFrame implements WindowListener{
 			this.setBackground(new Color(177,216,183));
 			this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 			this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+			HiloConsumidor consumidor=new HiloConsumidor(controladorAlertas);
+			consumidor.start();
 		}
+	}
+
+
+
+	public JLabel getLabelAlertas() {
+		return labelAlertas;
+	}
+
+	public void setLabelAlertas(JLabel labelAlertas) {
+		this.labelAlertas = labelAlertas;
+	}
+
+	public int getNumAlertas() {
+		return numAlertas;
+	}
+
+	public void setNumAlertas(int numAlertas) {
+		this.numAlertas = numAlertas;
 	}
 
 	private Component crearPanel() {
 		JPanel panel=new JPanel(new BorderLayout(0,0));
-		JScrollPane pPrincipal= new PanelPrincipal(this);
+		JScrollPane pPrincipal= new PanelPrincipal(this, controladorAlertas);
 		alertas=new JPanel(new BorderLayout(20,0));
 		alertas.setBorder(BorderFactory.createEmptyBorder(0,0,0,10));
 		alertas.add(crearLabelAlertas());
@@ -80,11 +105,11 @@ public class MUsker extends JFrame implements WindowListener{
 		labelAlertas.setForeground(COLORLETRA);
 		return labelAlertas;
 	}
-	void alertar(){
+	public void alertar(){
 		labelAlertas.setForeground(Color.white);
 		alertas.setBackground(Color.red);
 	}
-	void desAlertar(){
+	public void desAlertar(){
 		labelAlertas.setForeground(COLORLETRA);
 		alertas.setBackground(COLORTOOLBAR);
 	}

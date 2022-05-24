@@ -1,3 +1,5 @@
+package RabbitMQ;
+
 import java.util.Date;
 
 public class Constantes {
@@ -11,9 +13,8 @@ public class Constantes {
     int presion;
     int temperatura;
     int frrespiracion;
-    String estado;
 
-    public Constantes(Date fecha, float constanteId, float animalId, int latidos, int presion, int temperatura, int frrespiracion, String estado) {
+    public Constantes(Date fecha, float constanteId, float animalId, int latidos, int presion, int temperatura, int frrespiracion) {
         this.fecha = fecha;
         this.constanteId = constanteId;
         this.animalId = animalId;
@@ -21,7 +22,6 @@ public class Constantes {
         this.presion = presion;
         this.temperatura = temperatura;
         this.frrespiracion = frrespiracion;
-        this.estado=estado;
     }
 
     public Constantes() {
@@ -84,14 +84,6 @@ public class Constantes {
         this.frrespiracion = frrespiracion;
     }
 
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-
     @Override
     public String toString() {
         return "Constantes{" +
@@ -100,7 +92,6 @@ public class Constantes {
                 ", presion=" + presion +
                 ", temperatura=" + temperatura +
                 ", frrespiracion=" + frrespiracion +
-                ", estado=" + estado +
                 '}';
     }
 }

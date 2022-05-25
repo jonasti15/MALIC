@@ -114,6 +114,16 @@ public class DialogoEditarVisita extends JDialog implements ActionListener {
                 c1.set(Calendar.YEAR, datePicker.getModel().getYear());
                 java.util.Date date=c1.getTime();
                 Date datesql=new Date(date.getTime());
+
+                if(desc.getText().equals("")||desc==null){
+                    JOptionPane.showMessageDialog(null, "Tienes que rellenar todos los campos!","Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                java.util.Date hoy=new java.util.Date();
+                Date hoySql=new Date(hoy.getTime());
+                if(date.before(hoySql)){
+                    JOptionPane.showMessageDialog(null, "La fecha no puede ser anterior a la de hoy!","Error", JOptionPane.ERROR_MESSAGE);
+                }
                 controlador.editarVisita(this.visita.getVisitaId(),datesql, (User) this.txUser.getSelectedItem(), desc.getText());
                 this.dispose();
                 break;

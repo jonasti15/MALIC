@@ -47,7 +47,7 @@ public class UserController {
             returnStr = "redirect:/login";
             String uri = "/user/add";
             try{
-                user = RestController.RESTpostRequest(uri, user, User.class);
+                user = RestController.RESTpostRequest(uri, new HttpHeaders(), user, User.class);
             }catch (HttpClientErrorException e){
                 if(e.getMessage().contains("username")){
                     error = error + "Username already in use ";
@@ -123,7 +123,7 @@ public class UserController {
         if(error.length() == 0){
             String uri = "/user/add";
             try{
-                user = RestController.RESTpostRequest(uri, user, User.class);
+                user = RestController.RESTpostRequest(uri, new HttpHeaders(), user, User.class);
             }catch (HttpClientErrorException e){
                 if(e.getMessage().contains("username")){
                     error = error + "Username already in use ";

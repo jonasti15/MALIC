@@ -77,8 +77,7 @@ public class RestController {
                 .collect(Collectors.toList());
     }
 
-    public static <T, G> G RESTpostRequest(String requestUrl, T objToSend, Class<G> returnClass) {
-        HttpHeaders headers = new HttpHeaders();
+    public static <T, G> G RESTpostRequest(String requestUrl, HttpHeaders headers, T objToSend, Class<G> returnClass) {
         RestTemplate restTemplate = new RestTemplate();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<T> requestEntity = new HttpEntity<>(objToSend, headers);

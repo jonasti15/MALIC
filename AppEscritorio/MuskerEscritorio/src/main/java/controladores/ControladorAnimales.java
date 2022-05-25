@@ -32,8 +32,8 @@ public class ControladorAnimales  {
     DialogoAnadirAnimal dialogoAnadirAnimal;
     DialogoEditarAnimal dialogoEditarAnimal;
     private static final String REST_SERVICE_URL = "http://localhost:8080";
-    private  Client client;
     PanelPrincipal panel;
+    private  Client client;
     public ControladorAnimales(JFrame mUsker, PanelPrincipal panelPrincipal) {
         this.ventana=mUsker;
         this.panel=panelPrincipal;
@@ -191,6 +191,7 @@ public class ControladorAnimales  {
         animal.setRecinto_id(recinto);
         WebResource webResource = client.resource(REST_SERVICE_URL).path("/animals/edit");
         ClientResponse clientResponse = webResource.type(MediaType.APPLICATION_JSON).post(ClientResponse.class, animal);
+
         panel.getControladorPantallaPrincipal().recargarAnimales();
         if (clientResponse.getStatus() == Response.Status.OK.getStatusCode()) {
             System.out.println("Se ha editado un objeto.");

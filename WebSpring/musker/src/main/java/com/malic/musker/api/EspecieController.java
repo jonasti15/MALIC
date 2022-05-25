@@ -30,8 +30,8 @@ public class EspecieController {
         List<Consejo> consejos = RestController.RESTgetRequestListHeaders("/consejos/especie/" + especieId, new HttpHeaders(), Consejo.class);
 
         //Creo la imagen en el proyecto
-        if(!ImageMethods.imgExists(especie.getPath())){
-            ImageMethods.createImgWithBytes(especie.getPath());
+        if(!imgMethods.imgExists(especie.getPath())){
+            imgMethods.createImgWithBytes(especie.getPath());
         }
 
         if(especie == null || consejos == null){

@@ -13,12 +13,11 @@ import java.io.IOException;
 public class ImageMethods {
     public static final String BASE_PATH = "C:/Users/jon.astigarragaa/OneDrive - Mondragon Unibertsitatea/MU/3. Kurtsoa/2. sehilekoa/PBL/MALIC/WebSpring/musker/src/main/resources/static";
 
-    public static void createImgWithBytes(String p) throws IOException {
+    public void createImgWithBytes(String p) throws IOException {
         String path = BASE_PATH + p;
 
         HttpHeaders headers = new HttpHeaders();
-        //headers.set("path", "C:/Users/jon.astigarragaa/Desktop/pruebaimg" + p);
-        headers.set("path", path);
+        headers.set("path", p);
 
         int [][][] colors = RestController.RESTgetRequestHeaders("/images/get", headers, int[][][].class);
 
@@ -36,10 +35,12 @@ public class ImageMethods {
         }
 
         File outputFile = new File(path);
-        ImageIO.write(image, "png", outputFile);
+        String name = outputFile.getName();
+        String extension = name.substring(name.lastIndexOf(".") + 1);
+        ImageIO.write(image, extension, outputFile);
     }
 
-    public static void sendPhoto(String p) throws IOException {
+    public void sendPhoto(String p) throws IOException {
         int[][][] colors = null;
 
         File f = new File(BASE_PATH + p);
@@ -75,7 +76,7 @@ public class ImageMethods {
         RestController.RESTpostRequest("/images/save", headers, colors, Void.class);
     }
 
-    public static boolean imgExists(String path){
+    public boolean imgExists(String path){
         File file = new File(BASE_PATH + path);
         return file.exists();
     }

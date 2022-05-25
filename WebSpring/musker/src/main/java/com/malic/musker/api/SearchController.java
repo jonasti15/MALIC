@@ -2,6 +2,7 @@ package com.malic.musker.api;
 
 import com.malic.musker.entities.Especie;
 import com.malic.musker.entities.Estancia;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +16,9 @@ import java.util.List;
 @RequestMapping("/search")
 public class SearchController {
 
+    @Autowired
+    ImageMethods imgMethods;
+
     @GetMapping(path="/animals")
     public String allShelterAnimals(Model model) throws IOException {
         List<Estancia> estancias;
@@ -22,8 +26,8 @@ public class SearchController {
         estancias = RestController.RESTgetRequestListHeaders("/estancias/shelter", new HttpHeaders(), Estancia.class);
 
         for(Estancia estancia : estancias){
-            if(!ImageMethods.imgExists(estancia.getAnimal().getPath())){
-                ImageMethods.createImgWithBytes(estancia.getAnimal().getPath());
+            if(!imgMethods.imgExists(estancia.getAnimal().getPath())){
+                imgMethods.createImgWithBytes(estancia.getAnimal().getPath());
             }
         }
 
@@ -40,8 +44,8 @@ public class SearchController {
         species = RestController.RESTgetRequestListHeaders("/especies/all", new HttpHeaders(), Especie.class);
 
         for(Especie especie : species){
-            if(!ImageMethods.imgExists(especie.getPath())){
-                ImageMethods.createImgWithBytes(especie.getPath());
+            if(!imgMethods.imgExists(especie.getPath())){
+                imgMethods.createImgWithBytes(especie.getPath());
             }
         }
 

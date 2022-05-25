@@ -19,7 +19,7 @@ public class FotoController {
 
     @GetMapping("/get")
     public ResponseEntity<int[][][]> getImageBytes(HttpServletRequest request) throws IOException {
-        String path = request.getHeader(KEY);
+        String path = BASE_PATH + request.getHeader(KEY);
 
         int[][][] colors = null;
         if (path != null) {
@@ -74,7 +74,9 @@ public class FotoController {
         }
 
         File outputFile = new File(path);
-        ImageIO.write(image, "png", outputFile);
+        String name = outputFile.getName();
+        String extension = name.substring(name.lastIndexOf(".") + 1);
+        ImageIO.write(image, extension, outputFile);
     }
 
 }

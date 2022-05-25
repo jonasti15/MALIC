@@ -13,15 +13,21 @@ import dialogo.DialogoEditarAnimal;
 import elementos.*;
 import paneles.PanelPrincipal;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ControladorAnimales  {
+    private static String BASE_PATH = "C:/Users/ibail/OneDrive/Escritorio/LANAK/3 MAILA/EBAL2/PBL6/MALIC/AppEscritorio/MuskerEscritorio";
     JFrame ventana;
     DialogoAnadirAnimal dialogoAnadirAnimal;
     DialogoEditarAnimal dialogoEditarAnimal;
@@ -78,6 +84,40 @@ public class ControladorAnimales  {
         } else {
             System.out.println("La llamada no ha sido correcta.");
         }
+    }
+    public void sendPhoto(String p) throws IOException {
+        int[][][] colors = null;
+
+        File f = new File(BASE_PATH + p);
+        BufferedImage bimg = ImageIO.read(f);
+        int w = bimg.getWidth();
+        int h = bimg.getHeight();
+
+        int[] dataBuffInt = bimg.getRGB(0, 0, w, h, null, 0, w);
+
+        colors = new int[h][w][3];
+
+        int i = 0;
+        int j = 0;
+        int k = 0;
+
+        for (Integer in : dataBuffInt) {
+            Color c = new Color(in);
+            colors[k][j][0] = c.getRed();
+            colors[k][j][1] = c.getGreen();
+            colors[k][j][2] = c.getBlue();
+
+            j++;
+
+            if (j == w) {
+                j = 0;
+                k++;
+            }
+        }
+
+        WebResource webResource = client.resource(REST_SERVICE_URL).path("/images/save");
+        ClientResponse clientResponse = webResource.type(MediaType.APPLICATION_JSON).header("path", p).post(ClientResponse.class, colors);
+
     }
 
 
@@ -160,7 +200,7 @@ public class ControladorAnimales  {
         }
     }
 
-    public void anadirAnimal(Especie especie, TipoEstado estado, Recinto recinto) {
+    public Animal anadirAnimal(Especie especie, TipoEstado estado, Recinto recinto) {
         Animal animal=new Animal();
         animal.setEspecie(especie);
         animal.setEstado(estado);
@@ -170,10 +210,12 @@ public class ControladorAnimales  {
 
         if (clientResponse.getStatus() == Response.Status.OK.getStatusCode()) {
             System.out.println("Se ha creado un objeto nuevo.");
-
+            return clientResponse.getEntity(new GenericType<Animal>(){});
         } else {
             System.out.println("La llamada no ha sido correcta.");
+            return null;
         }
+
     }
     public void anadirEstancia(String motivo, Date fechaEntrada) {
         Estancia estancia=new Estancia();

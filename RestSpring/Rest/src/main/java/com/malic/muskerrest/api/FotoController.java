@@ -13,7 +13,7 @@ import java.io.IOException;
 @RestController
 @RequestMapping(path = "/images")
 public class FotoController {
-    public final String BASE_PATH = "C:/Users/jon.astigarragaa/OneDrive - Mondragon Unibertsitatea/MU/3. Kurtsoa/2. sehilekoa/PBL/MALIC/RestSpring/Rest/src/main/resources/static";
+    public final String BASE_PATH = "C:/Users/ibail/OneDrive/Escritorio/LANAK/3 MAILA/EBAL2/PBL6/MALIC/RestSpring/Rest/src/main/resources/static";
 
     public static String KEY = "path";
 

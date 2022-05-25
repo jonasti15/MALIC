@@ -37,8 +37,8 @@ public class ControllerJSON {
         Alerta alerta = new Alerta();
         try {
             obj = new JSONObject(json);
-            alerta.setAnimal_id(obj.getLong("animalId"));
-            Animal animal=controladorAlertas.getAnimal(alerta.getAnimal_id());
+            alerta.setAnimalId(obj.getLong("animalId"));
+            Animal animal=controladorAlertas.getAnimal(alerta.getAnimalId());
 
             TipoEstado estadoactual= controladorAlertas.getEstado(Long.valueOf(obj.getString("estadoActual")));
 
@@ -48,7 +48,7 @@ public class ControllerJSON {
             alerta.setRecinto_id(animal.getRecinto_id());
             alerta.setEspecie(animal.getEspecie());
             animal.setEstado(estadoactual);
-            controladorAlertas.editarAnimal(animal.getAnimal_id(), animal.getEspecie(), animal.getEstado(), animal.getRecinto_id());
+            controladorAlertas.editarAnimal(animal.getAnimalId(), animal.getEspecie(), animal.getEstado(), animal.getRecinto_id());
         } catch (JSONException e) {
             e.printStackTrace();
         }

@@ -12,7 +12,7 @@ public class Animal {
     @GenericGenerator(name="animal" , strategy="increment")
     @GeneratedValue(generator = "animal")
     @Column(name = "animal_id")
-    private Long animal_id;
+    private Long animalId;
 
     @Column(name = "path")
     private String path;
@@ -31,20 +31,20 @@ public class Animal {
 
     public Animal(){}
 
-    public Animal(Long animal_id, Especie especie, TipoEstado estado, Recinto recinto_id, String path) {
-        this.animal_id = animal_id;
+    public Animal(Long animalId, Especie especie, TipoEstado estado, Recinto recinto_id, String path) {
+        this.animalId = animalId;
         this.especie = especie;
         this.estado = estado;
         this.recinto_id = recinto_id;
         this.path = path;
     }
 
-    public Long getAnimal_id() {
-        return animal_id;
+    public Long getAnimalId() {
+        return animalId;
     }
 
-    public void setAnimal_id(Long animal_id) {
-        this.animal_id = animal_id;
+    public void setAnimalId(Long animalId) {
+        this.animalId = animalId;
     }
 
     public Especie getEspecie() {

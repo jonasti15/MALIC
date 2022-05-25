@@ -7,4 +7,7 @@ import java.util.List;
 
 public interface EstanciaRepository extends JpaRepository<Estancia, Long> {
     List<Estancia> getEstanciasByFechaSalidaIsNull();
+    Estancia getEstanciaByAnimal_AnimalIdAndFechaSalidaIsNull(long id);
+
+
 }

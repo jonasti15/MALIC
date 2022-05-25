@@ -12,5 +12,6 @@ public interface AnimalDao {
     void deleteAnimal(long id);
     void deleteAnimal(Animal animal);
     void addAnimal(Animal animal);
+    Animal findLastAnimal();
 
 }

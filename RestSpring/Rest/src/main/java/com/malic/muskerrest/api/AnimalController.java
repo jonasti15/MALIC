@@ -34,6 +34,11 @@ public class AnimalController {
         return ResponseEntity.ok(animalDao.getAnimal(id));
     }
 
+    @GetMapping("/last")
+    public ResponseEntity<Animal> getLastAnimal(){
+        return ResponseEntity.ok(animalDao.findLastAnimal());
+    }
+
     @PostMapping("/add")
     public ResponseEntity<Animal> addAnimal(@RequestBody Animal animal,
                                           HttpServletResponse response) throws IOException {

@@ -67,7 +67,6 @@ public class AvistamientoController {
 
         int [][][] colors = new int[255][255][3];
 
-        int index = 0;
         int i = 0;
         int j = 0;
         int k = 0;
@@ -127,7 +126,7 @@ public class AvistamientoController {
             Especie especie = RestController.RESTgetRequestHeaders("/especies/especie/"+Long.valueOf(especieId), new HttpHeaders(), Especie.class);
             avistamiento.setFecha(new Date());
             avistamiento.setEspecie(especie);
-            Avistamiento avistamientoCreado = RestController.RESTpostRequest("/avistamientos/add", avistamiento, Avistamiento.class);
+            Avistamiento avistamientoCreado = RestController.RESTpostRequest("/avistamientos/add", new HttpHeaders(), avistamiento, Avistamiento.class);
 
             publisher.publishMessage(avistamientoCreado);
 

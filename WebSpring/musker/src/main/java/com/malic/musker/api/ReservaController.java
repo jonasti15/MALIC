@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.method.HandlerTypePredicate;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.websocket.server.PathParam;
@@ -118,7 +119,7 @@ public class ReservaController {
         }
 
         if(error.length() == 0){
-            Reserva reservaCreado = RestController.RESTpostRequest("/reservas/add", reserva, Reserva.class);
+            Reserva reservaCreado = RestController.RESTpostRequest("/reservas/add", new HttpHeaders(), reserva, Reserva.class);
             if(reservaCreado != null){
                 error = "";
                 returnStr = "redirect:/";

@@ -9,6 +9,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.util.Date;
 
 public class DialogoAnadirAnimal extends JDialog implements ActionListener {
 
@@ -17,8 +19,8 @@ public class DialogoAnadirAnimal extends JDialog implements ActionListener {
     private static final Color COLORFONDO = new Color(177,216,183);
     private static final Color COLORLETRA = new Color(47, 82, 51);
     ControladorAnimales controlador;
-     JComboBox txEspecie, txEstado, txRecinto;
-
+    JComboBox txEspecie, txEstado, txRecinto;
+    JTextField txMotivo;
 
     public DialogoAnadirAnimal(JFrame ventana, String titulo, boolean modo, ControladorAnimales controlador){
         super(ventana, titulo, modo);
@@ -43,7 +45,7 @@ public class DialogoAnadirAnimal extends JDialog implements ActionListener {
     }
 
     private Component crearPanelInfo() {
-        JPanel panel =new JPanel(new GridLayout(4,1,30,90));
+        JPanel panel =new JPanel(new GridLayout(4,2,30,90));
         panel.setBackground(COLORFONDO);
 
         panel.add(anadirDato("Especie: "));
@@ -60,6 +62,10 @@ public class DialogoAnadirAnimal extends JDialog implements ActionListener {
         Recinto[] listaRecinto=controlador.getListaRecintos();
         txRecinto=new JComboBox(listaRecinto);
         panel.add(txRecinto);
+
+        panel.add(anadirDato("Motivo: "));
+        txMotivo=new JTextField("");
+        panel.add(txMotivo);
 
         panel.setBorder(BorderFactory.createEmptyBorder(30,60,30,60));
         return panel;
@@ -111,10 +117,28 @@ public class DialogoAnadirAnimal extends JDialog implements ActionListener {
             case "cancelar":
                 this.dispose();
                 break;
+            case "cargar":
+                /*JFileChooser chooser = new JFileChooser();
+                chooser.showOpenDialog(null);
+                File f = chooser.getSelectedFile();
+                String filename = f.getAbsolutePath();
+                jTextField1.setText(filename);
+                try {
+                    ImageIcon ii=new ImageIcon(scaleImage(120, 120, ImageIO.read(new File(f.getAbsolutePath()))));//get the image from file chooser and scale it to match JLabel size
+                    jLabel1.setIcon(ii);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }*/
+                break;
             case "anadir":
+
                 controlador.anadirAnimal((Especie) this.getTxEspecie().getSelectedItem(), (TipoEstado) this.getTxEstado().getSelectedItem(), (Recinto) this.getTxRecinto().getSelectedItem());
+                Date hoy=new Date();
+                java.sql.Date fecha=new java.sql.Date(hoy.getTime());
+                controlador.anadirEstancia(txMotivo.getText(), fecha);
                 this.dispose();
                 break;
+
 
         }
     }

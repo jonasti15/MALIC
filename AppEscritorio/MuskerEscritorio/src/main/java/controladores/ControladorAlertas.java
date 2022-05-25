@@ -110,7 +110,7 @@ public class ControladorAlertas {
     }
     public void editarAnimal(Long animal_id, Especie especie, TipoEstado estado, Recinto recinto) {
         Animal animal=new Animal();
-        animal.setAnimal_id(animal_id);
+        animal.setAnimalId(animal_id);
         animal.setEspecie(especie);
         animal.setEstado(estado);
         animal.setRecinto_id(recinto);

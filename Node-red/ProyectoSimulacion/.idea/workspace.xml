@@ -5,16 +5,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9fddde68-8528-4f80-9145-d347c18a8061" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../../AppEscritorio/MuskerEscritorio/src/main/java/RabbitMQ/Constantes.java" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AppEscritorio/MuskerEscritorio/src/main/java/elementos/Estancia.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../AppEscritorio/MuskerEscritorio/src/main/java/RabbitMQ/ControllerJSON.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../AppEscritorio/MuskerEscritorio/src/main/java/RabbitMQ/ControllerJSON.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../AppEscritorio/MuskerEscritorio/src/main/java/RabbitMQ/HiloConsumidor.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../AppEscritorio/MuskerEscritorio/src/main/java/RabbitMQ/HiloConsumidor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../AppEscritorio/MuskerEscritorio/src/main/java/RabbitMQ/HiloConsumidorAvistamientos.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../AppEscritorio/MuskerEscritorio/src/main/java/RabbitMQ/HiloConsumidorAvistamientos.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../AppEscritorio/MuskerEscritorio/src/main/java/controladores/ControladorAlertas.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../AppEscritorio/MuskerEscritorio/src/main/java/controladores/ControladorAlertas.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../AppEscritorio/MuskerEscritorio/src/main/java/controladores/ControladorAnimales.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../AppEscritorio/MuskerEscritorio/src/main/java/controladores/ControladorAnimales.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../AppEscritorio/MuskerEscritorio/src/main/java/dialogo/DialogoAnadirAnimal.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../AppEscritorio/MuskerEscritorio/src/main/java/dialogo/DialogoAnadirAnimal.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../AppEscritorio/MuskerEscritorio/src/main/java/dialogo/DialogoEditarAnimal.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../AppEscritorio/MuskerEscritorio/src/main/java/dialogo/DialogoEditarAnimal.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../AppEscritorio/MuskerEscritorio/src/main/java/dialogo/DialogoInfoAlerta.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../AppEscritorio/MuskerEscritorio/src/main/java/dialogo/DialogoInfoAlerta.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../AppEscritorio/MuskerEscritorio/src/main/java/dialogo/DialogoInfoAnimal.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../AppEscritorio/MuskerEscritorio/src/main/java/dialogo/DialogoInfoAnimal.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../AppEscritorio/MuskerEscritorio/src/main/java/elementos/Alerta.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../AppEscritorio/MuskerEscritorio/src/main/java/elementos/Alerta.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../AppEscritorio/MuskerEscritorio/src/main/java/elementos/Especie.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../AppEscritorio/MuskerEscritorio/src/main/java/elementos/Especie.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../AppEscritorio/MuskerEscritorio/src/main/java/renderertablas/RenderTablaAnimales.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../AppEscritorio/MuskerEscritorio/src/main/java/renderertablas/RenderTablaAnimales.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../AppEscritorio/MuskerEscritorio/src/main/java/elementos/Animal.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../AppEscritorio/MuskerEscritorio/src/main/java/elementos/Animal.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../RestSpring/Rest/src/main/java/com/malic/muskerrest/api/AnimalController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../RestSpring/Rest/src/main/java/com/malic/muskerrest/api/AnimalController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../RestSpring/Rest/src/main/java/com/malic/muskerrest/api/EstanciaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../RestSpring/Rest/src/main/java/com/malic/muskerrest/api/EstanciaController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../RestSpring/Rest/src/main/java/com/malic/muskerrest/dao/animal/AnimalDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../RestSpring/Rest/src/main/java/com/malic/muskerrest/dao/animal/AnimalDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../RestSpring/Rest/src/main/java/com/malic/muskerrest/dao/animal/AnimalDataAccessService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../RestSpring/Rest/src/main/java/com/malic/muskerrest/dao/animal/AnimalDataAccessService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../RestSpring/Rest/src/main/java/com/malic/muskerrest/dao/animal/AnimalRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../RestSpring/Rest/src/main/java/com/malic/muskerrest/dao/animal/AnimalRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../RestSpring/Rest/src/main/java/com/malic/muskerrest/dao/estancia/EstanciaDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../RestSpring/Rest/src/main/java/com/malic/muskerrest/dao/estancia/EstanciaDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../RestSpring/Rest/src/main/java/com/malic/muskerrest/dao/estancia/EstanciaDataAccessService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../RestSpring/Rest/src/main/java/com/malic/muskerrest/dao/estancia/EstanciaDataAccessService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../RestSpring/Rest/src/main/java/com/malic/muskerrest/dao/estancia/EstanciaRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../RestSpring/Rest/src/main/java/com/malic/muskerrest/dao/estancia/EstanciaRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../RestSpring/Rest/src/main/java/com/malic/muskerrest/entities/Animal.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../RestSpring/Rest/src/main/java/com/malic/muskerrest/entities/Animal.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,7 +54,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../AppEscritorio/MuskerEscritorio" />
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -101,7 +111,8 @@
       <workItem from="1652955657748" duration="1308000" />
       <workItem from="1653040083538" duration="2652000" />
       <workItem from="1653291074935" duration="5969000" />
-      <workItem from="1653377223744" duration="1322000" />
+      <workItem from="1653377223744" duration="1323000" />
+      <workItem from="1653459232184" duration="614000" />
     </task>
     <servers />
   </component>

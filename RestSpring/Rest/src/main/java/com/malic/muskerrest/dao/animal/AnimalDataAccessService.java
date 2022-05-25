@@ -42,4 +42,9 @@ public class AnimalDataAccessService implements AnimalDao{
         repository.save(animal);
     }
 
+    @Override
+    public Animal findLastAnimal() {
+        return repository.findLastAnimal();
+    }
+
 }

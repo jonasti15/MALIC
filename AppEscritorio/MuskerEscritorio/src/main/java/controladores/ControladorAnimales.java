@@ -41,26 +41,40 @@ public class ControladorAnimales  {
     }
 
     public void editar(Animal animal) {
-        dialogoEditarAnimal=new DialogoEditarAnimal(ventana, "Editar "+animal.getEspecie().getDescripcion()+" ID: "+ animal.getAnimal_id(),true, this, animal);
+        dialogoEditarAnimal=new DialogoEditarAnimal(ventana, "Editar "+animal.getEspecie().getDescripcion()+" ID: "+ animal.getAnimalId(),true, this, animal);
 
     }
     public List<Animal> getAnimales(){
+        List<Animal> lista=new ArrayList<>();
+        List<Estancia>listaEstancias=getEstanciasActivas();
+        for(Estancia e:listaEstancias){
+            lista.add(e.getAnimal());
+        }
+        return lista;
+    }
+    public List<Estancia> getEstanciasActivas(){
         WebResource webResource = client.resource(REST_SERVICE_URL)
-                .path("/animals/all");
+                .path("/estancias/shelter");
         ClientResponse clientResponse = webResource.accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
         if (clientResponse.getStatus() == Response.Status.OK.getStatusCode()) {
-            return clientResponse.getEntity(new GenericType<List<Animal>>(){});
+            return clientResponse.getEntity(new GenericType<List<Estancia>>(){});
         } else {
             return null;
         }
     }
 
+
     public void eliminar(Animal animal) {
-        WebResource webResource = client.resource(REST_SERVICE_URL).path("/animals/delete").path(String.valueOf(animal.getAnimal_id()));
-        ClientResponse clientResponse = webResource.type(MediaType.TEXT_PLAIN_TYPE).delete(ClientResponse.class);
+        Estancia estancia=getEstanciaByAnimalId(animal.getAnimalId());
+        java.util.Date hoy =new java.util.Date();
+        Date hoySql=new Date(hoy.getTime());
+        estancia.setFechaSalida(hoySql);
+        WebResource webResource = client.resource(REST_SERVICE_URL).path("/estancias/add");
+        ClientResponse clientResponse = webResource.type(MediaType.APPLICATION_JSON).post(ClientResponse.class, estancia);
         panel.getControladorPantallaPrincipal().recargarAnimales();
         if (clientResponse.getStatus() == Response.Status.OK.getStatusCode()) {
-            System.out.println("El animal ha sido eliminado correctamente.");
+            System.out.println("Se ha editado un objeto.");
+
         } else {
             System.out.println("La llamada no ha sido correcta.");
         }
@@ -131,7 +145,7 @@ public class ControladorAnimales  {
 
     public void editarAnimal(Long animal_id, Especie especie, TipoEstado estado, Recinto recinto) {
         Animal animal=new Animal();
-        animal.setAnimal_id(animal_id);
+        animal.setAnimalId(animal_id);
         animal.setEspecie(especie);
         animal.setEstado(estado);
         animal.setRecinto_id(recinto);
@@ -153,6 +167,22 @@ public class ControladorAnimales  {
         animal.setRecinto_id(recinto);
         WebResource webResource = client.resource(REST_SERVICE_URL).path("/animals/add");
         ClientResponse clientResponse = webResource.type(MediaType.APPLICATION_JSON).post(ClientResponse.class, animal);
+
+        if (clientResponse.getStatus() == Response.Status.OK.getStatusCode()) {
+            System.out.println("Se ha creado un objeto nuevo.");
+
+        } else {
+            System.out.println("La llamada no ha sido correcta.");
+        }
+    }
+    public void anadirEstancia(String motivo, Date fechaEntrada) {
+        Estancia estancia=new Estancia();
+        Animal animal=getLastAnimal();
+        estancia.setAnimal(animal);
+        estancia.setFecha_entrada(fechaEntrada);
+        estancia.setMotivo_entrada(motivo);
+        WebResource webResource = client.resource(REST_SERVICE_URL).path("/estancias/add");
+        ClientResponse clientResponse = webResource.type(MediaType.APPLICATION_JSON).post(ClientResponse.class, estancia);
         panel.getControladorPantallaPrincipal().recargarAnimales();
         if (clientResponse.getStatus() == Response.Status.OK.getStatusCode()) {
             System.out.println("Se ha creado un objeto nuevo.");
@@ -162,6 +192,30 @@ public class ControladorAnimales  {
         }
     }
 
+    private Animal getLastAnimal() {
+        WebResource webResource = client.resource(REST_SERVICE_URL)
+                .path("/animals/last");
+        ClientResponse clientResponse = webResource.accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
+
+        if (clientResponse.getStatus() == Response.Status.OK.getStatusCode()) {
+            return clientResponse.getEntity(new GenericType<Animal>(){});
+        } else {
+            return null;
+        }
+
+    }
+    public Estancia getEstanciaByAnimalId(long id) {
+        WebResource webResource = client.resource(REST_SERVICE_URL)
+                .path("/estancias/animal").path(String.valueOf(id));
+        ClientResponse clientResponse = webResource.accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
+
+        if (clientResponse.getStatus() == Response.Status.OK.getStatusCode()) {
+            return clientResponse.getEntity(new GenericType<Estancia>(){});
+        } else {
+            return null;
+        }
+
+    }
 
 
 }

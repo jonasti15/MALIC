@@ -11,7 +11,7 @@ public class Animal {
     @Id
     @GeneratedValue(generator = "animal")
     @Column(name = "animal_id")
-    private Long animal_id;
+    private Long animalId;
 
     @Column(name = "path")
     private String path;
@@ -30,26 +30,26 @@ public class Animal {
 
     public Animal(){}
 
-    public Animal(Long animal_id, Especie especie, TipoEstado estado, Recinto recinto_id, String path) {
-        this.animal_id = animal_id;
+    public Animal(Long animalId, Especie especie, TipoEstado estado, Recinto recinto_id, String path) {
+        this.animalId = animalId;
         this.especie = especie;
         this.estado = estado;
         this.recinto_id = recinto_id;
         this.path = path;
     }
-    public Animal(Long animal_id, Especie especie, TipoEstado estado, Recinto recinto_id) {
-        this.animal_id = animal_id;
+    public Animal(Long animalId, Especie especie, TipoEstado estado, Recinto recinto_id) {
+        this.animalId = animalId;
         this.especie = especie;
         this.estado = estado;
         this.recinto_id = recinto_id;
     }
 
-    public Long getAnimal_id() {
-        return animal_id;
+    public Long getAnimalId() {
+        return animalId;
     }
 
-    public void setAnimal_id(Long animal_id) {
-        this.animal_id = animal_id;
+    public void setAnimalId(Long animalId) {
+        this.animalId = animalId;
     }
 
     public Especie getEspecie() {
@@ -85,7 +85,7 @@ public class Animal {
     }
     public Object getFieldAt(int columna) {
         switch (columna){
-            case 0: return animal_id;
+            case 0: return animalId;
             case 1: return getEspecie().getDescripcion();
             case 2: return getRecinto_id().getRecinto_id();
             case 3: return getEstado().getDescripcion();

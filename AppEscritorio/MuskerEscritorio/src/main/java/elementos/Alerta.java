@@ -2,14 +2,14 @@ package elementos;
 
 public class Alerta {
 
-    Long animal_id;
+    Long animalId;
     Especie especie;
     TipoEstado estado;
     TipoEstado estadoNuevo;
     Recinto recinto_id;
 
     public Alerta(Long animal_id, Especie especie, TipoEstado estado,TipoEstado estadoNuevo,  Recinto recinto_id) {
-        this.animal_id = animal_id;
+        this.animalId = animal_id;
         this.especie = especie;
         this.estado = estado;
         this.estadoNuevo=estadoNuevo;
@@ -19,8 +19,8 @@ public class Alerta {
     public Alerta() {
     }
 
-    public void setAnimal_id(Long animal_id) {
-        this.animal_id = animal_id;
+    public void setAnimalId(Long animal_id) {
+        this.animalId = animal_id;
     }
 
     public void setEspecie(Especie especie) {
@@ -43,8 +43,8 @@ public class Alerta {
         this.estadoNuevo = estadoNuevo;
     }
 
-    public Long getAnimal_id() {
-        return animal_id;
+    public Long getAnimalId() {
+        return animalId;
     }
 
     public Especie getEspecie() {
@@ -60,7 +60,7 @@ public class Alerta {
     }
     public Object getFieldAt(int columna) {
         switch (columna){
-            case 0: return animal_id;
+            case 0: return animalId;
             case 1: return getEspecie().getDescripcion();
             case 2: return getEstadoNuevo().getDescripcion();
             case 3: return getRecinto_id().getRecinto_id();

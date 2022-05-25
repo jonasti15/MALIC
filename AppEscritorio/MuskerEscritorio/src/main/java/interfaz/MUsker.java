@@ -16,6 +16,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class MUsker extends JFrame implements WindowListener{
+	public static String access_token = "";
+	public static String refresh_token = "";
+
 	private static final Color COLORFONDO = new Color(177,216,183);
 	private static final Color COLORTOOLBAR = new Color(118, 185, 71);
 	private static final Color COLORLETRA = new Color(47, 82, 51);
@@ -125,7 +128,7 @@ public class MUsker extends JFrame implements WindowListener{
 	public static void connectToDB() {
 		try {
 			Class.forName(driver);
-			conn = DriverManager.getConnection(url, "worker", "worker");
+			conn = DriverManager.getConnection(url, "root", "root");
 			if(conn != null) {
 				System.out.println("Conexion establecida");
 			}

@@ -16,6 +16,9 @@ public class LoginBD implements DaoLogin{
 	
 	@Override
 	public void queryUser(String user) {
+
+
+
 		try {
 			ps = MUsker.conn.prepareStatement("SELECT username, tipo_usuario_id FROM usuario WHERE username = ?");
 			ps.setString(1, user);

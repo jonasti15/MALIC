@@ -115,6 +115,7 @@ public class DialogoEditarAnimal extends JDialog implements ActionListener {
         String accion = evt.getActionCommand();
         switch(accion) {
             case "editar":
+
                 controlador.editarAnimal(this.getAnimal().getAnimalId(),(Especie)this.getTxEspecie().getSelectedItem(), (TipoEstado)this.getTxEstado().getSelectedItem(), (Recinto)this.getTxRecinto().getSelectedItem());
                 this.dispose();
                 break;

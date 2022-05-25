@@ -39,7 +39,9 @@ public class AnimalDataAccessService implements AnimalDao{
 
     @Override
     public void addAnimal(Animal animal) {
-        animal.setPath("/images/animals/"+(repository.findLastAnimal().getAnimalId() + 1) + ".png");
+        long id = repository.findLastAnimal().getAnimalId() + 1;
+        animal.setAnimalId(id);
+        animal.setPath("/images/animals/"+id + ".png");
         repository.save(animal);
     }
 

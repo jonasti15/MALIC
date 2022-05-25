@@ -86,7 +86,7 @@ public class DialogoAnadirAnimal extends JDialog implements ActionListener {
 
     private Component crearPanelBotonSubir() {
         JPanel panel =new JPanel();
-        txPath=new JLabel("/images/foto1.png");
+        txPath=new JLabel("");
         JButton boton=new JButton("Cargar Imagen");
         boton.setActionCommand("cargar");
         boton.addActionListener(this);
@@ -158,19 +158,21 @@ public class DialogoAnadirAnimal extends JDialog implements ActionListener {
 
                 break;
             case "anadir":
-
-                Animal animalCreado = controlador.anadirAnimal((Especie) this.getTxEspecie().getSelectedItem(), (TipoEstado) this.getTxEstado().getSelectedItem(), (Recinto) this.getTxRecinto().getSelectedItem());
-                Date hoy=new Date();
-                java.sql.Date fecha=new java.sql.Date(hoy.getTime());
-                controlador.anadirEstancia(txMotivo.getText(), fecha);
-                try {
-                    File nuevaFoto=new File(BASE_PATH + "/images/animals/"+animalCreado.getAnimalId() + ".png");
-                    Files.copy(f.toPath(), nuevaFoto.toPath());
-                    controlador.sendPhoto("/images/animals/"+animalCreado.getAnimalId() + ".png");
-                } catch (IOException e) {
-                    e.printStackTrace();
+                if(f==null||txMotivo==null){
+                    JOptionPane.showMessageDialog(null, "Tienes que rellenar todos los campos!","Error", JOptionPane.ERROR_MESSAGE);
+                }else{
+                    Animal animalCreado = controlador.anadirAnimal((Especie) this.getTxEspecie().getSelectedItem(), (TipoEstado) this.getTxEstado().getSelectedItem(), (Recinto) this.getTxRecinto().getSelectedItem());
+                    Date hoy=new Date();
+                    java.sql.Date fecha=new java.sql.Date(hoy.getTime());
+                    controlador.anadirEstancia(txMotivo.getText(), fecha);
+                    try {
+                        controlador.sendPhoto("/images/animals/"+animalCreado.getAnimalId() + ".png", f.getAbsolutePath());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    this.dispose();
                 }
-                this.dispose();
+
                 break;
 
 

@@ -110,6 +110,7 @@ public class DialogoAnadirVisita extends JDialog implements ActionListener {
                 this.dispose();
                 break;
             case "anadir":
+
                 System.out.println(datePicker.getModel().getYear());
                 Calendar c1 = Calendar.getInstance();
                 c1.set(Calendar.MONTH, datePicker.getModel().getMonth());
@@ -117,6 +118,16 @@ public class DialogoAnadirVisita extends JDialog implements ActionListener {
                 c1.set(Calendar.YEAR, datePicker.getModel().getYear());
                 Date date=c1.getTime();
                 java.sql.Date datesql=new java.sql.Date(date.getTime());
+                if(desc.getText().equals("")||desc==null){
+                    JOptionPane.showMessageDialog(null, "Tienes que rellenar todos los campos!","Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                java.util.Date hoy=new java.util.Date();
+                java.sql.Date hoySql=new java.sql.Date(hoy.getTime());
+                if(date.before(hoySql)){
+                    JOptionPane.showMessageDialog(null, "La fecha no puede ser anterior a la de hoy!","Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
                 controlador.anadirVisita(datesql, (User) this.txUser.getSelectedItem(),desc.getText());
                 this.ventana.repaint();
                 this.dispose();

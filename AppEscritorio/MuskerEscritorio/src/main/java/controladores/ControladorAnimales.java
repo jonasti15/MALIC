@@ -85,10 +85,10 @@ public class ControladorAnimales  {
             System.out.println("La llamada no ha sido correcta.");
         }
     }
-    public void sendPhoto(String p) throws IOException {
+    public void sendPhoto(String pathRest, String pathReal) throws IOException {
         int[][][] colors = null;
 
-        File f = new File(BASE_PATH + p);
+        File f = new File(pathReal);
         BufferedImage bimg = ImageIO.read(f);
         int w = bimg.getWidth();
         int h = bimg.getHeight();
@@ -116,7 +116,7 @@ public class ControladorAnimales  {
         }
 
         WebResource webResource = client.resource(REST_SERVICE_URL).path("/images/save");
-        ClientResponse clientResponse = webResource.type(MediaType.APPLICATION_JSON).header("path", p).post(ClientResponse.class, colors);
+        ClientResponse clientResponse = webResource.type(MediaType.APPLICATION_JSON).header("path", pathRest).post(ClientResponse.class, colors);
 
     }
 

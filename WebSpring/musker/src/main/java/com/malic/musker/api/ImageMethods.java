@@ -11,7 +11,7 @@ import java.io.IOException;
 
 @Service
 public class ImageMethods {
-    public static final String BASE_PATH = "C:/Users/ibail/OneDrive/Escritorio/LANAK/3 MAILA/EBAL2/PBL6/MALIC/WebSpring/musker/src/main/resources/static";
+    public final String BASE_PATH = "C:/Users/jon.astigarragaa/OneDrive - Mondragon Unibertsitatea/MU/3. Kurtsoa/2. sehilekoa/PBL/MALIC/RestSpring/Rest/src/main/resources/static";
 
     public void createImgWithBytes(String p) throws IOException {
         String path = BASE_PATH + p;

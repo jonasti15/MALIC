@@ -70,21 +70,6 @@ public class HomeController {
         return "redirect:/login";
     }
 
-    @GetMapping("/pruebarest")
-    public String probarApi(@RequestParam(name = "username") String username) {
-        String uri = "http://localhost:8080/REST/api/usuarios/usuarioUsername?username="+username;
-        RestTemplate restTemplate = new RestTemplate();
-
-        String result = restTemplate.getForObject(uri, String.class);
-
-        Gson gson = new Gson();
-
-        User user = new User();
-        user = gson.fromJson(result, User.class);
-
-        return "userForm";
-    }
-
     @GetMapping("/aboutUs")
     public String aboutUs(Model model){
         model.addAttribute("navPage", "aboutUs");

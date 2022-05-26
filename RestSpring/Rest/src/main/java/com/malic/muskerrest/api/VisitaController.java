@@ -99,7 +99,7 @@ public class VisitaController {
         try{
             List<Reserva> listaRelacionados=reservaDao.getReservasDeVisita(id_visita);
             listaRelacionados.forEach(v->reservaDao.deleteReserva(v.getReserva_id()));
-         visitaDao.deleteVisita(id_visita);
+            visitaDao.deleteVisita(id_visita);
         }catch(Exception e){
             response.setHeader("error", e.getMessage());
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);

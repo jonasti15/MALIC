@@ -137,6 +137,41 @@ public class RestController {
         return clientResponse.getEntity(returnClass);
     }
 
+    public static void RESTdeleteRequest(String path, HashMap<String, String> headers){
+        ClientConfig clientConfig = new DefaultClientConfig();
+        clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);  // <----- set the json configuration POJO MAPPING for JSON reponse paring
+        client = Client.create(clientConfig);
+
+        headers.put("Authorization", "Bearer " + MUsker.access_token);
+
+        WebResource webResource = client.resource(REST_SERVICE_URL)
+                .path(path);
+
+        WebResource.Builder tmp = null;
+        for (Map.Entry<String, String> entry : headers.entrySet()) {
+            tmp = webResource.header(entry.getKey(), entry.getValue());
+        }
+        ClientResponse clientResponse = tmp.type(MediaType.APPLICATION_JSON).delete(ClientResponse.class);
+
+        MultivaluedMap<String, String> response = clientResponse.getHeaders();
+
+        if(response.containsKey("error")){
+            String errorValue = String.valueOf(response.get("error"));
+            if(errorValue.contains("Token has expired")){
+                if(refreshToken().equals("")){
+                    RESTdeleteRequest(path, headers);
+                }else if(refreshToken().equals("expired")){
+                    try {
+                        MUsker.restartProgram();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+
+    }
+
     public static String RESTpostRequestLogin(String path, Form form){
         ClientConfig clientConfig = new DefaultClientConfig();
         clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);  // <----- set the json configuration POJO MAPPING for JSON reponse paring
@@ -177,26 +212,5 @@ public class RestController {
             MUsker.access_token = access_token;
         }
         return "";
-    }
-    public static <T> void RESTdeleteRequest(String path, HashMap<String, String> headers){
-        ClientConfig clientConfig = new DefaultClientConfig();
-        clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);  // <----- set the json configuration POJO MAPPING for JSON reponse paring
-        client = Client.create(clientConfig);
-
-        headers.put("Authorization", "Bearer " + MUsker.access_token);
-
-        WebResource webResource = client.resource(REST_SERVICE_URL)
-                .path(path);
-
-        for (Map.Entry<String, String> entry : headers.entrySet()) {
-            webResource.header(entry.getKey(), entry.getValue());
-        }
-        ClientResponse clientResponse = webResource.type(MediaType.APPLICATION_JSON).delete(ClientResponse.class);
-        if (clientResponse.getStatus() == Response.Status.OK.getStatusCode()) {
-            System.out.println("El objeto ha sido eliminado correctamente.");
-        } else {
-            System.out.println("La llamada no ha sido correcta.");
-        }
-
     }
 }

@@ -19,7 +19,6 @@ import java.nio.file.Files;
 import java.util.Date;
 
 public class DialogoAnadirAnimal extends JDialog implements ActionListener {
-    private static String BASE_PATH = "C:/Users/ibail/OneDrive/Escritorio/LANAK/3 MAILA/EBAL2/PBL6/MALIC/AppEscritorio/MuskerEscritorio";
     public final static int DEFAULT_WIDTH = 1000;
     public final static int DEFAULT_HEIGHT = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight()-((int) Toolkit.getDefaultToolkit().getScreenSize().getHeight()/4);
     private static final Color COLORFONDO = new Color(177,216,183);

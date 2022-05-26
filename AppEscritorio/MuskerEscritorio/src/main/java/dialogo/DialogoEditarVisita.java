@@ -42,11 +42,15 @@ public class DialogoEditarVisita extends JDialog implements ActionListener {
     }
 
     private Container crearPanel() {
+        JScrollPane panelScroll=new JScrollPane();
+        panelScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        panelScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         JPanel panel =new JPanel(new BorderLayout(0,0));
         panel.add(crearPanelBotones(),BorderLayout.SOUTH);
         panel.add(crearPanelInfo(),BorderLayout.CENTER);
+        panelScroll.setViewportView(panel);
 
-        return panel;
+        return panelScroll;
     }
 
     private Component crearPanelInfo() {

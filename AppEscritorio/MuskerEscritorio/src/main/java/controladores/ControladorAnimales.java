@@ -24,6 +24,7 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class ControladorAnimales  {
@@ -206,7 +207,10 @@ public class ControladorAnimales  {
         animal.setEspecie(especie);
         animal.setEstado(estado);
         animal.setRecinto_id(recinto);
-        WebResource webResource = client.resource(REST_SERVICE_URL).path("/animals/add");
+
+        Animal animalCreado = RestController.RESTpostRequest("/animals/add", new HashMap<>(), animal, Animal.class);
+
+        /*WebResource webResource = client.resource(REST_SERVICE_URL).path("/animals/add");
         ClientResponse clientResponse = webResource.type(MediaType.APPLICATION_JSON).post(ClientResponse.class, animal);
 
         if (clientResponse.getStatus() == Response.Status.OK.getStatusCode()) {
@@ -215,7 +219,9 @@ public class ControladorAnimales  {
         } else {
             System.out.println("La llamada no ha sido correcta.");
             return null;
-        }
+        }*/
+
+        return animalCreado;
 
     }
     public void anadirEstancia(String motivo, Date fechaEntrada) {

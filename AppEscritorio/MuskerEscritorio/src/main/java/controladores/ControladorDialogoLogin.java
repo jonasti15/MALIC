@@ -1,6 +1,5 @@
 package controladores;
 
-import basedatos.LoginBD;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.GenericType;
@@ -13,13 +12,11 @@ import dialogo.DialogoLogin;
 import elementos.Permisos;
 import elementos.User;
 import interfaz.MUsker;
-import org.apache.tools.ant.taskdefs.Javadoc;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import javax.swing.*;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -59,8 +56,6 @@ public class ControladorDialogoLogin implements ActionListener {
 
         switch (accion) {
             case "confirmar":
-                MUsker.userDB = login.getUsuario().getText();
-                MUsker.pass = String.valueOf(login.getPassword().getPassword());
 
                 Form form = new Form();
                 form.add("username", login.getUsuario().getText());
@@ -69,8 +64,9 @@ public class ControladorDialogoLogin implements ActionListener {
                 WebResource webResource = client.resource(REST_SERVICE_URL)
                         .path("/login");
                 ClientResponse clientResponse = webResource.type(MediaType.APPLICATION_FORM_URLENCODED).post(ClientResponse.class, form);
-                String jsonToken = clientResponse.getEntity(new GenericType<String>(){});
-                if(!jsonToken.equals("")){
+                String jsonToken = clientResponse.getEntity(new GenericType<String>() {
+                });
+                if (!jsonToken.equals("")) {
                     JSONObject obj = null;
                     String access_token = "", refresh_token = "";
                     try {
@@ -85,34 +81,33 @@ public class ControladorDialogoLogin implements ActionListener {
                     webResource = client.resource(REST_SERVICE_URL)
                             .path("/user/username").path(login.getUsuario().getText());
                     clientResponse = webResource.accept(MediaType.APPLICATION_JSON).header("Authorization", "Bearer " + MUsker.access_token).get(ClientResponse.class);
-                    if(clientResponse.getStatus() == Response.Status.OK.getStatusCode()){
-                        user = clientResponse.getEntity(new GenericType<User>(){});
+                    if (clientResponse.getStatus() == Response.Status.OK.getStatusCode()) {
+                        user = clientResponse.getEntity(new GenericType<User>() {
+                        });
                     }
 
-                    if(user != null && user.getTipoUsuario().getTipoUsuarioId() != 3){
+                    if (user != null && user.getTipoUsuario().getTipoUsuarioId() != 3) {
                         switch (user.getTipoUsuario().getTipoUsuarioId()) {
-
-                            case 2:
-                                permiso = Permisos.WORKER;
-                                break;
 
                             case 1:
                                 permiso = Permisos.ADMIN;
                                 break;
 
+                            case 2:
+                                permiso = Permisos.WORKER;
+                                break;
+
                         }
 
-                        MUsker.connectToDB();
-                        if (MUsker.conn != null) {
-                            login.setUser(user);
-                            login.dispose();
-                        }
-                    }else{
+                        login.setUser(user);
+                        login.dispose();
+
+                    } else {
                         JOptionPane.showConfirmDialog(login, "Usuario no válido", "Usuario no válido", JOptionPane.PLAIN_MESSAGE, JOptionPane.ERROR_MESSAGE);
                         login.getPassword().setText("");
                     }
 
-                }else {
+                } else {
                     JOptionPane.showConfirmDialog(login, "El usuario o la contraseña no son correctos", "Usuario inválido", JOptionPane.PLAIN_MESSAGE, JOptionPane.ERROR_MESSAGE);
                     login.getPassword().setText("");
                 }

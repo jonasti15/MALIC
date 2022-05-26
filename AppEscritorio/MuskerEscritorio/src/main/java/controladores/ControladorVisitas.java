@@ -20,7 +20,9 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ControladorVisitas {
     JFrame ventana;
@@ -77,14 +79,7 @@ public class ControladorVisitas {
     }
 
     public List<Visita> getListVisitas() {
-        WebResource webResource = client.resource(REST_SERVICE_URL)
-                .path("/visitas/editables");
-        ClientResponse clientResponse = webResource.accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
-        if (clientResponse.getStatus() == Response.Status.OK.getStatusCode()) {
-            return clientResponse.getEntity(new GenericType<List<Visita>>(){});
-        } else {
-            return null;
-        }
+        return RestController.RESTgetListRequest("/visitas/editables", new HashMap<>(), Visita.class);
     }
 
 

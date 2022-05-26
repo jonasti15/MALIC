@@ -24,11 +24,6 @@ public class MUsker extends JFrame implements WindowListener{
 	private static final Color COLORLETRA = new Color(47, 82, 51);
 	public final static int DEFAULT_WIDTH = 1000;
 	public final static int DEFAULT_HEIGHT = 600;
-	public static Connection conn = null;
-	private static final String driver = "com.mysql.cj.jdbc.Driver";
-	public static String userDB;
-	public static String pass;
-	private static final String url = "jdbc:mysql://localhost:3306/musker";
 	JScrollPane pDisplay;
 	JPanel alertas;
 	User user;
@@ -123,27 +118,6 @@ public class MUsker extends JFrame implements WindowListener{
 		labelAlertas.setForeground(COLORLETRA);
 		labelAlertas.setText("No hay alertas");
 	}
-
-
-	public static void connectToDB() {
-		try {
-			Class.forName(driver);
-			conn = DriverManager.getConnection(url, "root", "root");
-			if(conn != null) {
-				System.out.println("Conexion establecida");
-			}
-		} catch (ClassNotFoundException | SQLException e) {
-			System.out.println("Error al conectar " + e);
-		}
-	}
-	
-	public void disconnectFromDB() {
-		conn = null;
-		if(conn == null) {
-			System.out.println("Conexion terminada");
-		}
-	}
-
 	
 	public JScrollPane getpDisplay() {
 		return pDisplay;
@@ -157,12 +131,10 @@ public class MUsker extends JFrame implements WindowListener{
 
 	@Override
 	public void windowClosed(WindowEvent arg0) {
-		this.disconnectFromDB();
 	}
 
 	@Override
 	public void windowClosing(WindowEvent arg0) {
-		this.disconnectFromDB();
 	}
 
 	@Override

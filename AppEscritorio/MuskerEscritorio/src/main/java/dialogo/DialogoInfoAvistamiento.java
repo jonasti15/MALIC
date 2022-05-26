@@ -33,10 +33,15 @@ public class DialogoInfoAvistamiento extends JDialog implements ActionListener {
     }
 
     private Container crearPanel() {
+        JScrollPane panelScroll=new JScrollPane();
+        panelScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        panelScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         JPanel panel =new JPanel(new BorderLayout(0,0));
+        panel.add(crearPanelBoton(),BorderLayout.SOUTH);
         panel.add(crearPanelInfo(),BorderLayout.CENTER);
-        panel.add(crearPanelBoton(), BorderLayout.SOUTH);
-        return panel;
+        panelScroll.setViewportView(panel);
+
+        return panelScroll;
     }
     private Component crearPanelBoton() {
         JPanel panel =new JPanel();

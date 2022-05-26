@@ -22,6 +22,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.HashMap;
 
 public class ControladorDialogoLogin implements ActionListener {
     PreparedStatement ps = null;
@@ -61,11 +62,7 @@ public class ControladorDialogoLogin implements ActionListener {
                 form.add("username", login.getUsuario().getText());
                 form.add("password", String.valueOf(login.getPassword().getPassword()));
 
-                WebResource webResource = client.resource(REST_SERVICE_URL)
-                        .path("/login");
-                ClientResponse clientResponse = webResource.type(MediaType.APPLICATION_FORM_URLENCODED).post(ClientResponse.class, form);
-                String jsonToken = clientResponse.getEntity(new GenericType<String>() {
-                });
+                String jsonToken = RestController.RESTpostRequestLogin("/login", form);
                 if (!jsonToken.equals("")) {
                     JSONObject obj = null;
                     String access_token = "", refresh_token = "";
@@ -76,15 +73,9 @@ public class ControladorDialogoLogin implements ActionListener {
                     } catch (JSONException e) {
                         System.out.println("Error Parsing tokens");
                     }
-
-                    User user = null;
-                    webResource = client.resource(REST_SERVICE_URL)
-                            .path("/user/username").path(login.getUsuario().getText());
-                    clientResponse = webResource.accept(MediaType.APPLICATION_JSON).header("Authorization", "Bearer " + MUsker.access_token).get(ClientResponse.class);
-                    if (clientResponse.getStatus() == Response.Status.OK.getStatusCode()) {
-                        user = clientResponse.getEntity(new GenericType<User>() {
-                        });
-                    }
+                    HashMap<String, Object> headers = new HashMap<>();
+                    headers.put("Authorization", "Bearer " + MUsker.access_token);
+                    User user = RestController.RESTgetRequest("/user/username/"+login.getUsuario().getText(), headers, User.class);
 
                     if (user != null && user.getTipoUsuario().getTipoUsuarioId() != 3) {
                         switch (user.getTipoUsuario().getTipoUsuarioId()) {

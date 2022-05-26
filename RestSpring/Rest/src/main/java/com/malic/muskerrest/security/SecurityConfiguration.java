@@ -47,9 +47,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.authorizeRequests().antMatchers("/reservas/user").authenticated();
+        http.authorizeRequests().antMatchers("/visitas/add").authenticated();
         http.authorizeRequests().antMatchers(ANY_USER_MATCHERS).permitAll();
-        http.authorizeRequests().anyRequest().authenticated();
+        //http.authorizeRequests().anyRequest().authenticated();
         http.addFilter(customAuthenticationFilter);
         http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
     }

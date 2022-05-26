@@ -15,4 +15,5 @@ public interface ReservaDao {
     int countPersonsasVisita(Long visitaId);
     List<Reserva> getReservasByUserAndFecha(Long userId);
 
+    List<Reserva> getReservasDeVisita(Long id_visita);
 }

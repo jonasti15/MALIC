@@ -13,6 +13,7 @@ import elementos.Animal;
 import elementos.User;
 import elementos.Visita;
 import org.codehaus.jackson.jaxrs.JacksonJaxbJsonProvider;
+import org.codehaus.jackson.map.ObjectMapper;
 import paneles.PanelPrincipal;
 
 import javax.swing.*;
@@ -28,16 +29,11 @@ public class ControladorVisitas {
     JFrame ventana;
     DialogoAnadirVisita dialogoAnadirVisita;
     DialogoEditarVisita dialogoEditarVisita;
-    private static final String REST_SERVICE_URL = "http://localhost:8080";
-    private Client client;
     PanelPrincipal panel;
     public ControladorVisitas(JFrame mUsker, PanelPrincipal panelPrincipal) {
         this.ventana=mUsker;
         this.panel=panelPrincipal;
-        ClientConfig clientConfig = new DefaultClientConfig();
-        clientConfig.getClasses().add(JacksonJaxbJsonProvider.class);
-        clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);  // <----- set the json configuration POJO MAPPING for JSON reponse paring
-        client = Client.create(clientConfig);
+
     }
 
     public void anadirVisita() {
@@ -50,14 +46,8 @@ public class ControladorVisitas {
     }
 
     public void eliminar(Visita visita) {
-        WebResource webResource = client.resource(REST_SERVICE_URL).path("/visitas/delete").path(String.valueOf(visita.getVisitaId()));
-        ClientResponse clientResponse = webResource.type(MediaType.TEXT_PLAIN_TYPE).delete(ClientResponse.class);
+        RestController.RESTdeleteRequest("/visitas/delete/"+visita.getVisitaId(), new HashMap<>());
         panel.getControladorPantallaPrincipal().recargarVisitas();
-        if (clientResponse.getStatus() == Response.Status.OK.getStatusCode()) {
-            System.out.println("El animal ha sido eliminado correctamente.");
-        } else {
-            System.out.println("La llamada no ha sido correcta.");
-        }
     }
     public User[] getListaUsuarios() {
         List<User> lista=getListTrabajadores();
@@ -68,17 +58,12 @@ public class ControladorVisitas {
         return especies;
     }
     public List<User> getListTrabajadores() {
-        WebResource webResource = client.resource(REST_SERVICE_URL)
-                .path("/user/userType/2");
-        ClientResponse clientResponse = webResource.accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
-        if (clientResponse.getStatus() == Response.Status.OK.getStatusCode()) {
-            return clientResponse.getEntity(new GenericType<List<User>>(){});
-        } else {
-            return null;
-        }
+
+        return RestController.RESTgetListRequest("/user/userType/2", new HashMap<>(), User.class);
     }
 
     public List<Visita> getListVisitas() {
+
         return RestController.RESTgetListRequest("/visitas/editables", new HashMap<>(), Visita.class);
     }
 
@@ -90,15 +75,9 @@ public class ControladorVisitas {
         visita.setFecha(fecha);
         visita.setDescripcion(desc);
         visita.setGuia(guia);
-        WebResource webResource = client.resource(REST_SERVICE_URL).path("/visitas/edit");
-        ClientResponse clientResponse = webResource.type(MediaType.APPLICATION_JSON).post(ClientResponse.class, visita);
+        RestController.RESTpostRequest("/visitas/edit", new HashMap<>(), visita, Visita.class);
         panel.getControladorPantallaPrincipal().recargarVisitas();
-        if (clientResponse.getStatus() == Response.Status.OK.getStatusCode()) {
-            System.out.println("Se ha editado un objeto.");
 
-        } else {
-            System.out.println("La llamada no ha sido correcta.");
-        }
     }
 
     public void anadirVisita(Date fecha, User guia, String desc) {
@@ -106,15 +85,8 @@ public class ControladorVisitas {
         visita.setFecha(fecha);
         visita.setDescripcion(desc);
         visita.setGuia(guia);
-        WebResource webResource = client.resource(REST_SERVICE_URL).path("/visitas/add");
-        ClientResponse clientResponse = webResource.type(MediaType.APPLICATION_JSON).post(ClientResponse.class, visita);
+        RestController.RESTpostRequest("/visitas/add", new HashMap<>(), visita, Visita.class);
         panel.getControladorPantallaPrincipal().recargarVisitas();
-        if (clientResponse.getStatus() == Response.Status.OK.getStatusCode()) {
-            System.out.println("Se ha creado un objeto nuevo.");
-
-        } else {
-            System.out.println("La llamada no ha sido correcta.");
-        }
     }
 
 

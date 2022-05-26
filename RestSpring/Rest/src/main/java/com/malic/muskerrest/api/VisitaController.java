@@ -1,8 +1,10 @@
 package com.malic.muskerrest.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.malic.muskerrest.dao.reserva.ReservaDao;
 import com.malic.muskerrest.dao.visita.VisitaDao;
 import com.malic.muskerrest.entities.Animal;
+import com.malic.muskerrest.entities.Reserva;
 import com.malic.muskerrest.entities.User;
 import com.malic.muskerrest.entities.Visita;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,8 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class VisitaController {
     @Autowired
     private VisitaDao visitaDao;
+    @Autowired
+    private ReservaDao reservaDao;
 
     @GetMapping("/all")
     public ResponseEntity<List<Visita>> getAllVisita(){
@@ -93,7 +97,9 @@ public class VisitaController {
     public ResponseEntity<Visita> editAnimal(@PathVariable(value="id")  Long id_visita,
                                              HttpServletResponse response) throws IOException {
         try{
-            visitaDao.deleteVisita(id_visita);
+            List<Reserva> listaRelacionados=reservaDao.getReservasDeVisita(id_visita);
+            listaRelacionados.forEach(v->reservaDao.deleteReserva(v.getReserva_id()));
+         visitaDao.deleteVisita(id_visita);
         }catch(Exception e){
             response.setHeader("error", e.getMessage());
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);

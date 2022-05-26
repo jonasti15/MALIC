@@ -13,4 +13,6 @@ public interface ReservaRepository extends JpaRepository<Reserva, Long> {
     Integer countCantidadPersonas(Long visitaId);
 
     List<Reserva> findReservasByUser_UserIdAndVisita_FechaGreaterThanEqual(Long userId, Date date);
+
+    List<Reserva> findReservasByVisita_VisitaId(Long id_visita);
 }

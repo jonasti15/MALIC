@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
 
 public class DialogoInfoVisita extends JDialog implements ActionListener {
     public final static int DEFAULT_WIDTH = 700;
-    public final static int DEFAULT_HEIGHT = 400;
+    public final static int DEFAULT_HEIGHT = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight()-((int) Toolkit.getDefaultToolkit().getScreenSize().getHeight()/4);
     private static final Color COLORFONDO = new Color(177,216,183);
     private static final Color COLORLETRA = new Color(47, 82, 51);
 

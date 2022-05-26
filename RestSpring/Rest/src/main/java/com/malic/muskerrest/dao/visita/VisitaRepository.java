@@ -1,5 +1,6 @@
 package com.malic.muskerrest.dao.visita;
 
+import com.malic.muskerrest.entities.Reserva;
 import com.malic.muskerrest.entities.Visita;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

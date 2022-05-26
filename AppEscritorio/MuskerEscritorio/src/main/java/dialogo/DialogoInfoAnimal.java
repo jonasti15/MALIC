@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
 
 public class DialogoInfoAnimal extends JDialog implements ActionListener {
     public final static int DEFAULT_WIDTH = 900;
-    public final static int DEFAULT_HEIGHT = 700;
+    public final static int DEFAULT_HEIGHT = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight()-((int) Toolkit.getDefaultToolkit().getScreenSize().getHeight()/4);
     private static final Color COLORFONDO = new Color(177,216,183);
     private static final Color COLORLETRA = new Color(47, 82, 51);
 
@@ -34,15 +34,11 @@ public class DialogoInfoAnimal extends JDialog implements ActionListener {
     }
 
     private Container crearPanel() {
-        JScrollPane panelScroll=new JScrollPane();
-        panelScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        panelScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         JPanel panel =new JPanel(new BorderLayout(0,0));
         panel.add(crearPanelBotones(),BorderLayout.SOUTH);
         panel.add(crearPanelInfo(),BorderLayout.CENTER);
-        panelScroll.setViewportView(panel);
 
-        return panelScroll;
+        return panel;
     }
 
     private Component crearPanelInfo() {

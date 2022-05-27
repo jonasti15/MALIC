@@ -15,11 +15,15 @@ public class Constantes {
     @Column(name = "constante_id")
     private Long constante_id;
 
-    @Column(name = "constante")
-    private Integer constante;
 
     @Column(name = "latidos")
     private Integer latidos;
+
+    @Column(name = "saturacionO2")
+    private Integer saturacionO2;
+
+    @Column(name = "tens_arterial")
+    private Integer tensArterial;
 
     @Column(name = "presion")
     private Integer presion;
@@ -33,23 +37,38 @@ public class Constantes {
     @Column(name = "fecha")
     private Date fecha;
 
-    @ManyToOne
     @JoinColumn(name = "animal_id", nullable = false)
-    private Animal animal;
+    private Long animalId;
 
     public Constantes() {
     }
 
-    public Constantes(Long constante_id, Integer constante, Integer latidos, Integer presion, Integer temperatura,
-                      Integer frrespiracion, Date fecha, Animal animal) {
+    public Constantes(Long constante_id, Integer latidos, Integer saturacionO2, Integer tensArterial, Integer presion, Integer temperatura, Integer frrespiracion, Date fecha, Long animalId) {
         this.constante_id = constante_id;
-        this.constante = constante;
         this.latidos = latidos;
+        this.saturacionO2 = saturacionO2;
+        this.tensArterial = tensArterial;
         this.presion = presion;
         this.temperatura = temperatura;
         this.frrespiracion = frrespiracion;
         this.fecha = fecha;
-        this.animal = animal;
+        this.animalId = animalId;
+    }
+
+    public Integer getSaturacionO2() {
+        return saturacionO2;
+    }
+
+    public void setSaturacionO2(Integer saturacionO2) {
+        this.saturacionO2 = saturacionO2;
+    }
+
+    public Integer getTensArterial() {
+        return tensArterial;
+    }
+
+    public void setTensArterial(Integer tensArterial) {
+        this.tensArterial = tensArterial;
     }
 
     public Long getConstante_id() {
@@ -60,13 +79,6 @@ public class Constantes {
         this.constante_id = constante_id;
     }
 
-    public Integer getConstante() {
-        return constante;
-    }
-
-    public void setConstante(Integer constante) {
-        this.constante = constante;
-    }
 
     public Date getFecha() {
         return fecha;
@@ -76,12 +88,12 @@ public class Constantes {
         this.fecha = fecha;
     }
 
-    public Animal getAnimal() {
-        return animal;
+    public Long getAnimalId() {
+        return animalId;
     }
 
-    public void setAnimal(Animal animal) {
-        this.animal = animal;
+    public void setAnimalId(Long animal) {
+        this.animalId = animal;
     }
 
     public Integer getLatidos() {
@@ -120,13 +132,12 @@ public class Constantes {
     public String toString() {
         return "Constantes{" +
                 "constante_id=" + constante_id +
-                ", constante=" + constante +
                 ", latidos=" + latidos +
                 ", presion=" + presion +
                 ", temperatura=" + temperatura +
                 ", frrespiracion=" + frrespiracion +
                 ", fecha=" + fecha +
-                ", animal=" + animal +
+                ", animal=" + animalId +
                 '}';
     }
 }

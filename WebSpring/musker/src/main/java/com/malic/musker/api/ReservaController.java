@@ -43,15 +43,15 @@ public class ReservaController {
                                        @RequestParam(value = "error", required = false) String error) {
         String returnStr = "/";
 
-        Visita visita = RestController.RESTgetRequestHeaders("/visitas/visita/" + visitaId, new HttpHeaders(), Visita.class);
+        HttpHeaders headers = new HttpHeaders();
+        headers.set(HttpHeaders.AUTHORIZATION, "Bearer " + RestController.getRequest().getSession().getAttribute("access_token").toString());
+
+        Visita visita = RestController.RESTgetRequestHeaders("/visitas/visita/" + visitaId, headers, Visita.class);
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String loggedUsername = authentication.getName();
 
-        HttpHeaders header = new HttpHeaders();
-        header.set(HttpHeaders.AUTHORIZATION, "Bearer " + RestController.getRequest().getSession().getAttribute("access_token").toString());
-
-        User user = RestController.RESTgetRequestHeaders("/user/username/"+loggedUsername, header, User.class);
+        User user = RestController.RESTgetRequestHeaders("/user/username/"+loggedUsername, headers, User.class);
 
         if(user == null){
             error += " Usuario incorrecto";
@@ -69,7 +69,7 @@ public class ReservaController {
         }else{
             model.addAttribute("reserva", reserva);
             model.addAttribute("error", error);
-            int maxPersonas = 10 - RestController.RESTgetRequestHeaders("/reservas/count/"+visitaId, new HttpHeaders(), Integer.class);
+            int maxPersonas = 10 - RestController.RESTgetRequestHeaders("/reservas/count/"+visitaId, headers, Integer.class);
             model.addAttribute("maximo", maxPersonas);
             returnStr = "/reservation";
         }
@@ -106,7 +106,7 @@ public class ReservaController {
 
         // Obtengo el numero de personas que van a acudir a la visita. Si el numero de personas es mayor que 10, no se permite hacer la reserva
         if((reserva.getCantidad_personas() +
-                RestController.RESTgetRequestHeaders("/reservas/count/"+reserva.getVisita().getVisitaId(), new HttpHeaders(), Integer.class)) > MAX_PERSONAS){
+                RestController.RESTgetRequestHeaders("/reservas/count/"+reserva.getVisita().getVisitaId(), header, Integer.class)) > MAX_PERSONAS){
             error = "No pueden ir esa cantidad de personas";
             returnStr = "redirect:/reservas/visita/"+visita.getVisitaId()+"?error="+error;
             return new ModelAndView(returnStr, new ModelMap(model));
@@ -119,7 +119,7 @@ public class ReservaController {
         }
 
         if(error.length() == 0){
-            Reserva reservaCreado = RestController.RESTpostRequest("/reservas/add", new HttpHeaders(), reserva, Reserva.class);
+            Reserva reservaCreado = RestController.RESTpostRequest("/reservas/add", header, reserva, Reserva.class);
             if(reservaCreado != null){
                 error = "";
                 returnStr = "redirect:/";
@@ -138,7 +138,7 @@ public class ReservaController {
 
         Reserva reserva = RestController.RESTgetRequestHeaders("/reservas/reserva/"+reservaId, header, Reserva.class);
 
-        String message = RestController.RESTdeleteRequest("/reservas/delete", reserva, String.class);
+        String message = RestController.RESTdeleteRequest("/reservas/delete", header, reserva, String.class);
 
         return new ModelAndView("redirect:/", new ModelMap(model));
     }

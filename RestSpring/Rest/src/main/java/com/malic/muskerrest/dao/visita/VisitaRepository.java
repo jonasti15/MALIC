@@ -12,11 +12,11 @@ public interface VisitaRepository extends JpaRepository<Visita, Long> {
     List<Visita> findAllByFechaAfterOrderByFechaAsc(Date date);
 
 
-    @Query(value = "SELECT v.* " +
-            "FROM visita v " +
-            "JOIN reserva r on v.visita_id = r.visita_id " +
-            "WHERE v.fecha > CURDATE() " +
-            "GROUP BY v.visita_id " +
-            "HAVING SUM(r.cantidad_personas) < 10 ", nativeQuery =  true)
+    @Query(value = "select v.* " +
+            "from visita v " +
+            "LEFT JOIN reserva r on v.visita_id = r.visita_id " +
+            "where v.fecha > curdate() " +
+            "group by v.visita_id " +
+            "having sum(r.cantidad_personas) < 10 or sum(r.cantidad_personas) IS NULL", nativeQuery =  true)
     List<Visita> visitasDisponibles();
 }

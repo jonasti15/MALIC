@@ -13,7 +13,7 @@ import java.io.IOException;
 @RestController
 @RequestMapping(path = "/images")
 public class FotoController {
-    public final String BASE_PATH = "C:/Users/jon.astigarragaa/OneDrive - Mondragon Unibertsitatea/MU/3. Kurtsoa/2. sehilekoa/PBL/MALIC/RestSpring/Rest/src/main/resources/static";
+    public final String BASE_PATH = "C:/Users/ibail/OneDrive/Escritorio/LANAK/3 MAILA/EBAL2/PBL6/MALIC/RestSpring/Rest/src/main/resources/static";
 
     public static String KEY = "path";
 
@@ -56,7 +56,7 @@ public class FotoController {
     }
 
     @PostMapping("/save")
-    public void saveImage(HttpServletRequest request,
+    public ResponseEntity<String> saveImage(HttpServletRequest request,
                           @RequestBody int [][][] colors) throws IOException {
         String path = BASE_PATH + request.getHeader(KEY);
         int w = colors[1].length;
@@ -77,6 +77,8 @@ public class FotoController {
         String name = outputFile.getName();
         String extension = name.substring(name.lastIndexOf(".") + 1);
         ImageIO.write(image, extension, outputFile);
+
+        return ResponseEntity.ok("saved");
     }
 
 }

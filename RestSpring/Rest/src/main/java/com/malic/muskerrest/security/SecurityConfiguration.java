@@ -28,9 +28,23 @@ import java.util.Arrays;
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     final static int REMEMBER_ME_TIME = 86400;  //1 day
-    private final static String[] ANY_USER_MATCHERS = {
-            "/user/refresh","/user/userType/{userTypeId}", "/user/add", "/animals/**", "/estancias/**", "/consejos/**", "/especies/**", "/news/**",
-            "/visitas/**", "/reservas/**","/recintos/**","/tipoestado/**", "/avistamientos/**","/rabbit/**", "/images/**"};
+
+    // Cualquier usuario
+    private final static String [] ANY_USER_MATCHERS = {
+        "/images/**", "/news/all", "/estancias/shelter", "/especies/**", "/consejos/especie/**", "/avistamientos/add", "/user/add", "/rabbit/**"
+    };
+
+    // Usuarios que estan autenticados
+    private final static String[] AUTHENTICATED_MATCHERS = {
+            "/visitas/all", "/visitas/visita/**", "/user/username/**", "/user/user/**", "/reservas/user", "/reservas/count/**",
+            "/reservas/add", "/reservas/delete", "/reservas/reserva/**"
+    };
+
+    // Usuarios con rol de ADMIN o WORKER
+    private final static String [] ROLE_WORKER_ADMIN_MATCHERS = {
+            "/visitas/**", "/reservas/**", "/animals/**", "/estancias/**",
+            "/tipoestado/**"
+    };
 
     @Autowired
     UserDetailsService userDetailsService;
@@ -47,9 +61,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.authorizeRequests().antMatchers("/visitas/delete/**").authenticated();
         http.authorizeRequests().antMatchers(ANY_USER_MATCHERS).permitAll();
-        //http.authorizeRequests().anyRequest().authenticated();
+        http.authorizeRequests().antMatchers(AUTHENTICATED_MATCHERS).authenticated();
+        http.authorizeRequests().antMatchers(ROLE_WORKER_ADMIN_MATCHERS).hasAnyAuthority("ROLE_WORKER", "ROLE_ADMIN");
         http.addFilter(customAuthenticationFilter);
         http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
     }

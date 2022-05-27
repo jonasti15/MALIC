@@ -39,7 +39,7 @@ public class VisitaController {
     }
     @GetMapping("/editables")
     public ResponseEntity<List<Visita>> getAllVisitaEditables(){
-        List<Visita> visitas = visitaDao.getAllVisitas();
+        List<Visita> visitas = visitaDao.getVisitasEditables();
 
         for(Visita v : visitas){
             v.setGuia(cleanGuia(v.getGuia()));

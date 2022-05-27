@@ -14,6 +14,7 @@ public interface VisitaDao {
     void deleteVisita(Visita visita);
     void addVisita(Visita visita);
     List<Visita> getVisitasDisponibles();
+    List<Visita> getVisitasEditables();
 
 
 }

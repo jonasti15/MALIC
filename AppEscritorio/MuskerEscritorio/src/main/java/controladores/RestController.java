@@ -102,7 +102,7 @@ public class RestController {
         return adevolver;
     }
 
-    public static <T> T RESTpostRequest(String path, HashMap<String, Object> headers, T objToSend, Class<T> returnClass){
+    public static <T, G> G RESTpostRequest(String path, HashMap<String, Object> headers, T objToSend, Class<G> returnClass){
         ClientConfig clientConfig = new DefaultClientConfig();
         clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);  // <----- set the json configuration POJO MAPPING for JSON reponse paring
         client = Client.create(clientConfig);

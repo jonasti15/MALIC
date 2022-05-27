@@ -56,7 +56,7 @@ public class FotoController {
     }
 
     @PostMapping("/save")
-    public void saveImage(HttpServletRequest request,
+    public ResponseEntity<String> saveImage(HttpServletRequest request,
                           @RequestBody int [][][] colors) throws IOException {
         String path = BASE_PATH + request.getHeader(KEY);
         int w = colors[1].length;
@@ -77,6 +77,8 @@ public class FotoController {
         String name = outputFile.getName();
         String extension = name.substring(name.lastIndexOf(".") + 1);
         ImageIO.write(image, extension, outputFile);
+
+        return ResponseEntity.ok("saved");
     }
 
 }

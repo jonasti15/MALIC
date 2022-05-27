@@ -48,5 +48,12 @@ public class VisitaDataAccessService implements VisitaDao{
         return repository.visitasDisponibles();
     }
 
+    @Override
+    public List<Visita> getVisitasEditables() {
+        java.util.Date utilDate = new  java.util.Date();
+        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+        return repository.findAllByFechaAfterOrderByFechaAsc(sqlDate);
+    }
+
 
 }

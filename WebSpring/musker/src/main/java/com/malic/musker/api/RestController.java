@@ -87,8 +87,7 @@ public class RestController {
         return responseEntity.getBody();
     }
 
-    public static <T, G> G RESTdeleteRequest(String requestUrl, T objToSend, Class<G> returnClass) {
-        HttpHeaders headers = new HttpHeaders();
+    public static <T, G> G RESTdeleteRequest(String requestUrl, HttpHeaders headers, T objToSend, Class<G> returnClass) {
         RestTemplate restTemplate = new RestTemplate();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<T> requestEntity = new HttpEntity<>(objToSend, headers);

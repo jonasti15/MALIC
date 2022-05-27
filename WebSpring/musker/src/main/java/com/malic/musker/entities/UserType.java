@@ -14,24 +14,24 @@ public class UserType {
     @GenericGenerator(name="tipo_usuario" , strategy="increment")
     @GeneratedValue(generator = "tipo_usuario")
     @Column(name = "tipo_usuario_id")
-    private Integer tipo_usuario_id;
+    private Integer tipoUsuarioId;
     @Column(name = "descripcion")
     private String descripcion;
 
     public UserType() {
     }
 
-    public UserType(Integer tipo_usuario_id, String descripcion) {
-        this.tipo_usuario_id = tipo_usuario_id;
+    public UserType(Integer tipoUsuarioId, String descripcion) {
+        this.tipoUsuarioId = tipoUsuarioId;
         this.descripcion = descripcion;
     }
 
-    public Integer getTipo_usuario_id() {
-        return tipo_usuario_id;
+    public Integer getTipoUsuarioId() {
+        return tipoUsuarioId;
     }
 
-    public void setTipo_usuario_id(Integer tipo_usuario_id) {
-        this.tipo_usuario_id = tipo_usuario_id;
+    public void setTipoUsuarioId(Integer tipoUsuarioId) {
+        this.tipoUsuarioId = tipoUsuarioId;
     }
 
     public String getDescripcion() {

@@ -99,7 +99,7 @@ public class ControladorAnimales  {
         }
         HashMap<String,Object> headers=new HashMap<>();
         headers.put("path", pathRest);
-        RestController.RESTpostRequest("/images/save", headers, colors, int[][][].class);
+        RestController.RESTpostRequest("/images/save", headers, colors, String.class);
     }
 
 

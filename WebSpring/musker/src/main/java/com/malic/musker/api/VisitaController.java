@@ -22,7 +22,10 @@ public class VisitaController {
         String error = "";
         String returnStr = "/";
 
-        List<Visita> visitas = RestController.RESTgetRequestListHeaders("/visitas/all", new HttpHeaders(), Visita.class);
+        HttpHeaders headers = new HttpHeaders();
+        headers.set(HttpHeaders.AUTHORIZATION, "Bearer " + RestController.getRequest().getSession().getAttribute("access_token").toString());
+
+        List<Visita> visitas = RestController.RESTgetRequestListHeaders("/visitas/all", headers, Visita.class);
 
         if(visitas == null){
             error = "Error inesperado";

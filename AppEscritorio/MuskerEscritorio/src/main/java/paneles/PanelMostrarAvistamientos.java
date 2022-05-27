@@ -8,6 +8,7 @@ import modelotablas.ModeloTablaAvistamientos;
 import renderertablas.RenderTablaAvistamientos;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class PanelMostrarAvistamientos extends JScrollPane {
     JTable tabla;
@@ -16,20 +17,22 @@ public class PanelMostrarAvistamientos extends JScrollPane {
     RenderTablaAvistamientos renderer;
     JFrame MUsker;
     ControladorAlertas controlador;
-    public PanelMostrarAvistamientos(){
+    public PanelMostrarAvistamientos(ControladorAlertas controlador){
+        this.controlador=controlador;
         this.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         this.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         this.renderer=new RenderTablaAvistamientos();
-        this.tablaModel=new ModeloTablaAvistamientos();
+        this.tablaModel=new ModeloTablaAvistamientos(controlador.getAvistamientos());
         this.colum=new ModeloColumnasTablaAvistamientos(renderer);
 
         tabla = new JTable(tablaModel, colum);
+        tabla.setBackground(Color.white);
         tabla.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 int row = tabla.rowAtPoint(evt.getPoint());
                 Avistamiento alerta=tablaModel.getAvistamiento(row);
-                DialogoInfoAvistamiento dialogoInfoAnimal=new DialogoInfoAvistamiento(MUsker,"Avistamiento: "+alerta.getEspecie(),false, alerta);
+                DialogoInfoAvistamiento dialogoInfoAvistamiento=new DialogoInfoAvistamiento(MUsker,"Avistamiento: "+alerta.getEspecie(),false, alerta,controlador );
             }
         });
         tabla.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);

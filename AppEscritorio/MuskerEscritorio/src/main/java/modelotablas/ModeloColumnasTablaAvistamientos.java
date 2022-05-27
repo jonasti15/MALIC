@@ -15,7 +15,6 @@ public class ModeloColumnasTablaAvistamientos extends DefaultTableColumnModel {
         this.addColumn(crearColumna("Descripcion", 2, 100));
         this.addColumn(crearColumna("Especie", 3, 100));
         this.addColumn(crearColumna("Localizacion", 3, 100));
-        this.addColumn(crearColumna("Usuario", 3, 100));
 
     }
 

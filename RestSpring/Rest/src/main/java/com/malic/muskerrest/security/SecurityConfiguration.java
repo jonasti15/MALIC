@@ -30,8 +30,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     final static int REMEMBER_ME_TIME = 86400;  //1 day
     private final static String[] ANY_USER_MATCHERS = {
             "/user/refresh","/user/userType/{userTypeId}", "/user/add", "/animals/**", "/estancias/**", "/consejos/**", "/especies/**", "/news/**",
-            "/visitas/**", "/reservas/**","/recintos/**","/tipoestado/**"};
-
+            "/visitas/**", "/reservas/**","/recintos/**","/tipoestado/**", "/avistamientos/**","/rabbit/**", "/images/**"};
 
     @Autowired
     UserDetailsService userDetailsService;
@@ -48,9 +47,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.authorizeRequests().antMatchers("/reservas/user").authenticated();
+        http.authorizeRequests().antMatchers("/visitas/delete/**").authenticated();
         http.authorizeRequests().antMatchers(ANY_USER_MATCHERS).permitAll();
-        http.authorizeRequests().anyRequest().authenticated();
+        //http.authorizeRequests().anyRequest().authenticated();
         http.addFilter(customAuthenticationFilter);
         http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
     }

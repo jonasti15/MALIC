@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="include.html :: headerfiles">
+    <title id="Ptitle" th:text="#{avistamiento.avistamiento}"></title>
+</head>
+
+<body>
+    <header th:replace="include.html :: headercontent"></header>
+    <h4 th:text="${error}" class="container errorMsg"></h4>
+    <div class="container rounded bg-white mt-5 mb-5 center">
+        <div class="row justify-content-center p-3 createNew-div">
+            <div class="col-md-5 border bg-white rounded">
+                <div class="p-3 py-5 justify-content-center">
+                    <h4 class="text-right" th:text="#{avistamiento.avistamiento}"></h4>
+                    <form name="user-profile-form" th:object="${avistamiento}" th:action="@{/avistamientos/add}" method="post">
+                        <div class="row mt-3">
+                            <div class="col-md-12 mb-3"><label class="labels" th:text="#{avistamiento.descripcion}"></label><textarea
+                                    class="form-control" th:field="*{descripcion}" placeholder="" style="height:100%;"
+                                    required></textarea></div>
+                        </div>
+                        <div class="col-md-12 mb-3"><label class="labels" th:text="#{avistamiento.localizacion}"></label><textarea
+                                class="form-control" th:field="*{localizacion}" placeholder="" style="height:100%;"
+                                required></textarea></div>
+                        <div class="col-md-4">
+                            <span class="labels" th:text="#{avistamiento.especie}"></span>
+                            <select class="form-select" name="especieId">
+                                <optgroup label="Select specie">
+                                    <option th:if="${selectedEsp == '-'}" selected value="-" text="-"></option>
+                                    <option th:unless="${selectedEsp == '-'}" value="-" text="-"></option>
+                                    <option th:value="${especie.especieId}"
+                                            th:text="${especie.descripcion}"
+                                            th:if="${selectedEsp == especie.descripcion}" selected
+                                            th:each="especie : ${especies}"></option>
+                                    <option th:value="${especie.especieId}"
+                                            th:text="${especie.descripcion}"
+                                            th:unless="${selectedEsp == especie.descripcion}"
+                                            th:each="especie : ${especies}"></option>
+                                </optgroup>
+                            </select>
+                        </div>
+                        <div class="mt-5 text-center">
+                            <button class="btn salmon" type="submit" th:text="#{avistamiento.crear}"></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-5 border bg-white rounded">
+                <div class="p-3 py-5 justify-content-center">
+                    <h4 class="text-right" th:text="#{avistamiento.noidea}"></h4>
+                    <form name="user-profile-form" th:action="@{/avistamientos/foto}" enctype="multipart/form-data" method="post">
+                        <div class="upload-img-div d-flex justify-content-start">
+                            <input type="file" class="custom-file-input" name="img" id="img" required>
+                        </div>
+                        <div class="mt-5 text-center">
+                            <button class="btn salmon" type="submit" th:text="#{avistamiento.foto}"></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer th:replace="include.html :: footercontent"></footer>
+</body>
+
+</html>

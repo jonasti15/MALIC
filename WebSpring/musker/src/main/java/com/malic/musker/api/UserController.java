@@ -15,6 +15,8 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.security.SecureRandom;
+
 @Controller
 @RequestMapping(path="/user")
 public class UserController {
@@ -28,7 +30,8 @@ public class UserController {
 
         BCryptPasswordEncoder encrypt = new BCryptPasswordEncoder(SecurityConfiguration.ENCRYPT_STRENGTH);
         user.setPassword(encrypt.encode(request.getParameter("password")));
-        user.setTipo_usuario(new UserType(3, "USUARIO"));
+        user.setTipoUsuario(new UserType(3, "USUARIO"));
+        setRandomProfile(user);
 
         if(!passwordsMatch(request)){
             error = "Password mismatch ";
@@ -44,7 +47,7 @@ public class UserController {
             returnStr = "redirect:/login";
             String uri = "/user/add";
             try{
-                user = RestController.RESTpostRequest(uri, user, User.class);
+                user = RestController.RESTpostRequest(uri, new HttpHeaders(), user, User.class);
             }catch (HttpClientErrorException e){
                 if(e.getMessage().contains("username")){
                     error = error + "Username already in use ";
@@ -80,7 +83,7 @@ public class UserController {
             model.addAttribute("error", error);
             return "userProfile";
         }else{
-            return "/";
+            return "index";
         }
     }
 
@@ -114,12 +117,13 @@ public class UserController {
         }
 
         user.setFecha_nacimiento(bdUser.getFecha_nacimiento());
-        user.setTipo_usuario(bdUser.getTipo_usuario());
+        user.setTipoUsuario(bdUser.getTipoUsuario());
+        user.setProfileImg(bdUser.getProfileImg());
 
         if(error.length() == 0){
             String uri = "/user/add";
             try{
-                user = RestController.RESTpostRequest(uri, user, User.class);
+                user = RestController.RESTpostRequest(uri, new HttpHeaders(), user, User.class);
             }catch (HttpClientErrorException e){
                 if(e.getMessage().contains("username")){
                     error = error + "Username already in use ";
@@ -151,6 +155,12 @@ public class UserController {
             match = false;
         }
         return match;
+    }
+
+    private void setRandomProfile(User user) {
+        SecureRandom rand = new SecureRandom();
+        int image = rand.nextInt(13);
+        user.setProfileImg("/images/userProfiles/"+image+".png");
     }
 
 }

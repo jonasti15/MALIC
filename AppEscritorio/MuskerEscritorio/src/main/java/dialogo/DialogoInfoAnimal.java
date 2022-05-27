@@ -2,6 +2,7 @@ package dialogo;
 
 import controladores.ControladorAnimales;
 import elementos.Animal;
+import elementos.Estancia;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,7 +11,7 @@ import java.awt.event.ActionListener;
 
 public class DialogoInfoAnimal extends JDialog implements ActionListener {
     public final static int DEFAULT_WIDTH = 900;
-    public final static int DEFAULT_HEIGHT = 700;
+    public final static int DEFAULT_HEIGHT = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight()-((int) Toolkit.getDefaultToolkit().getScreenSize().getHeight()/4);
     private static final Color COLORFONDO = new Color(177,216,183);
     private static final Color COLORLETRA = new Color(47, 82, 51);
 
@@ -41,13 +42,19 @@ public class DialogoInfoAnimal extends JDialog implements ActionListener {
     }
 
     private Component crearPanelInfo() {
-        JPanel panel =new JPanel(new GridLayout(5,1));
+        JPanel panel =new JPanel(new GridLayout(7,1));
         panel.setBackground(COLORFONDO);
-        panel.add(anadirDato("ID: "+animal.getAnimal_id()));
+        panel.add(anadirDato("ID: "+animal.getAnimalId()));
         panel.add(anadirDato("Especie: "+animal.getEspecie().getDescripcion()));
         panel.add(anadirDato("Clase: "+animal.getEspecie().getClase().getDescripcion()));
         panel.add(anadirDato("Estado: "+animal.getEstado().getDescripcion()));
         panel.add(anadirDato("Recinto: "+animal.getRecinto_id().getDescripcion()));
+        Estancia estancia=controlador.getEstanciaByAnimalId(animal.getAnimalId());
+        if(estancia!=null){
+            panel.add(anadirDato("Motivo de entrada: "+estancia.getMotivo_entrada()));
+            panel.add(anadirDato("Fecha de entrada: "+estancia.getFechaString()));
+        }
+
 
         return panel;
     }
@@ -84,7 +91,6 @@ public class DialogoInfoAnimal extends JDialog implements ActionListener {
         String accion = evt.getActionCommand();
         switch(accion) {
             case "editar":
-                this.dispose();
                 controlador.editar(this.animal);
                 this.dispose();
                 break;

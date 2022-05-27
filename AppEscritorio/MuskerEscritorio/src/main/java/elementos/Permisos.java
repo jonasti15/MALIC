@@ -2,7 +2,7 @@ package elementos;
 
 public enum Permisos {
 
-	WORKER('W');
+	WORKER('W'), ADMIN('A');
 	
 	char inicial;
 	
@@ -14,6 +14,8 @@ public enum Permisos {
 		switch(nombre) {
 		case "W":
 		case "worker": return WORKER;
+		case "A":
+		case "admin": return ADMIN;
 
 		default: return null;
 		}

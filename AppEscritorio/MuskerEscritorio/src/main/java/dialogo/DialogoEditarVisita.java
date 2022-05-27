@@ -17,7 +17,7 @@ import java.util.Calendar;
 public class DialogoEditarVisita extends JDialog implements ActionListener {
 
     public final static int DEFAULT_WIDTH = 900;
-    public final static int DEFAULT_HEIGHT = 900;
+    public final static int DEFAULT_HEIGHT = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight()-((int) Toolkit.getDefaultToolkit().getScreenSize().getHeight()/4);
     private static final Color COLORFONDO = new Color(177,216,183);
     private static final Color COLORLETRA = new Color(47, 82, 51);
     ControladorVisitas controlador;
@@ -42,11 +42,15 @@ public class DialogoEditarVisita extends JDialog implements ActionListener {
     }
 
     private Container crearPanel() {
+        JScrollPane panelScroll=new JScrollPane();
+        panelScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        panelScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         JPanel panel =new JPanel(new BorderLayout(0,0));
         panel.add(crearPanelBotones(),BorderLayout.SOUTH);
         panel.add(crearPanelInfo(),BorderLayout.CENTER);
+        panelScroll.setViewportView(panel);
 
-        return panel;
+        return panelScroll;
     }
 
     private Component crearPanelInfo() {
@@ -114,6 +118,16 @@ public class DialogoEditarVisita extends JDialog implements ActionListener {
                 c1.set(Calendar.YEAR, datePicker.getModel().getYear());
                 java.util.Date date=c1.getTime();
                 Date datesql=new Date(date.getTime());
+
+                if(desc.getText().equals("")||desc==null){
+                    JOptionPane.showMessageDialog(null, "Tienes que rellenar todos los campos!","Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                java.util.Date hoy=new java.util.Date();
+                Date hoySql=new Date(hoy.getTime());
+                if(date.before(hoySql)){
+                    JOptionPane.showMessageDialog(null, "La fecha no puede ser anterior a la de hoy!","Error", JOptionPane.ERROR_MESSAGE);
+                }
                 controlador.editarVisita(this.visita.getVisitaId(),datesql, (User) this.txUser.getSelectedItem(), desc.getText());
                 this.dispose();
                 break;

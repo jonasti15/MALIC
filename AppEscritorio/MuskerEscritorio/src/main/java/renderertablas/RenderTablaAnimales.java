@@ -1,5 +1,7 @@
 package renderertablas;
 
+import elementos.Animal;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
@@ -22,9 +24,11 @@ public class RenderTablaAnimales extends DefaultTableCellRenderer {
             case 2:
                 componente.setHorizontalAlignment(CENTER);
                 componente.setFont(new Font("Serif", Font.PLAIN, 20));
+
             case 3:
                 componente.setHorizontalAlignment(CENTER);
                 componente.setFont(new Font("Serif", Font.PLAIN, 20));
+
         }
 
         return componente;

@@ -8,4 +8,7 @@ import java.util.List;
 
 public interface AnimalRepository extends JpaRepository<Animal, Long> {
     List<Animal> findAll();
+
+    @Query(value = "SELECT * FROM animal a ORDER BY a.animal_id DESC LIMIT 1", nativeQuery =  true)
+    Animal findLastAnimal();
 }

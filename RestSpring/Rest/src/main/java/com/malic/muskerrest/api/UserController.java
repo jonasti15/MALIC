@@ -101,11 +101,13 @@ public class UserController {
                 DecodedJWT decodedJWT = verifier.verify(refresh_token);
                 String username = decodedJWT.getSubject();
                 User user = userDao.getUserByUsername(username);
+                List<String> authorities = new ArrayList<>();
+                authorities.add("ROLE_" + user.getTipoUsuario().getDescripcion());
                 String access_token = JWT.create()
                         .withSubject(user.getUsername())
                         .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
                         .withIssuer(request.getRequestURL().toString())
-                        .withClaim("roles", user.getTipoUsuario().getDescripcion())
+                        .withClaim("roles", authorities)
                         .sign(algorithm);
 
                 Map<String, String> tokens = new HashMap<>();
@@ -115,12 +117,12 @@ public class UserController {
                 response.setContentType(APPLICATION_JSON_VALUE);
                 new ObjectMapper().writeValue(response.getOutputStream(), tokens);
             }catch(Exception e){
-                System.out.println("Error logging in: " + e.getMessage());
+                System.out.println("Refresh token expired: " + e.getMessage());
                 response.setHeader("error", e.getMessage());
                 response.setStatus(HttpServletResponse.SC_FORBIDDEN);
 
                 Map<String, String> error = new HashMap<>();
-                error.put("error_message", e.getMessage());
+                error.put("error_message", "Refresh token expired");
 
                 response.setContentType(APPLICATION_JSON_VALUE);
                 new ObjectMapper().writeValue(response.getOutputStream(), error);
@@ -128,13 +130,6 @@ public class UserController {
         }else{
             throw new RuntimeException("Refresh Token is missing");
         }
-    }
-
-    @GetMapping("/prueba")
-    public void pruebas(){
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
-        System.out.println("hola");
     }
 
 

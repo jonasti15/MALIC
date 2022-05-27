@@ -49,6 +49,7 @@ public class PublisherConstantes {
             constantes.setPresion(randomNum);
             randomNum = ThreadLocalRandom.current().nextInt(30, 100 + 1);
             constantes.setTemperatura(randomNum);
+            constantes.setEstado("OK");
 
             String mensaje = controllerJSON.generateConstantesJSON(constantes);
             channel.basicPublish(EXCHANGE_NAME, "", properties, mensaje.getBytes(StandardCharsets.UTF_8));

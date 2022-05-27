@@ -29,7 +29,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final static String[] ANY_USER_MATCHERS = {
             "/","/index","/home","/login","/login_process","/logout", "/aboutUs","/user/add",
-            "/css/**","/images/**","/js/**", "../language/**", "/search/animals", "/search/species", "/especies/**", "/visitas/**", "/reservas/**"};
+            "/css/**","/images/**","/js/**", "../language/**", "/search/animals", "/search/species", "/especies/**",
+            "/visitas/**", "/reservas/**", "/avistamientos/**"};
 
     @Autowired
     UserDetailsService userDetailsService;

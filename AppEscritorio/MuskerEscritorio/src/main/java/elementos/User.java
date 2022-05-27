@@ -1,8 +1,11 @@
 package elementos;
 
+
 import javax.persistence.*;
 import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
+import java.io.File;
+import java.sql.Date;
+import java.util.List;
 
 @Entity
 @Table(name= "usuario")
@@ -25,25 +28,22 @@ public class User {
     private String username;
     @Column(name = "password")
     private String password;
+    @Column(name = "profile_img")
+    private String profileImg;
 
     @ManyToOne
     @JoinColumn(name = "tipo_usuario_id", nullable = false)
     private UserType tipoUsuario;
 
-    public User (String username, String password, UserType tipoUsuario){
-        this.username = username;
-        this.password = password;
-        this.tipoUsuario = tipoUsuario;
-    }
-
     public User(HttpServletRequest request){
-        this.tipoUsuario = new UserType(3, "USUARIO");
+        this.tipoUsuario = new UserType(1, "USER");
         this.nombre = (String) request.getAttribute("name");
         this.apellido = (String) request.getAttribute("surname");
         this.email = (String) request.getAttribute("email");
         this.username = (String) request.getAttribute("username");
         this.password = String.valueOf(request.getAttribute("password").hashCode());
         this.fecha_nacimiento = (Date) request.getAttribute("birthDate");
+        this.profileImg = (String) request.getAttribute("profile_img");
     }
 
     public User() {}
@@ -80,8 +80,8 @@ public class User {
         return userId;
     }
 
-    public void setUserId(Long usuario_id) {
-        this.userId = usuario_id;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public String getNombre() {
@@ -108,12 +108,20 @@ public class User {
         this.fecha_nacimiento = fecha_nacimiento;
     }
 
+    public String getProfileImg() {
+        return profileImg;
+    }
+
+    public void setProfileImg(String profileImg) {
+        this.profileImg = profileImg;
+    }
+
     public UserType getTipoUsuario() {
         return tipoUsuario;
     }
 
-    public void setTipoUsuario(UserType tipoUsuario) {
-        this.tipoUsuario = tipoUsuario;
+    public void setTipoUsuario(UserType tipo_usuario) {
+        this.tipoUsuario = tipo_usuario;
     }
 
     @Override

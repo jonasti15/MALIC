@@ -17,13 +17,15 @@ public class ControladorPantallaPrincipal implements ActionListener {
     JFrame MUsker;
     ControladorAnimales controlador;
     ControladorVisitas controladorVisitas;
+    ControladorAlertas controladorAlertas;
     JPanel actual;
 
-    public ControladorPantallaPrincipal(PanelPrincipal panel, MUsker mUsker, ControladorAnimales controlador, ControladorVisitas controladorVisitas) {
+    public ControladorPantallaPrincipal(PanelPrincipal panel, MUsker mUsker, ControladorAnimales controlador, ControladorVisitas controladorVisitas, ControladorAlertas controladorAlertas) {
         this.panelActual = panel;
         this.MUsker=mUsker;
         this.controlador=controlador;
         this.controladorVisitas=controladorVisitas;
+        this.controladorAlertas=controladorAlertas;
 
     }
     void recargarVisitas(){
@@ -35,7 +37,7 @@ public class ControladorPantallaPrincipal implements ActionListener {
         this.panelActual.setViewportView(actual);
     }
     void recargarAlertas(){
-        actual = new PanelAlertas(this, this.MUsker);
+        actual = new PanelAlertas(this, this.MUsker, controladorAlertas);
         this.panelActual.setViewportView(actual);
     }
 
@@ -49,7 +51,7 @@ public class ControladorPantallaPrincipal implements ActionListener {
                 this.panelActual.setViewportView(actual);
                 break;
             case "alertas":
-                actual = new PanelAlertas(this, this.MUsker);
+                actual = new PanelAlertas(this, this.MUsker, controladorAlertas);
                 this.panelActual.setViewportView(actual);
                 break;
             case "mostrarVisitas":

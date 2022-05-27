@@ -21,12 +21,23 @@ public class Especie {
     @JoinColumn(name = "clase_id", nullable = false)
     private Clase clase;
 
+    @Column(name = "path")
+    private String path;
+
     public Especie(){}
 
-    public Especie(Long especieId, String descripcion, Clase clase) {
+    public Especie(Long especieId, String descripcion, String path, Clase clase) {
         this.especieId = especieId;
         this.descripcion = descripcion;
+        this.path = path;
         this.clase = clase;
+    }
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 
     public Long getEspecieId() {

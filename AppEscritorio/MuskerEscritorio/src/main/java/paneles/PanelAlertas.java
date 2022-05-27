@@ -1,5 +1,6 @@
 package paneles;
 
+import controladores.ControladorAlertas;
 import controladores.ControladorPantallaPrincipal;
 import elementos.Visita;
 
@@ -20,10 +21,12 @@ public class PanelAlertas extends JPanel implements ActionListener {
     JButton botonMostrarAlertas, botonMostrarAvistamientos;
     JScrollPane panelContenido;
     JLabel pagina;
+    ControladorAlertas controladorAlertas;
 
-    public PanelAlertas(ControladorPantallaPrincipal controladorPantallaPrincipal, JFrame MUsker){
+    public PanelAlertas(ControladorPantallaPrincipal controladorPantallaPrincipal, JFrame MUsker, ControladorAlertas controladorAlertas){
         this.setLayout(new BorderLayout(0,0));
         this.listaAnimales=new ArrayList<>();
+        this.controladorAlertas=controladorAlertas;
         this.controladorPantallaPrincipal=controladorPantallaPrincipal;
         this.setBackground(COLORFONDO);
         this.setPreferredSize(new Dimension(2,2));
@@ -52,8 +55,8 @@ public class PanelAlertas extends JPanel implements ActionListener {
     }
 
     private Component crearPanelMostrarAlertas() {
-        this.panelMostrarAlertas=new PanelMostrarAlertas();
-        this.panelMostrarAvistamientos=new PanelMostrarAvistamientos();
+        this.panelMostrarAlertas=new PanelMostrarAlertas(controladorAlertas);
+        this.panelMostrarAvistamientos=new PanelMostrarAvistamientos(controladorAlertas);
         return panelMostrarAlertas;
 
     }
@@ -63,7 +66,7 @@ public class PanelAlertas extends JPanel implements ActionListener {
 
         double tamanopantalla= Toolkit.getDefaultToolkit().getScreenSize().getWidth();
         double tamanoseparador=(tamanopantalla/2)-40;
-        pagina=new JLabel("Alertas");
+        pagina=new JLabel("Alertas     ");
         pagina.setForeground(COLORLETRA);
         barraBotones.add(pagina);
         barraBotones.addSeparator(new Dimension((int) tamanoseparador,0));
@@ -102,6 +105,7 @@ public class PanelAlertas extends JPanel implements ActionListener {
             case "mostrarAvistamientos":
                 this.botonMostrarAvistamientos.setEnabled(false);
                 this.botonMostrarAlertas.setEnabled(true);
+                panelMostrarAvistamientos=new PanelMostrarAvistamientos(controladorAlertas);
                 this.panelContenido.setViewportView(panelMostrarAvistamientos);
                 pagina.setText("Avistamientos");
 
@@ -109,8 +113,9 @@ public class PanelAlertas extends JPanel implements ActionListener {
             case "mostrarAlertas":
                 this.botonMostrarAvistamientos.setEnabled(true);
                 this.botonMostrarAlertas.setEnabled(false);
+                panelMostrarAlertas= new PanelMostrarAlertas(controladorAlertas);
                 this.panelContenido.setViewportView(panelMostrarAlertas);
-                pagina.setText("Alertas");
+                pagina.setText("Alertas     ");
                 break;
 
         }

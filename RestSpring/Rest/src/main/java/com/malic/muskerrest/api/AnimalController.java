@@ -10,10 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.PathParam;
 import java.io.IOException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -32,6 +30,11 @@ public class AnimalController {
     @GetMapping("/animal/{id}")
     public ResponseEntity<Animal> getAnimal(@PathVariable int id){
         return ResponseEntity.ok(animalDao.getAnimal(id));
+    }
+
+    @GetMapping("/last")
+    public ResponseEntity<Animal> getLastAnimal(){
+        return ResponseEntity.ok(animalDao.findLastAnimal());
     }
 
     @PostMapping("/add")
@@ -70,6 +73,7 @@ public class AnimalController {
 
         return ResponseEntity.ok(animal);
     }
+
     @RequestMapping(value="/delete/{id}", method=RequestMethod.DELETE)
     public ResponseEntity<Animal> editAnimal(@PathVariable(value="id")  Long id_animal,
                                              HttpServletResponse response) throws IOException {

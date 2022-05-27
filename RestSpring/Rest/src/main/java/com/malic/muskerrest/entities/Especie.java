@@ -18,15 +18,19 @@ public class Especie {
     @Column(name = "descripcion")
     private String descripcion;
 
+    @Column(name = "path")
+    private String path;
+
     @ManyToOne
     @JoinColumn(name = "clase_id", nullable = false)
     private Clase clase;
 
     public Especie(){}
 
-    public Especie(Long especieId, String descripcion, Clase clase) {
+    public Especie(Long especieId, String descripcion, String path, Clase clase) {
         this.especieId = especieId;
         this.descripcion = descripcion;
+        this.path = path;
         this.clase = clase;
     }
 
@@ -44,6 +48,14 @@ public class Especie {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 
     public Clase getClase() {

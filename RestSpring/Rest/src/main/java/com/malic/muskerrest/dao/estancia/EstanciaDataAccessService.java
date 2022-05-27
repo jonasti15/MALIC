@@ -46,4 +46,9 @@ public class EstanciaDataAccessService implements EstanciaDao{
     public List<Estancia> getActiveEstancias() {
         return repository.getEstanciasByFechaSalidaIsNull();
     }
+
+    @Override
+    public Estancia getEstanciaByAnimalId(long id) {
+        return repository.getEstanciaByAnimal_AnimalIdAndFechaSalidaIsNull(id);
+    }
 }

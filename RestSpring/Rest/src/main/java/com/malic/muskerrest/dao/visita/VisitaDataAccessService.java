@@ -1,5 +1,6 @@
 package com.malic.muskerrest.dao.visita;
 
+import com.malic.muskerrest.entities.Reserva;
 import com.malic.muskerrest.entities.Visita;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,4 +47,6 @@ public class VisitaDataAccessService implements VisitaDao{
     public List<Visita> getVisitasDisponibles() {
         return repository.visitasDisponibles();
     }
+
+
 }

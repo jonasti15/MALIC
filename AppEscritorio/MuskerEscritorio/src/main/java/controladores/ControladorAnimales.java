@@ -13,27 +13,29 @@ import dialogo.DialogoEditarAnimal;
 import elementos.*;
 import paneles.PanelPrincipal;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ControladorAnimales  {
     JFrame ventana;
     DialogoAnadirAnimal dialogoAnadirAnimal;
     DialogoEditarAnimal dialogoEditarAnimal;
-    private static final String REST_SERVICE_URL = "http://localhost:8080";
-    private  Client client;
     PanelPrincipal panel;
     public ControladorAnimales(JFrame mUsker, PanelPrincipal panelPrincipal) {
         this.ventana=mUsker;
         this.panel=panelPrincipal;
-        ClientConfig clientConfig = new DefaultClientConfig();
-        clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);  // <----- set the json configuration POJO MAPPING for JSON reponse paring
-        client = Client.create(clientConfig);
     }
 
     public void anadirAnimal() {
@@ -41,29 +43,63 @@ public class ControladorAnimales  {
     }
 
     public void editar(Animal animal) {
-        dialogoEditarAnimal=new DialogoEditarAnimal(ventana, "Editar "+animal.getEspecie().getDescripcion()+" ID: "+ animal.getAnimal_id(),true, this, animal);
+        dialogoEditarAnimal=new DialogoEditarAnimal(ventana, "Editar "+animal.getEspecie().getDescripcion()+" ID: "+ animal.getAnimalId(),true, this, animal);
 
     }
     public List<Animal> getAnimales(){
-        WebResource webResource = client.resource(REST_SERVICE_URL)
-                .path("/animals/all");
-        ClientResponse clientResponse = webResource.accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
-        if (clientResponse.getStatus() == Response.Status.OK.getStatusCode()) {
-            return clientResponse.getEntity(new GenericType<List<Animal>>(){});
-        } else {
-            return null;
+        List<Animal> lista=new ArrayList<>();
+        List<Estancia>listaEstancias=getEstanciasActivas();
+        for(Estancia e:listaEstancias){
+            lista.add(e.getAnimal());
         }
+        return lista;
+    }
+    public List<Estancia> getEstanciasActivas(){
+        return RestController.RESTgetListRequest("/estancias/shelter", new HashMap<>(),Estancia.class);
     }
 
+
     public void eliminar(Animal animal) {
-        WebResource webResource = client.resource(REST_SERVICE_URL).path("/animals/delete").path(String.valueOf(animal.getAnimal_id()));
-        ClientResponse clientResponse = webResource.type(MediaType.TEXT_PLAIN_TYPE).delete(ClientResponse.class);
+        Estancia estancia=getEstanciaByAnimalId(animal.getAnimalId());
+        java.util.Date hoy =new java.util.Date();
+        Date hoySql=new Date(hoy.getTime());
+        estancia.setFechaSalida(hoySql);
+        RestController.RESTpostRequest("/estancias/add", new HashMap<>(),estancia ,Estancia.class );
         panel.getControladorPantallaPrincipal().recargarAnimales();
-        if (clientResponse.getStatus() == Response.Status.OK.getStatusCode()) {
-            System.out.println("El animal ha sido eliminado correctamente.");
-        } else {
-            System.out.println("La llamada no ha sido correcta.");
+
+    }
+    public void sendPhoto(String pathRest, String pathReal) throws IOException {
+        int[][][] colors = null;
+
+        File f = new File(pathReal);
+        BufferedImage bimg = ImageIO.read(f);
+        int w = bimg.getWidth();
+        int h = bimg.getHeight();
+
+        int[] dataBuffInt = bimg.getRGB(0, 0, w, h, null, 0, w);
+
+        colors = new int[h][w][3];
+
+        int i = 0;
+        int j = 0;
+        int k = 0;
+
+        for (Integer in : dataBuffInt) {
+            Color c = new Color(in);
+            colors[k][j][0] = c.getRed();
+            colors[k][j][1] = c.getGreen();
+            colors[k][j][2] = c.getBlue();
+
+            j++;
+
+            if (j == w) {
+                j = 0;
+                k++;
+            }
         }
+        HashMap<String,Object> headers=new HashMap<>();
+        headers.put("path", pathRest);
+        RestController.RESTpostRequest("/images/save", headers, colors, int[][][].class);
     }
 
 
@@ -77,14 +113,7 @@ public class ControladorAnimales  {
         return especies;
     }
     public List<Especie> getListEspecies() {
-        WebResource webResource = client.resource(REST_SERVICE_URL)
-                .path("/especies/all");
-        ClientResponse clientResponse = webResource.accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
-        if (clientResponse.getStatus() == Response.Status.OK.getStatusCode()) {
-            return clientResponse.getEntity(new GenericType<List<Especie>>(){});
-        } else {
-            return null;
-        }
+        return RestController.RESTgetListRequest("/especies/all", new HashMap<>(), Especie.class);
     }
 
 
@@ -98,14 +127,7 @@ public class ControladorAnimales  {
         return estados;
     }
     public List<TipoEstado> getListEstados() {
-        WebResource webResource = client.resource(REST_SERVICE_URL)
-                .path("/tipoestado/all");
-        ClientResponse clientResponse = webResource.accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
-        if (clientResponse.getStatus() == Response.Status.OK.getStatusCode()) {
-            return clientResponse.getEntity(new GenericType<List<TipoEstado>>(){});
-        } else {
-            return null;
-        }
+        return  RestController.RESTgetListRequest("/tipoestado/all", new HashMap<>(), TipoEstado.class);
     }
 
     public Recinto[] getListaRecintos() {
@@ -118,50 +140,49 @@ public class ControladorAnimales  {
     }
 
     public List<Recinto> getListRecintos() {
-        WebResource webResource = client.resource(REST_SERVICE_URL)
-                .path("/recintos/all");
-        ClientResponse clientResponse = webResource.accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
-        if (clientResponse.getStatus() == Response.Status.OK.getStatusCode()) {
-            return clientResponse.getEntity(new GenericType<List<Recinto>>(){});
-        } else {
-            return null;
-        }
+        return  RestController.RESTgetListRequest("/recintos/all", new HashMap<>(), Recinto.class);
     }
 
 
     public void editarAnimal(Long animal_id, Especie especie, TipoEstado estado, Recinto recinto) {
         Animal animal=new Animal();
-        animal.setAnimal_id(animal_id);
+        animal.setAnimalId(animal_id);
         animal.setEspecie(especie);
         animal.setEstado(estado);
         animal.setRecinto_id(recinto);
-        WebResource webResource = client.resource(REST_SERVICE_URL).path("/animals/edit");
-        ClientResponse clientResponse = webResource.type(MediaType.APPLICATION_JSON).post(ClientResponse.class, animal);
+        RestController.RESTpostRequest("/animals/edit", new HashMap<>(), animal, Animal.class);
         panel.getControladorPantallaPrincipal().recargarAnimales();
-        if (clientResponse.getStatus() == Response.Status.OK.getStatusCode()) {
-            System.out.println("Se ha editado un objeto.");
 
-        } else {
-            System.out.println("La llamada no ha sido correcta.");
-        }
     }
 
-    public void anadirAnimal(Especie especie, TipoEstado estado, Recinto recinto) {
+    public Animal anadirAnimal(Especie especie, TipoEstado estado, Recinto recinto) {
         Animal animal=new Animal();
         animal.setEspecie(especie);
         animal.setEstado(estado);
         animal.setRecinto_id(recinto);
-        WebResource webResource = client.resource(REST_SERVICE_URL).path("/animals/add");
-        ClientResponse clientResponse = webResource.type(MediaType.APPLICATION_JSON).post(ClientResponse.class, animal);
-        panel.getControladorPantallaPrincipal().recargarAnimales();
-        if (clientResponse.getStatus() == Response.Status.OK.getStatusCode()) {
-            System.out.println("Se ha creado un objeto nuevo.");
 
-        } else {
-            System.out.println("La llamada no ha sido correcta.");
-        }
+        Animal animalCreado = RestController.RESTpostRequest("/animals/add", new HashMap<>(), animal, Animal.class);
+        panel.getControladorPantallaPrincipal().recargarAnimales();
+        return animalCreado;
+
+    }
+    public void anadirEstancia(String motivo, Date fechaEntrada) {
+        Estancia estancia=new Estancia();
+        Animal animal=getLastAnimal();
+        estancia.setAnimal(animal);
+        estancia.setFecha_entrada(fechaEntrada);
+        estancia.setMotivo_entrada(motivo);
+        RestController.RESTpostRequest("/estancias/add", new HashMap<>(), estancia, Estancia.class);
+        panel.getControladorPantallaPrincipal().recargarAnimales();
+
     }
 
+    private Animal getLastAnimal() {
+        return RestController.RESTgetRequest("/animals/last", new HashMap<>(), Animal.class);
+    }
+    public Estancia getEstanciaByAnimalId(long id) {
+        return RestController.RESTgetRequest("/estancias/animal/"+id, new HashMap<>(), Estancia.class);
+    }
 
 
 }

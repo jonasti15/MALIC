@@ -171,9 +171,6 @@ public class DialogoLogin extends JDialog {
 	    return resizedImage;
 	}
 
-
-
-	
 	public User getUserLoged() {
 		return user;
 	}

@@ -78,7 +78,7 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
             <version>5.3.19</version>
-        </dependency>
+		</dependency>
     </dependencies>
 
 	<build>
@@ -101,6 +101,11 @@
 					<username>local</username>
 					<password>jj7jzYJ9</password>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>3.1.0</version>
 			</plugin>
 			<!-- code coverage -->
 			<plugin>

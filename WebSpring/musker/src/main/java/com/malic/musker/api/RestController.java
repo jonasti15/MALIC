@@ -11,12 +11,14 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Properties;
 import java.util.stream.Collectors;
 
 public class RestController {
-    public static String PATH = "http://localhost:8080";
 
     public static HttpServletRequest getRequest() {
         return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
@@ -26,7 +28,9 @@ public class RestController {
     public static <T> T RESTgetRequestHeaders(String requestUrl, HttpHeaders headers, Class<T> returnClass) {
         RestTemplate restTemplate = new RestTemplate();
 
-        String url = PATH + requestUrl;
+        String ruta = getPath();
+        String url = ruta + requestUrl;
+
 
         HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
         ResponseEntity<T> responseEntity = null;
@@ -38,7 +42,7 @@ public class RestController {
                 if(refreshAccessToken().equals("")){
                     HttpHeaders newHeaders = new HttpHeaders();
                     newHeaders.set(HttpHeaders.AUTHORIZATION, "Bearer " + RestController.getRequest().getSession().getAttribute("access_token").toString());
-                    return RestController.RESTgetRequestHeaders(url.substring(PATH.length()), newHeaders, returnClass);
+                    return RestController.RESTgetRequestHeaders(url.substring(ruta.length()), newHeaders, returnClass);
                 }else{
                     throw new CustomException();
                 }
@@ -51,7 +55,8 @@ public class RestController {
     public static <T> List<T> RESTgetRequestListHeaders(String requestUrl, HttpHeaders headers, Class<T> returnClass) {
         RestTemplate restTemplate = new RestTemplate();
 
-        String url = PATH + requestUrl;
+        String ruta = getPath();
+        String url = ruta + requestUrl;
 
         HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
 
@@ -64,7 +69,7 @@ public class RestController {
                 if(refreshAccessToken().equals("")){
                     HttpHeaders newHeaders = new HttpHeaders();
                     newHeaders.set(HttpHeaders.AUTHORIZATION, "Bearer " + RestController.getRequest().getSession().getAttribute("access_token").toString());
-                    return RestController.RESTgetRequestListHeaders(url.substring(PATH.length()), newHeaders, returnClass);
+                    return RestController.RESTgetRequestListHeaders(url.substring(ruta.length()), newHeaders, returnClass);
                 }else{
                     throw new CustomException();
                 }
@@ -82,7 +87,7 @@ public class RestController {
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<T> requestEntity = new HttpEntity<>(objToSend, headers);
 
-        String url = PATH + requestUrl;
+        String url = getPath() + requestUrl;
         ResponseEntity<G> responseEntity = restTemplate.exchange(url, HttpMethod.POST, requestEntity, returnClass);
         return responseEntity.getBody();
     }
@@ -92,7 +97,7 @@ public class RestController {
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<T> requestEntity = new HttpEntity<>(objToSend, headers);
 
-        String url = PATH + requestUrl;
+        String url = getPath() + requestUrl;
         ResponseEntity<G> responseEntity = restTemplate.exchange(url, HttpMethod.DELETE, requestEntity, returnClass);
         return responseEntity.getBody();
     }
@@ -101,20 +106,23 @@ public class RestController {
         HttpHeaders headers = new HttpHeaders();
         RestTemplate restTemplate = new RestTemplate();
 
+        String ruta = getPath();
+
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
         MultiValueMap<T, T> map = mapToSend;
 
         HttpEntity<MultiValueMap<T, T>> request = new HttpEntity<MultiValueMap<T, T>>(map, headers);
 
-        ResponseEntity<G> response = restTemplate.postForEntity(PATH + requestUrl, request, returnClass);
+        ResponseEntity<G> response = restTemplate.postForEntity(ruta + requestUrl, request, returnClass);
 
         return response.getBody();
     }
 
     private static String refreshAccessToken() {
         RestTemplate restTemplate = new RestTemplate();
-        String refreshUrl = PATH + "/user/refresh";
+        String ruta = getPath();
+        String refreshUrl = ruta + "/user/refresh";
         String refresh_token = RestController.getRequest().getSession().getAttribute("refresh_token").toString();
         HttpHeaders refreshHeader = new HttpHeaders();
         refreshHeader.set(HttpHeaders.AUTHORIZATION, "Bearer " + refresh_token);
@@ -138,6 +146,18 @@ public class RestController {
         }
 
         return "";
+    }
+
+    public static String getPath()  {
+        Properties properties = new Properties();
+        try
+        {
+            InputStream in = RestController.class.getClassLoader().getResourceAsStream("musker.properties");
+            properties.load(in);
+        } catch (IOException e) {
+            System.out.println("No se puede leer musker.properties");
+        }
+        return properties.getProperty("URL");
     }
 
 }

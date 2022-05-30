@@ -45,6 +45,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             "/visitas/**", "/reservas/**", "/animals/**", "/estancias/**",
             "/tipoestado/**"
     };
+    // Usuarios con rol de ADMIN o WORKER
+    private final static String [] ROLE_NODE_MATCHERS = {
+            "/constantes/post"
+    };
+
+
 
     @Autowired
     UserDetailsService userDetailsService;
@@ -64,6 +70,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers(ANY_USER_MATCHERS).permitAll();
         http.authorizeRequests().antMatchers(AUTHENTICATED_MATCHERS).authenticated();
         http.authorizeRequests().antMatchers(ROLE_WORKER_ADMIN_MATCHERS).hasAnyAuthority("ROLE_WORKER", "ROLE_ADMIN");
+        http.authorizeRequests().antMatchers(ROLE_NODE_MATCHERS).hasAuthority("ROLE_NODE");
         http.addFilter(customAuthenticationFilter);
         http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
     }

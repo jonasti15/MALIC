@@ -12,6 +12,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Date;
+import java.time.ZoneId;
 import java.util.Calendar;
 
 public class DialogoEditarVisita extends JDialog implements ActionListener {
@@ -61,11 +62,17 @@ public class DialogoEditarVisita extends JDialog implements ActionListener {
         JDatePanelImpl datePanel = new JDatePanelImpl(model);
         datePicker = new JDatePickerImpl(datePanel);
 
+        datePicker.getModel().setDate(visita.getFecha().toLocalDate().getYear(), visita.getFecha().toLocalDate().getMonthValue()-1, visita.getFecha().toLocalDate().getDayOfMonth());
         panel.add(datePanel);
         JPanel panelUser=new JPanel(new GridLayout(2,4,50,50));
         panelUser.add(anadirDato("Guia: "));
         User[] listaUsers=controlador.getListaUsuarios();
         txUser=new JComboBox(listaUsers);
+        for(int i =0;i<listaUsers.length;i++){
+            if(listaUsers[i].getUserId()==visita.getGuia().getUserId()){
+                txUser.setSelectedIndex(i);
+            }
+        }
         panelUser.add(txUser);
         panelUser.add(anadirDato("Descripcion: "));
         desc=new JTextField(visita.getDescripcion());

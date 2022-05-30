@@ -55,16 +55,33 @@ public class DialogoEditarAnimal extends JDialog implements ActionListener {
         panel.add(anadirDato("Especie: "));
         Especie[] listaEspecies=controlador.getListaEspecies();
         txEspecie=new JComboBox(listaEspecies);
+        for(int i =0;i<listaEspecies.length;i++){
+            if(listaEspecies[i].getEspecieId()==animal.getEspecie().getEspecieId()){
+                txEspecie.setSelectedIndex(i);
+            }
+        }
         panel.add(txEspecie);
 
         panel.add(anadirDato("Estado: "));
         TipoEstado[] listaEstados=controlador.getListaEstados();
+
         txEstado=new JComboBox(listaEstados);
+        for(int i =0;i<listaEstados.length;i++){
+            if(listaEstados[i].getEstado_id()==animal.getEstado().getEstado_id()){
+                txEstado.setSelectedIndex(i);
+            }
+        }
+
         panel.add(txEstado);
 
         panel.add(anadirDato("Recinto: "));
         Recinto[] listaRecinto=controlador.getListaRecintos();
         txRecinto=new JComboBox(listaRecinto);
+        for(int i =0;i<listaRecinto.length;i++){
+            if(listaRecinto[i].getRecinto_id()==animal.getRecinto_id().getRecinto_id()){
+                txRecinto.setSelectedIndex(i);
+            }
+        }
         panel.add(txRecinto);
 
         panel.setBorder(BorderFactory.createEmptyBorder(30,60,30,60));

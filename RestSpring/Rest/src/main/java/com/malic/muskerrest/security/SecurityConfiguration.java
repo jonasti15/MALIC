@@ -37,12 +37,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     // Usuarios que estan autenticados
     private final static String[] AUTHENTICATED_MATCHERS = {
             "/visitas/all", "/visitas/visita/**", "/user/username/**", "/user/user/**", "/reservas/user", "/reservas/count/**",
-            "/reservas/add", "/reservas/delete", "/reservas/reserva/**"
+            "/reservas/add", "/reservas/delete", "/reservas/reserva/**","/animals/**"
     };
 
     // Usuarios con rol de ADMIN o WORKER
     private final static String [] ROLE_WORKER_ADMIN_MATCHERS = {
-            "/visitas/**", "/reservas/**", "/animals/**", "/estancias/**",
+            "/visitas/**", "/reservas/**", "/estancias/**",
             "/tipoestado/**"
     };
     // Usuarios con rol de ADMIN o WORKER

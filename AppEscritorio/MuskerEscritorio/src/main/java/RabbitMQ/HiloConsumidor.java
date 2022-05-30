@@ -22,7 +22,9 @@ public class HiloConsumidor extends Thread{
         this.controladorAlertas=controladorAlertas;
         factory = new ConnectionFactory();
         controllerJSON = new ControllerJSON();
-        factory.setHost("localhost");
+        factory.setHost("musker.duckdns.org:5672");
+        factory.setUsername("super");
+        factory.setPassword("jj7jzYJ9");
     }
     @Override
     public void run() {
@@ -30,6 +32,9 @@ public class HiloConsumidor extends Thread{
             Channel channel = null;
             try {
                 connection = factory.newConnection();
+                factory.setHost("musker.duckdns.org:5672");
+                factory.setUsername("super");
+                factory.setPassword("jj7jzYJ9");
                 channel = connection.createChannel();
                 channel.exchangeDeclare(EXCHANGE_DATOS, "direct", true);
                 channel.queueDeclare(QUEUE_DATOS, true, false, false, null);

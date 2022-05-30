@@ -25,7 +25,8 @@ public class HiloConsumidorAvistamientos extends Thread{
         this.controladorAlertas=controladorAlertas;
         factory = new ConnectionFactory();
         controllerJSON = new ControllerJSON();
-        factory.setHost("musker.duckdns.org:5672");
+        factory.setHost("musker.duckdns.org");
+        factory.setPort(5672);
         factory.setUsername("super");
         factory.setPassword("jj7jzYJ9");
     }

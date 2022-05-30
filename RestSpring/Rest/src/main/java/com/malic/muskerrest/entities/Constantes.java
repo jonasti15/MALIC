@@ -25,9 +25,6 @@ public class Constantes {
     @Column(name = "tens_arterial")
     private Integer tensArterial;
 
-    @Column(name = "presion")
-    private Integer presion;
-
     @Column(name = "temperatura")
     private Integer temperatura;
 
@@ -43,12 +40,11 @@ public class Constantes {
     public Constantes() {
     }
 
-    public Constantes(Long constante_id, Integer latidos, Integer saturacionO2, Integer tensArterial, Integer presion, Integer temperatura, Integer frrespiracion, Date fecha, Long animalId) {
+    public Constantes(Long constante_id, Integer latidos, Integer saturacionO2, Integer tensArterial, Integer temperatura, Integer frrespiracion, Date fecha, Long animalId) {
         this.constante_id = constante_id;
         this.latidos = latidos;
         this.saturacionO2 = saturacionO2;
         this.tensArterial = tensArterial;
-        this.presion = presion;
         this.temperatura = temperatura;
         this.frrespiracion = frrespiracion;
         this.fecha = fecha;
@@ -104,14 +100,6 @@ public class Constantes {
         this.latidos = latidos;
     }
 
-    public Integer getPresion() {
-        return presion;
-    }
-
-    public void setPresion(Integer presion) {
-        this.presion = presion;
-    }
-
     public Integer getTemperatura() {
         return temperatura;
     }
@@ -133,7 +121,6 @@ public class Constantes {
         return "Constantes{" +
                 "constante_id=" + constante_id +
                 ", latidos=" + latidos +
-                ", presion=" + presion +
                 ", temperatura=" + temperatura +
                 ", frrespiracion=" + frrespiracion +
                 ", fecha=" + fecha +

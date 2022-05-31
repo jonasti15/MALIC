@@ -70,7 +70,7 @@ public class DialogoInfoAnimal extends JDialog implements ActionListener {
     private Component crearPanelBotones() {
         JPanel panel =new JPanel();
         panel.add(crearBoton("editar"));
-        panel.add(crearBoton("eliminar"));
+        panel.add(crearBoton("liberado"));
         panel.setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
         panel.setBackground(COLORFONDO);
         return panel;
@@ -95,7 +95,7 @@ public class DialogoInfoAnimal extends JDialog implements ActionListener {
                 this.dispose();
                 break;
 
-            case "eliminar":
+            case "liberado":
 
                 controlador.eliminar(this.animal);
                 this.dispose();

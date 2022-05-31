@@ -145,8 +145,7 @@ public class ControladorAnimales  {
 
 
     public void editarAnimal(Long animal_id, Especie especie, TipoEstado estado, Recinto recinto) {
-        Animal animal=new Animal();
-        animal.setAnimalId(animal_id);
+        Animal animal=RestController.RESTgetRequest("/animals/animal/"+animal_id, new HashMap<>(), Animal.class);
         animal.setEspecie(especie);
         animal.setEstado(estado);
         animal.setRecinto_id(recinto);

@@ -99,7 +99,7 @@ public class RestController {
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<T> requestEntity = new HttpEntity<>(objToSend, headers);
 
-        String url = "http://localhost:5000" + requestUrl;
+        String url = "http://localhost:8081" + requestUrl;
         ResponseEntity<G> responseEntity = restTemplate.exchange(url, HttpMethod.POST, requestEntity, returnClass);
         return responseEntity.getBody();
     }

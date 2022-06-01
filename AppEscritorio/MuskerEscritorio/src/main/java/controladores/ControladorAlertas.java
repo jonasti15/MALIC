@@ -76,7 +76,7 @@ public class ControladorAlertas {
     }
 
     public TipoEstado getEstado(Long id) {
-       return RestController.RESTgetRequest("/tipoestado/type/"+String.valueOf(id), new HashMap<>(), TipoEstado.class);
+       return RestController.RESTgetRequest("/tipoestado/type/"+id, new HashMap<>(), TipoEstado.class);
     }
     public void editarAnimal(Long animal_id, Especie especie, TipoEstado estado, Recinto recinto) {
         Animal animal=new Animal();

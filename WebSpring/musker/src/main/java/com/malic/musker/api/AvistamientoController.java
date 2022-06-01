@@ -1,9 +1,12 @@
 package com.malic.musker.api;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.malic.musker.comunication.MessagePublisher;
 import com.malic.musker.entities.Avistamiento;
 import com.malic.musker.entities.Especie;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Controller;
@@ -53,7 +56,7 @@ public class AvistamientoController {
 
     @PostMapping(path="/foto")
     public ModelAndView getSpecieWithImg(Model model,
-                                         @RequestParam(value = "img", required = true) MultipartFile file) throws IOException {
+                                         @RequestParam(value = "img", required = true) MultipartFile file) throws IOException, JSONException {
         String returnStr = "redirect:/avistamientos/add";
 
         BufferedImage bImage = ImageIO.read(file.getInputStream());
@@ -87,15 +90,20 @@ public class AvistamientoController {
 
         Gson gson = new Gson();
         String json = gson.toJson(colors, int[][][].class);
-        String mensaje = "{'data':" + json+"}";
+        String mensaje = "{\"data\":" + json+"}";
 
         //Aqui le paso al rest de IA el array de bytes y me devuelve el nombre de la especie
-        String response = "Gorrion";
 
-        if(response.equals("")){
+        String response = RestController.RESTgetRequestIA("/predict", mensaje, String.class);
+        JSONObject obj = new JSONObject(response);
+        int value = obj.getInt("value") + 1;
+
+        Especie especie = RestController.RESTgetRequestHeaders("/especies/especie/"+value, new HttpHeaders(), Especie.class);
+
+        if(especie == null){
             returnStr += "?error=No se ha podido detectar la especie";
         }else{
-            returnStr += "?especie="+response;
+            returnStr += "?especie="+especie.getDescripcion();
         }
 
         return new ModelAndView(returnStr, new ModelMap(model));

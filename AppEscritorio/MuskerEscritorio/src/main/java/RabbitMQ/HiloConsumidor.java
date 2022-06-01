@@ -37,7 +37,7 @@ public class HiloConsumidor extends Thread{
                 factory.setUsername("super");
                 factory.setPassword("jj7jzYJ9");
                 channel = connection.createChannel();
-                channel.exchangeDeclare(EXCHANGE_DATOS, "direct", true);
+                channel.exchangeDeclare(EXCHANGE_DATOS, "fanout", true);
                 channel.queueDeclare(QUEUE_DATOS, true, false, false, null);
                 channel.queueBind(QUEUE_DATOS, EXCHANGE_DATOS, "");
 

@@ -21,7 +21,7 @@ public class ControllerJSON {
         try {
             obj = new JSONObject(json);
             avistamiento.setAvistamiento_id(obj.getLong("avistamiento_id"));
-            avistamiento.setFecha(new Date(Long.valueOf(obj.getString("fecha"))));
+            avistamiento.setFecha(new Date(Long.parseLong(obj.getString("fecha"))));
             avistamiento.setDescripcion(obj.getString("descripcion"));
             avistamiento.setLocalizacion(obj.getString("localizacion"));
             avistamiento.setEspecie(gson.fromJson(obj.getString("especie"), Especie.class));

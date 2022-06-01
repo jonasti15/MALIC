@@ -92,6 +92,18 @@ public class RestController {
         return responseEntity.getBody();
     }
 
+    public static <T, G> G RESTgetRequestIA(String requestUrl, T objToSend, Class<G> returnClass) {
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Accept", "application/json");
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<T> requestEntity = new HttpEntity<>(objToSend, headers);
+
+        String url = "http://localhost:5000" + requestUrl;
+        ResponseEntity<G> responseEntity = restTemplate.exchange(url, HttpMethod.POST, requestEntity, returnClass);
+        return responseEntity.getBody();
+    }
+
     public static <T, G> G RESTdeleteRequest(String requestUrl, HttpHeaders headers, T objToSend, Class<G> returnClass) {
         RestTemplate restTemplate = new RestTemplate();
         headers.setContentType(MediaType.APPLICATION_JSON);

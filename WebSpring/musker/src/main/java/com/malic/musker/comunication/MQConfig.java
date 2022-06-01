@@ -18,16 +18,15 @@ public class MQConfig {
     }
 
     @Bean
-    public DirectExchange exchange(){
-        return new DirectExchange(EXCHANGE_DATOS);
+    public FanoutExchange exchange(){
+        return new FanoutExchange(EXCHANGE_DATOS);
     }
 
     @Bean
-    public Binding binding(Queue queue, DirectExchange exchange){
+    public Binding binding(Queue queue, FanoutExchange exchange){
         return BindingBuilder
                 .bind(queue)
-                .to(exchange)
-                .with("");
+                .to(exchange);
     }
 
     @Bean

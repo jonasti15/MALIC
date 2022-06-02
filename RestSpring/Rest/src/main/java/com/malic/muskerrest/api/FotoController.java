@@ -109,8 +109,12 @@ public class FotoController {
         String[] rutaUrl = new String[2];
         try {
             rutaUrl[0] = getPath();
-            if(add)
+            if(add){
+                if(requestUrl.contains(" ")){
+                    requestUrl.replace(" ", "_");
+                }
                 rutaUrl[1] = rutaUrl[0] + requestUrl;
+            }
             else
                 rutaUrl[1] = rutaUrl[0];
         } catch (Exception e) {

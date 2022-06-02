@@ -40,6 +40,7 @@ public class AnimalDataAccessService implements AnimalDao{
     @Override
     public void addAnimal(Animal animal) {
         long id ;
+        String path;
         Animal a = repository.findLastAnimal();
         if(a == null){
             id = 1;
@@ -47,7 +48,11 @@ public class AnimalDataAccessService implements AnimalDao{
             id = a.getAnimalId() + 1;
         }
         animal.setAnimalId(id);
-        animal.setPath("/images/animals/"+animal.getEspecie().getDescripcion()+"/"+id + ".png");
+        path = animal.getEspecie().getDescripcion();
+        if(path.contains(" ")){
+            path.replace(" ", "_");
+        }
+        animal.setPath("/images/animals/"+path+"/"+id + ".png");
         repository.save(animal);
     }
 

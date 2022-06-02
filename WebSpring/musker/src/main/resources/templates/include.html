@@ -80,7 +80,7 @@
       <!-- container for responsiveness -->
       <div class="container">
         <!-- first item: brand name -->
-        <a class="navbar-brand text-white d-lg-none w-mi" id="mubook-text" href="#">MuBook</a>
+        <a class="navbar-brand text-white d-lg-none w-mi" id="mubook-text" href="#">MUsker</a>
         <!-- this is the button when it collapses due to small screen size (data-bs-target must match the ID of the div below)-->
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -109,7 +109,7 @@
               <a class="nav-link text-white trackGrafana" grafanaId="4" th:classappend="${navPage eq 'aboutUs'}? active" th:href="@{/aboutUs}" th:text="#{menu.aboutUs}"></a>
             </li>
             <hr>
-            <li sec:authorize= "hasRole('USER')"><a class="nav-link text-white d-lg-none" href="/reservations/all" th:text="#{menu.myReservations}"></a></li>
+            <li sec:authorize= "hasRole('USER')"><a class="nav-link text-white d-lg-none" href="/reservas/user" th:text="#{menu.myReservations}"></a></li>
             <li sec:authorize= "isAuthenticated()"><a class="nav-link text-white d-lg-none" href="/user/profile" th:text="#{menu.myProfile}"></a></li>
             <li sec:authorize= "isAuthenticated()">
               <hr class="dropdown-divider ">
@@ -143,7 +143,7 @@
         <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mb-4 text-center">
           <!-- Content -->
           <h6 class="text-uppercase fw-bold mb-4" th:text="#{footer.contactUs}"></h6>
-          <a href="mailto:mubook@mondragon.edu" class="text-white">
+          <a href="mailto:musker@mondragon.edu" class="text-white">
             musker@mondragon.edu
           </a>
         </div>
@@ -168,7 +168,7 @@
               <a
                 class="btn btn-primary btn-floating m-1"
                 style="background-color: #3b5998;"
-                href="https://www.facebook.com/mubook"
+                href="https://www.facebook.com/musker"
                 role="button"
                 ><em class="fab fa-facebook-f"></em
               ></a>
@@ -176,7 +176,7 @@
               <a
               class="btn btn-primary btn-floating m-1"
               style="background-color: #ac2bac;"
-              href="https://www.instagram.com/mubook"
+              href="https://www.instagram.com/musker"
               role="button"
               ><em class="fab fa-instagram"></em
             ></a>
@@ -184,7 +184,7 @@
               <a
                 class="btn btn-primary btn-floating m-1"
                 style="background-color: #55acee;"
-                href="https://www.twitter.com/mubook"
+                href="https://www.twitter.com/musker"
                 role="button"
                 ><em class="fab fa-twitter"></em
               ></a>
@@ -192,7 +192,7 @@
               <a
                 class="btn btn-primary btn-floating m-1"
                 style="background-color: #333333;"
-                href="https://github.com/PeioM/mubook"
+                href="https://github.com/jonasti15/MALIC"
                 role="button"
                 ><em class="fab fa-github"></em
               ></a>

@@ -41,4 +41,9 @@ public class RecintoDataAccessService implements RecintoDao{
     public void addRecinto(Recinto recinto) {
         repository.save(recinto);
     }
+
+    @Override
+    public int getPlazasOcupadas(int id) {
+        return repository.cantidadEstancias(id);
+    }
 }

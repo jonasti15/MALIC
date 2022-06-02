@@ -28,5 +28,9 @@ public class RecintoController {
     public ResponseEntity<Recinto> getRecinto(@PathVariable int id){
         return ResponseEntity.ok(recintoDao.getRecinto(id));
     }
+    @GetMapping("/ocupacion/{id}")
+    public  int getOcupacionRecinto(@PathVariable int id){
+        return recintoDao.getPlazasOcupadas(id);
+    }
 
 }

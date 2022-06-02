@@ -12,4 +12,6 @@ public interface RecintoDao {
     void deleteRecinto(Recinto recinto);
     void deleteRecinto(int id);
     void addRecinto(Recinto recinto);
+
+    int getPlazasOcupadas(int id);
 }

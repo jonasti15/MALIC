@@ -9,6 +9,7 @@ import javax.persistence.*;
 public class Animal {
 
     @Id
+
     @Column(name = "animal_id")
     private Long animalId;
 

@@ -39,7 +39,7 @@ public class AnimalDataAccessService implements AnimalDao{
 
     @Override
     public void addAnimal(Animal animal) {
-        long id;
+        long id ;
         Animal a = repository.findLastAnimal();
         if(a == null){
             id = 1;

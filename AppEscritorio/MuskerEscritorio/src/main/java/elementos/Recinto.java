@@ -50,6 +50,6 @@ public class Recinto {
     }
     @Override
     public String toString() {
-        return this.getRecinto_id()+": "+this.getDescripcion()+" Capacidad: "+this.getCantidad_animales();
+        return this.getRecinto_id()+": "+this.getDescripcion();
     }
 }

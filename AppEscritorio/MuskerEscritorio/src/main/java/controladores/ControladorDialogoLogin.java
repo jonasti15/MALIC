@@ -31,7 +31,8 @@ public class ControladorDialogoLogin implements ActionListener {
     DialogoLogin login;
 
     private Client client;
-    private static final String REST_SERVICE_URL = "https://musker.duckdns.org/api";
+    private static final String REST_SERVICE_URL = "http://localhost:8080/api";
+   // private static final String REST_SERVICE_URL = "https://musker.duckdns.org/api";
 
     public ControladorDialogoLogin(DialogoLogin login) {
         this.login = login;

@@ -41,7 +41,7 @@ public class AnimalDataAccessService implements AnimalDao{
     public void addAnimal(Animal animal) {
         long id = repository.findLastAnimal().getAnimalId() + 1;
         animal.setAnimalId(id);
-        animal.setPath("/images/animals/"+id + ".png");
+        animal.setPath("/images/animals/"+animal.getEspecie().getDescripcion()+"/"+id + ".png");
         repository.save(animal);
     }
 

@@ -88,7 +88,20 @@ public class RestController {
         HttpEntity<T> requestEntity = new HttpEntity<>(objToSend, headers);
 
         String url = getPath() + requestUrl;
-        ResponseEntity<G> responseEntity = restTemplate.exchange(url, HttpMethod.POST, requestEntity, returnClass);
+        ResponseEntity<G> responseEntity = null;
+        try{
+            responseEntity = restTemplate.exchange(url, HttpMethod.POST, requestEntity, returnClass);
+        }catch (Exception e){
+            if (e.getMessage().contains("Token has expired")) {
+                if(refreshAccessToken().equals("")){
+                    HttpHeaders newHeaders = new HttpHeaders();
+                    newHeaders.set(HttpHeaders.AUTHORIZATION, "Bearer " + RestController.getRequest().getSession().getAttribute("access_token").toString());
+                    return RESTpostRequest(requestUrl, newHeaders, objToSend, returnClass);
+                }
+            }else{
+                throw new CustomException();
+            }
+        }
         return responseEntity.getBody();
     }
 
@@ -110,7 +123,20 @@ public class RestController {
         HttpEntity<T> requestEntity = new HttpEntity<>(objToSend, headers);
 
         String url = getPath() + requestUrl;
-        ResponseEntity<G> responseEntity = restTemplate.exchange(url, HttpMethod.DELETE, requestEntity, returnClass);
+        ResponseEntity<G> responseEntity = null;
+        try{
+            responseEntity = restTemplate.exchange(url, HttpMethod.DELETE, requestEntity, returnClass);
+        }catch(Exception e){
+            if (e.getMessage().contains("Token has expired")) {
+                if(refreshAccessToken().equals("")) {
+                    HttpHeaders newHeaders = new HttpHeaders();
+                    newHeaders.set(HttpHeaders.AUTHORIZATION, "Bearer " + RestController.getRequest().getSession().getAttribute("access_token").toString());
+                    return RESTdeleteRequest(requestUrl, newHeaders, objToSend, returnClass);
+                }else{
+                    throw new CustomException();
+                }
+            }
+        }
         return responseEntity.getBody();
     }
 

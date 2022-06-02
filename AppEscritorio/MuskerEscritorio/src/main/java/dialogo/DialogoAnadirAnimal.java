@@ -1,6 +1,7 @@
 package dialogo;
 
 import controladores.ControladorAnimales;
+import controladores.RestController;
 import elementos.Animal;
 import elementos.Especie;
 import elementos.Recinto;
@@ -17,6 +18,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Date;
+import java.util.HashMap;
 
 public class DialogoAnadirAnimal extends JDialog implements ActionListener {
     public final static int DEFAULT_WIDTH = 1000;
@@ -164,16 +166,20 @@ public class DialogoAnadirAnimal extends JDialog implements ActionListener {
                 if(f==null||txMotivo==null){
                     JOptionPane.showMessageDialog(null, "Tienes que rellenar todos los campos!","Error", JOptionPane.ERROR_MESSAGE);
                 }else{
+
                     Animal animalCreado = controlador.anadirAnimal((Especie) this.getTxEspecie().getSelectedItem(), (TipoEstado) this.getTxEstado().getSelectedItem(), (Recinto) this.getTxRecinto().getSelectedItem());
-                    Date hoy=new Date();
-                    java.sql.Date fecha=new java.sql.Date(hoy.getTime());
-                    controlador.anadirEstancia(txMotivo.getText(), fecha);
-                    try {
-                        controlador.sendPhoto("/images/animals/"+animalCreado.getAnimalId() + ".png", f.getAbsolutePath());
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                    if(animalCreado!=null){
+                        Date hoy=new Date();
+                        java.sql.Date fecha=new java.sql.Date(hoy.getTime());
+                        controlador.anadirEstancia(txMotivo.getText(), fecha);
+                        try {
+                            controlador.sendPhoto("/images/animals/"+animalCreado.getAnimalId() + ".png", f.getAbsolutePath());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        this.dispose();
                     }
-                    this.dispose();
+
                 }
 
                 break;

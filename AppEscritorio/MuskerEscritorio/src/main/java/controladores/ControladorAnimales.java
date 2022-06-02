@@ -144,13 +144,19 @@ public class ControladorAnimales  {
     }
 
 
-    public void editarAnimal(Long animal_id, Especie especie, TipoEstado estado, Recinto recinto) {
+    public Animal editarAnimal(Long animal_id, Especie especie, TipoEstado estado, Recinto recinto) {
         Animal animal=RestController.RESTgetRequest("/animals/animal/"+animal_id, new HashMap<>(), Animal.class);
-        animal.setEspecie(especie);
-        animal.setEstado(estado);
-        animal.setRecinto_id(recinto);
-        RestController.RESTpostRequest("/animals/edit", new HashMap<>(), animal, Animal.class);
-        panel.getControladorPantallaPrincipal().recargarAnimales();
+        int ocupados= RestController.RESTgetRequest("/recintos/ocupacion/"+recinto.getRecinto_id(), new HashMap<>(), Integer.class);
+        if(ocupados>=recinto.getCantidad_animales()&&animal.getRecinto_id().getRecinto_id()!=recinto.getRecinto_id()){
+            JOptionPane.showMessageDialog(null, "El recinto seleccionado esta lleno!","Error", JOptionPane.ERROR_MESSAGE);
+            return null;
+        }else{
+            animal.setEspecie(especie);
+            animal.setEstado(estado);
+            animal.setRecinto_id(recinto);
+            panel.getControladorPantallaPrincipal().recargarAnimales();
+            return animal;
+        }
 
     }
 
@@ -158,11 +164,18 @@ public class ControladorAnimales  {
         Animal animal=new Animal();
         animal.setEspecie(especie);
         animal.setEstado(estado);
-        animal.setRecinto_id(recinto);
+        int ocupados= RestController.RESTgetRequest("/recintos/ocupacion/"+recinto.getRecinto_id(), new HashMap<>(), Integer.class);
+        if(ocupados>=recinto.getCantidad_animales()){
+            JOptionPane.showMessageDialog(null, "El recinto seleccionado esta lleno!","Error", JOptionPane.ERROR_MESSAGE);
+            return null;
+        }else{
+            animal.setRecinto_id(recinto);
+            Animal animalCreado = RestController.RESTpostRequest("/animals/add", new HashMap<>(), animal, Animal.class);
+            panel.getControladorPantallaPrincipal().recargarAnimales();
+            return animalCreado;
+        }
 
-        Animal animalCreado = RestController.RESTpostRequest("/animals/add", new HashMap<>(), animal, Animal.class);
-        panel.getControladorPantallaPrincipal().recargarAnimales();
-        return animalCreado;
+
 
     }
     public void anadirEstancia(String motivo, Date fechaEntrada) {

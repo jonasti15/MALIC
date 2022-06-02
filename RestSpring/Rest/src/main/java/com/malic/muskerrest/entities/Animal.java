@@ -9,8 +9,7 @@ import javax.persistence.*;
 public class Animal {
 
     @Id
-    @GenericGenerator(name="animal" , strategy="increment")
-    @GeneratedValue(generator = "animal")
+
     @Column(name = "animal_id")
     private Long animalId;
 

@@ -44,6 +44,14 @@ public class RecintoDataAccessService implements RecintoDao{
 
     @Override
     public int getPlazasOcupadas(int id) {
-        return repository.cantidadEstancias(id);
+        int num=0;
+        try{
+            num = repository.cantidadEstancias(id);
+            return num;
+        }catch (Exception e){
+            return num;
+        }
+
+
     }
 }

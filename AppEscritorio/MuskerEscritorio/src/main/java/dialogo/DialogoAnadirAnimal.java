@@ -173,7 +173,7 @@ public class DialogoAnadirAnimal extends JDialog implements ActionListener {
                         java.sql.Date fecha=new java.sql.Date(hoy.getTime());
                         controlador.anadirEstancia(txMotivo.getText(), fecha);
                         try {
-                            controlador.sendPhoto("/images/animals/"+animalCreado.getAnimalId() + ".png", f.getAbsolutePath());
+                            controlador.sendPhoto("/images/animals/"+animalCreado.getEspecie().getDescripcion() + "/" + animalCreado.getAnimalId() + ".png", f.getAbsolutePath());
                         } catch (IOException e) {
                             e.printStackTrace();
                         }

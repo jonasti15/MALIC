@@ -49,9 +49,7 @@ public class AnimalDataAccessService implements AnimalDao{
         }
         animal.setAnimalId(id);
         path = animal.getEspecie().getDescripcion();
-        if(path.contains(" ")){
-            path.replace(" ", "_");
-        }
+        path = path.replaceAll("\\s", "_");
         animal.setPath("/images/animals/"+path+"/"+id + ".png");
         repository.save(animal);
     }

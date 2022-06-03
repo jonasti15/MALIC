@@ -26,17 +26,22 @@ public class Animal {
     private TipoEstado estado;
 
     @ManyToOne
+    @JoinColumn(name = "estado_ia_id", nullable = false)
+    private TipoEstado estadoIa;
+
+    @ManyToOne
     @JoinColumn(name = "recinto_id", nullable = false)
     private Recinto recinto_id;
 
     public Animal(){}
 
-    public Animal(Long animal_id, Especie especie, TipoEstado estado, Recinto recinto_id, String path) {
-        this.animalId = animal_id;
+    public Animal(Long animalId, Especie especie, TipoEstado estado, TipoEstado estadoIa, Recinto recinto_id, String path) {
+        this.animalId = animalId;
         this.especie = especie;
         this.estado = estado;
         this.recinto_id = recinto_id;
         this.path = path;
+        this.estadoIa = estadoIa;
     }
 
     public Long getAnimalId() {
@@ -77,5 +82,13 @@ public class Animal {
 
     public void setPath(String path) {
         this.path = path;
+    }
+
+    public TipoEstado getEstadoIa() {
+        return estadoIa;
+    }
+
+    public void setEstadoIa(TipoEstado estadoIa) {
+        this.estadoIa = estadoIa;
     }
 }

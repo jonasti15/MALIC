@@ -42,6 +42,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService);
+        auth.authenticationProvider(authenticationProvider());
     }
 
     @Override
@@ -67,9 +68,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 //Login remember me control
                 .rememberMe()
                 .tokenValiditySeconds(REMEMBER_ME_TIME).key("muskerTheBestPBL")
-                .rememberMeParameter("checkRememberMe")
-                .and()
-                .cors().and().csrf().disable();
+                .rememberMeParameter("checkRememberMe");
     }
 
     @Bean

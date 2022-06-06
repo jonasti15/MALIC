@@ -5,6 +5,7 @@ import com.malic.muskerrest.dao.animal.AnimalDao;
 import com.malic.muskerrest.dao.estancia.EstanciaDao;
 import com.malic.muskerrest.entities.Animal;
 import com.malic.muskerrest.entities.Visita;
+import com.malic.muskerrest.entitiesDTO.AnimalDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -38,9 +39,15 @@ public class AnimalController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Animal> addAnimal(@RequestBody Animal animal,
+    public ResponseEntity<Animal> addAnimal(@RequestBody AnimalDTO animalDTO,
                                           HttpServletResponse response) throws IOException {
+        Animal animal = new Animal();
+        animal.setAnimalId(animalDTO.getAnimalId());
+        animal.setEspecie(animal.getEspecie());
+        animal.setEstado(animal.getEstado());
+        animal.setEstadoIa(animal.getEstadoIa());
         try{
+
             animalDao.addAnimal(animal);
         }catch(Exception e){
             response.setHeader("error", e.getMessage());

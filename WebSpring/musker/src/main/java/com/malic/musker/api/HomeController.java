@@ -64,7 +64,7 @@ public class HomeController {
         return "mainPage";
     }
 
-    @RequestMapping("/login-error")
+    @RequestMapping(path = "/login-error", method = RequestMethod.POST)
     public String loginError(Model model) {
         model.addAttribute("loginError", true);
         return "redirect:/login";

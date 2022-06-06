@@ -2,6 +2,7 @@ package elementos;
 
 public class Alerta {
 
+    String mensageId;
     Long animalId;
     Especie especie;
     TipoEstado estado;
@@ -17,6 +18,14 @@ public class Alerta {
     }
 
     public Alerta() {
+    }
+
+    public String getMensageId() {
+        return mensageId;
+    }
+
+    public void setMensageId(String mensageId) {
+        this.mensageId = mensageId;
     }
 
     public void setAnimalId(Long animal_id) {

@@ -42,13 +42,13 @@ public class ControllerJSON {
 
             TipoEstado estadoactual= controladorAlertas.getEstado(Long.valueOf(obj.getString("estadoActual")));
 
-
+            alerta.setMensageId(obj.getString("_msgid"));
             alerta.setEstado(animal.getEstado());
             alerta.setEstadoNuevo(estadoactual);
             alerta.setRecinto_id(animal.getRecinto_id());
             alerta.setEspecie(animal.getEspecie());
             animal.setEstado(estadoactual);
-            controladorAlertas.editarAnimal(animal.getAnimalId(), animal.getEspecie(), animal.getEstado(), animal.getRecinto_id());
+            controladorAlertas.editarAnimal(animal.getAnimalId(), animal.getEspecie(), animal.getEstado(), animal.getRecinto_id(), animal.getEstadoIa());
         } catch (JSONException e) {
             e.printStackTrace();
         }

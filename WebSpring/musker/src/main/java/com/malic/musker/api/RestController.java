@@ -15,14 +15,19 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.stream.Collectors;
 
 public class RestController {
 
     public static HttpServletRequest getRequest() {
-        return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
-                .getRequest();
+        if(RequestContextHolder.getRequestAttributes() != null){
+            return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
+                    .getRequest();
+        }else{
+            return null;
+        }
     }
 
     public static <T> T RESTgetRequestHeaders(String requestUrl, HttpHeaders headers, Class<T> returnClass) {
@@ -49,7 +54,11 @@ public class RestController {
             }
         }
 
-        return responseEntity.getBody();
+        if (responseEntity != null) {
+            return responseEntity.getBody();
+        }else{
+            return null;
+        }
     }
 
     public static <T> List<T> RESTgetRequestListHeaders(String requestUrl, HttpHeaders headers, Class<T> returnClass) {
@@ -102,7 +111,11 @@ public class RestController {
                 throw new CustomException();
             }
         }
-        return responseEntity.getBody();
+        if (responseEntity != null) {
+            return responseEntity.getBody();
+        }else{
+            return null;
+        }
     }
 
     public static <T, G> G RESTgetRequestIA(String requestUrl, T objToSend, Class<G> returnClass) {
@@ -137,7 +150,11 @@ public class RestController {
                 }
             }
         }
-        return responseEntity.getBody();
+        if (responseEntity != null) {
+            return responseEntity.getBody();
+        }else{
+            return null;
+        }
     }
 
     public static <T, G> G RESTpostRequestForm(String requestUrl, MultiValueMap<T, T> mapToSend, Class<G> returnClass) {

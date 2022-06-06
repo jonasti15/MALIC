@@ -126,7 +126,7 @@ public class AvistamientoController {
 
         String especieId = request.getParameter("especieId");
 
-        if(especieId.equals("-")){
+        if(especieId != null && especieId.equals("-")){
             error += " Debes seleccionar una especie";
         }
 

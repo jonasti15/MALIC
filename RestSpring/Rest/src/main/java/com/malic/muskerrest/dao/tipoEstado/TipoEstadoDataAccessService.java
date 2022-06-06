@@ -46,4 +46,9 @@ public class TipoEstadoDataAccessService implements TipoEstadoDao{
     public TipoEstado getTipoEstadoByDescripcion(String descripcion) {
         return repository.findTipoEstadoByDescripcion(descripcion);
     }
+
+    @Override
+    public TipoEstado getTipoEstadoByAnimalId(long id) {
+        return repository.findTipoEstadoByAnimalId(id);
+    }
 }

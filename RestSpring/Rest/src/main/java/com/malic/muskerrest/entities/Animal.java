@@ -25,7 +25,7 @@ public class Animal {
     private TipoEstado estado;
 
     @ManyToOne
-    @JoinColumn(name = "estado_ia_id", nullable = false)
+    @JoinColumn(name = "estado_ia_id", nullable = true)
     private TipoEstado estadoIa;
 
     @ManyToOne

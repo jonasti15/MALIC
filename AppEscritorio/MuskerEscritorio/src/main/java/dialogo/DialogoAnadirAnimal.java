@@ -166,7 +166,6 @@ public class DialogoAnadirAnimal extends JDialog implements ActionListener {
                 if(f==null||txMotivo==null){
                     JOptionPane.showMessageDialog(null, "Tienes que rellenar todos los campos!","Error", JOptionPane.ERROR_MESSAGE);
                 }else{
-
                     Animal animalCreado = controlador.anadirAnimal((Especie) this.getTxEspecie().getSelectedItem(), (TipoEstado) this.getTxEstado().getSelectedItem(), (Recinto) this.getTxRecinto().getSelectedItem());
                     if(animalCreado!=null){
                         Date hoy=new Date();

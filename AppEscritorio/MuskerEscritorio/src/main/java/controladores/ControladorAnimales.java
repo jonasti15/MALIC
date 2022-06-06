@@ -154,6 +154,7 @@ public class ControladorAnimales  {
             animal.setEspecie(especie);
             animal.setEstado(estado);
             animal.setRecinto_id(recinto);
+            animal.setEstadoIa(animal.getEstadoIa());
             Animal animalCreado = RestController.RESTpostRequest("/animals/edit", new HashMap<>(), animal, Animal.class);
             panel.getControladorPantallaPrincipal().recargarAnimales();
             return animalCreado;
@@ -196,6 +197,5 @@ public class ControladorAnimales  {
     public Estancia getEstanciaByAnimalId(long id) {
         return RestController.RESTgetRequest("/estancias/animal/"+id, new HashMap<>(), Estancia.class);
     }
-
 
 }

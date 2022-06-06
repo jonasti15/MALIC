@@ -13,5 +13,6 @@ public interface TipoEstadoDao {
     void deleteTipoEstado(TipoEstado tipoEstado);
     void addTipoEstado(TipoEstado tipoEstado);
     TipoEstado getTipoEstadoByDescripcion(String descripcion);
+    TipoEstado getTipoEstadoByAnimalId(long id);
 
 }

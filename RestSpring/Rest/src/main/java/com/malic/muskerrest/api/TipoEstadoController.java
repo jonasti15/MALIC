@@ -30,4 +30,9 @@ public class TipoEstadoController {
     public ResponseEntity<TipoEstado> getTipoEstado(@PathVariable int id){
         return ResponseEntity.ok(tipoEstadoDao.getTipoEstado(id));
     }
+
+    @GetMapping("/animal/{id}")
+    public ResponseEntity<TipoEstado> getTipoEstadoByAnimalId(@PathVariable long id){
+        return ResponseEntity.ok(tipoEstadoDao.getTipoEstadoByAnimalId(id));
+    }
 }

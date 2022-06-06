@@ -15,14 +15,43 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.stream.Collectors;
 
 public class RestController {
 
+    public static String getAccessToken(){
+        try{
+            return "Bearer " + RestController.getRequest().getSession().getAttribute("access_token").toString();
+        }catch(NullPointerException e){
+            return null;
+        }
+    }
+
+    public static String getRefreshToken(){
+        try{
+            return "Bearer " + RestController.getRequest().getSession().getAttribute("refresh_token").toString();
+        }catch(NullPointerException e){
+            return null;
+        }
+    }
+
+    public static void setAccessToken(String token){
+        try{
+            RestController.getRequest().getSession().setAttribute("access_token", token);
+        }catch(NullPointerException ignored){
+
+        }
+    }
+
     public static HttpServletRequest getRequest() {
-        return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
-                .getRequest();
+        try{
+            return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
+                    .getRequest();
+        }catch(NullPointerException e){
+            return null;
+        }
     }
 
     public static <T> T RESTgetRequestHeaders(String requestUrl, HttpHeaders headers, Class<T> returnClass) {
@@ -41,7 +70,7 @@ public class RestController {
             if (e.getMessage().contains("Token has expired")) {
                 if(refreshAccessToken().equals("")){
                     HttpHeaders newHeaders = new HttpHeaders();
-                    newHeaders.set(HttpHeaders.AUTHORIZATION, "Bearer " + RestController.getRequest().getSession().getAttribute("access_token").toString());
+                    newHeaders.set(HttpHeaders.AUTHORIZATION, RestController.getAccessToken());
                     return RestController.RESTgetRequestHeaders(url.substring(ruta.length()), newHeaders, returnClass);
                 }else{
                     throw new CustomException();
@@ -49,7 +78,11 @@ public class RestController {
             }
         }
 
-        return responseEntity.getBody();
+        if (responseEntity != null) {
+            return responseEntity.getBody();
+        }else{
+            return null;
+        }
     }
 
     public static <T> List<T> RESTgetRequestListHeaders(String requestUrl, HttpHeaders headers, Class<T> returnClass) {
@@ -68,7 +101,7 @@ public class RestController {
             if (e.getMessage().contains("Token has expired")) {
                 if(refreshAccessToken().equals("")){
                     HttpHeaders newHeaders = new HttpHeaders();
-                    newHeaders.set(HttpHeaders.AUTHORIZATION, "Bearer " + RestController.getRequest().getSession().getAttribute("access_token").toString());
+                    newHeaders.set(HttpHeaders.AUTHORIZATION, RestController.getAccessToken());
                     return RestController.RESTgetRequestListHeaders(url.substring(ruta.length()), newHeaders, returnClass);
                 }else{
                     throw new CustomException();
@@ -95,14 +128,18 @@ public class RestController {
             if (e.getMessage().contains("Token has expired")) {
                 if(refreshAccessToken().equals("")){
                     HttpHeaders newHeaders = new HttpHeaders();
-                    newHeaders.set(HttpHeaders.AUTHORIZATION, "Bearer " + RestController.getRequest().getSession().getAttribute("access_token").toString());
+                    newHeaders.set(HttpHeaders.AUTHORIZATION, RestController.getAccessToken());
                     return RESTpostRequest(requestUrl, newHeaders, objToSend, returnClass);
                 }
             }else{
                 throw new CustomException();
             }
         }
-        return responseEntity.getBody();
+        if (responseEntity != null) {
+            return responseEntity.getBody();
+        }else{
+            return null;
+        }
     }
 
     public static <T, G> G RESTgetRequestIA(String requestUrl, T objToSend, Class<G> returnClass) {
@@ -130,14 +167,18 @@ public class RestController {
             if (e.getMessage().contains("Token has expired")) {
                 if(refreshAccessToken().equals("")) {
                     HttpHeaders newHeaders = new HttpHeaders();
-                    newHeaders.set(HttpHeaders.AUTHORIZATION, "Bearer " + RestController.getRequest().getSession().getAttribute("access_token").toString());
+                    newHeaders.set(HttpHeaders.AUTHORIZATION, RestController.getAccessToken());
                     return RESTdeleteRequest(requestUrl, newHeaders, objToSend, returnClass);
                 }else{
                     throw new CustomException();
                 }
             }
         }
-        return responseEntity.getBody();
+        if (responseEntity != null) {
+            return responseEntity.getBody();
+        }else{
+            return null;
+        }
     }
 
     public static <T, G> G RESTpostRequestForm(String requestUrl, MultiValueMap<T, T> mapToSend, Class<G> returnClass) {
@@ -161,9 +202,8 @@ public class RestController {
         RestTemplate restTemplate = new RestTemplate();
         String ruta = getPath();
         String refreshUrl = ruta + "/user/refresh";
-        String refresh_token = RestController.getRequest().getSession().getAttribute("refresh_token").toString();
         HttpHeaders refreshHeader = new HttpHeaders();
-        refreshHeader.set(HttpHeaders.AUTHORIZATION, "Bearer " + refresh_token);
+        refreshHeader.set(HttpHeaders.AUTHORIZATION, RestController.getRefreshToken());
         HttpEntity<Void> requestRefresh = new HttpEntity<>(refreshHeader);
         try {
             ResponseEntity<String> responseTokens = restTemplate.exchange(refreshUrl, HttpMethod.GET, requestRefresh, String.class);
@@ -173,10 +213,9 @@ public class RestController {
             try {
                 obj = new JSONObject(response);
                 access_token = obj.getString("access_token");
-            } catch (JSONException ex) {
-                ex.printStackTrace();
+            } catch (JSONException ignored) {
             }
-            RestController.getRequest().getSession().setAttribute("access_token", access_token);
+            RestController.setAccessToken(access_token);
         } catch (Exception e) {
             if(e.getMessage().contains("Refresh token expired")){
                 return "expired";

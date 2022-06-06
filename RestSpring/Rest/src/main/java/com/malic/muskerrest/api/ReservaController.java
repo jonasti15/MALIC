@@ -70,7 +70,7 @@ public class ReservaController {
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity deleteReserva(@RequestBody Reserva reserva){
+    public ResponseEntity<String> deleteReserva(@RequestBody Reserva reserva){
 
             reservaDao.deleteReserva(reserva.getReserva_id());
 

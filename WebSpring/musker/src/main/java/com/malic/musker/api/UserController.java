@@ -3,6 +3,7 @@ package com.malic.musker.api;
 import com.malic.musker.entities.User;
 import com.malic.musker.entities.UserType;
 import com.malic.musker.security.SecurityConfiguration;
+import jdk.jfr.Frequency;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -49,14 +50,18 @@ public class UserController {
             try{
                 user = RestController.RESTpostRequest(uri, new HttpHeaders(), user, User.class);
             }catch (HttpClientErrorException e){
-                if(e.getMessage().contains("username")){
-                    error = error + "Username already in use ";
-                }
-                if(e.getMessage().contains("email")){
-                    error = error + "Email already in use ";
-                }
+                try{
+                    if(e.getMessage().contains("username")){
+                        error = error + "Username already in use ";
+                    }
+                    if(e.getMessage().contains("email")){
+                        error = error + "Email already in use ";
+                    }
 
-                returnStr = "register";
+                    returnStr = "register";
+                }catch(NullPointerException ignored){
+
+                }
             }
         }
 
@@ -104,7 +109,7 @@ public class UserController {
             error = "Password mismatch";
             model.addAttribute("userEdit", user);
             returnStr = "redirect:/user/profile?error="+error;
-        }else if(request.getParameter("password").equals("") && request.getParameter("passwordRep").equals("")){
+        }else if(getPassword(request, "password").equals("") && getPassword(request, "passwordRep").equals("")){
             user.setPassword(bdUser.getPassword());
         }else{
             BCryptPasswordEncoder encrypt = new BCryptPasswordEncoder(SecurityConfiguration.ENCRYPT_STRENGTH);
@@ -125,15 +130,19 @@ public class UserController {
             try{
                 user = RestController.RESTpostRequest(uri, new HttpHeaders(), user, User.class);
             }catch (HttpClientErrorException e){
-                if(e.getMessage().contains("username")){
-                    error = error + "Username already in use ";
-                }
-                if(e.getMessage().contains("email")){
-                    error = error + "Email already in use ";
-                }
+                try{
+                    if(e.getMessage().contains("username")){
+                        error = error + "Username already in use ";
+                    }
+                    if(e.getMessage().contains("email")){
+                        error = error + "Email already in use ";
+                    }
 
-                model.addAttribute("userEdit", user);
-                returnStr = "redirect:/user/profile?error="+error;
+                    model.addAttribute("userEdit", user);
+                    returnStr = "redirect:/user/profile?error="+error;
+                }catch(NullPointerException ignored){
+
+                }
             }
         }
 
@@ -161,6 +170,14 @@ public class UserController {
         SecureRandom rand = new SecureRandom();
         int image = rand.nextInt(13);
         user.setProfileImg("/images/userProfiles/"+image+".png");
+    }
+
+    private String getPassword(WebRequest request, String key){
+        try{
+            return request.getParameter(key);
+        }catch(NullPointerException e){
+            return null;
+        }
     }
 
 }

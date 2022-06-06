@@ -39,7 +39,7 @@ public class AnimalController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Animal> addAnimal(@RequestBody Animal animalDTO,
+    public ResponseEntity<Animal> addAnimal(@RequestBody AnimalDTO animalDTO,
                                           HttpServletResponse response) throws IOException {
         Animal animal = new Animal();
         animal.setAnimalId(animalDTO.getAnimalId());

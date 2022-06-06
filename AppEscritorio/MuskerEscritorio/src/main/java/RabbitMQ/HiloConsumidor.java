@@ -83,7 +83,7 @@ public class HiloConsumidor extends Thread {
     public class MiConsumer extends DefaultConsumer {
         Channel channel;
         ConcurrentMap<String, Integer> contadores;
-        boolean mensajeCorrecto = false;
+        boolean mensajeCorrecto = true;
 
         public MiConsumer(Channel channel) {
             super(channel);

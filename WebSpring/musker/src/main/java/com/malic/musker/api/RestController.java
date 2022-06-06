@@ -21,11 +21,35 @@ import java.util.stream.Collectors;
 
 public class RestController {
 
+    public static String getAccessToken(){
+        try{
+            return "Bearer " + RestController.getRequest().getSession().getAttribute("access_token").toString();
+        }catch(NullPointerException e){
+            return null;
+        }
+    }
+
+    public static String getRefreshToken(){
+        try{
+            return "Bearer " + RestController.getRequest().getSession().getAttribute("refresh_token").toString();
+        }catch(NullPointerException e){
+            return null;
+        }
+    }
+
+    public static void setAccessToken(String token){
+        try{
+            RestController.getRequest().getSession().setAttribute("access_token", token);
+        }catch(NullPointerException ignored){
+
+        }
+    }
+
     public static HttpServletRequest getRequest() {
-        if(RequestContextHolder.getRequestAttributes() != null){
+        try{
             return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
                     .getRequest();
-        }else{
+        }catch(NullPointerException e){
             return null;
         }
     }
@@ -46,7 +70,7 @@ public class RestController {
             if (e.getMessage().contains("Token has expired")) {
                 if(refreshAccessToken().equals("")){
                     HttpHeaders newHeaders = new HttpHeaders();
-                    newHeaders.set(HttpHeaders.AUTHORIZATION, "Bearer " + RestController.getRequest().getSession().getAttribute("access_token").toString());
+                    newHeaders.set(HttpHeaders.AUTHORIZATION, RestController.getAccessToken());
                     return RestController.RESTgetRequestHeaders(url.substring(ruta.length()), newHeaders, returnClass);
                 }else{
                     throw new CustomException();
@@ -77,7 +101,7 @@ public class RestController {
             if (e.getMessage().contains("Token has expired")) {
                 if(refreshAccessToken().equals("")){
                     HttpHeaders newHeaders = new HttpHeaders();
-                    newHeaders.set(HttpHeaders.AUTHORIZATION, "Bearer " + RestController.getRequest().getSession().getAttribute("access_token").toString());
+                    newHeaders.set(HttpHeaders.AUTHORIZATION, RestController.getAccessToken());
                     return RestController.RESTgetRequestListHeaders(url.substring(ruta.length()), newHeaders, returnClass);
                 }else{
                     throw new CustomException();
@@ -104,7 +128,7 @@ public class RestController {
             if (e.getMessage().contains("Token has expired")) {
                 if(refreshAccessToken().equals("")){
                     HttpHeaders newHeaders = new HttpHeaders();
-                    newHeaders.set(HttpHeaders.AUTHORIZATION, "Bearer " + RestController.getRequest().getSession().getAttribute("access_token").toString());
+                    newHeaders.set(HttpHeaders.AUTHORIZATION, RestController.getAccessToken());
                     return RESTpostRequest(requestUrl, newHeaders, objToSend, returnClass);
                 }
             }else{
@@ -143,7 +167,7 @@ public class RestController {
             if (e.getMessage().contains("Token has expired")) {
                 if(refreshAccessToken().equals("")) {
                     HttpHeaders newHeaders = new HttpHeaders();
-                    newHeaders.set(HttpHeaders.AUTHORIZATION, "Bearer " + RestController.getRequest().getSession().getAttribute("access_token").toString());
+                    newHeaders.set(HttpHeaders.AUTHORIZATION, RestController.getAccessToken());
                     return RESTdeleteRequest(requestUrl, newHeaders, objToSend, returnClass);
                 }else{
                     throw new CustomException();
@@ -178,9 +202,8 @@ public class RestController {
         RestTemplate restTemplate = new RestTemplate();
         String ruta = getPath();
         String refreshUrl = ruta + "/user/refresh";
-        String refresh_token = RestController.getRequest().getSession().getAttribute("refresh_token").toString();
         HttpHeaders refreshHeader = new HttpHeaders();
-        refreshHeader.set(HttpHeaders.AUTHORIZATION, "Bearer " + refresh_token);
+        refreshHeader.set(HttpHeaders.AUTHORIZATION, RestController.getRefreshToken());
         HttpEntity<Void> requestRefresh = new HttpEntity<>(refreshHeader);
         try {
             ResponseEntity<String> responseTokens = restTemplate.exchange(refreshUrl, HttpMethod.GET, requestRefresh, String.class);
@@ -190,10 +213,9 @@ public class RestController {
             try {
                 obj = new JSONObject(response);
                 access_token = obj.getString("access_token");
-            } catch (JSONException ex) {
-                ex.printStackTrace();
+            } catch (JSONException ignored) {
             }
-            RestController.getRequest().getSession().setAttribute("access_token", access_token);
+            RestController.setAccessToken(access_token);
         } catch (Exception e) {
             if(e.getMessage().contains("Refresh token expired")){
                 return "expired";

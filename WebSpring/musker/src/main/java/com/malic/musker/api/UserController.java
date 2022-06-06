@@ -49,14 +49,16 @@ public class UserController {
             try{
                 user = RestController.RESTpostRequest(uri, new HttpHeaders(), user, User.class);
             }catch (HttpClientErrorException e){
-                if(e.getMessage().contains("username")){
-                    error = error + "Username already in use ";
-                }
-                if(e.getMessage().contains("email")){
-                    error = error + "Email already in use ";
-                }
+                if(e.getMessage() != null){
+                    if(e.getMessage().contains("username")){
+                        error = error + "Username already in use ";
+                    }
+                    if(e.getMessage().contains("email")){
+                        error = error + "Email already in use ";
+                    }
 
-                returnStr = "register";
+                    returnStr = "register";
+                }
             }
         }
 
@@ -104,7 +106,8 @@ public class UserController {
             error = "Password mismatch";
             model.addAttribute("userEdit", user);
             returnStr = "redirect:/user/profile?error="+error;
-        }else if(request.getParameter("password").equals("") && request.getParameter("passwordRep").equals("")){
+        }else if(request.getParameter("password") != null && request.getParameter("password").equals("") &&
+                 request.getParameter("passwordRep") != null && request.getParameter("passwordRep").equals("")){
             user.setPassword(bdUser.getPassword());
         }else{
             BCryptPasswordEncoder encrypt = new BCryptPasswordEncoder(SecurityConfiguration.ENCRYPT_STRENGTH);
@@ -125,15 +128,17 @@ public class UserController {
             try{
                 user = RestController.RESTpostRequest(uri, new HttpHeaders(), user, User.class);
             }catch (HttpClientErrorException e){
-                if(e.getMessage().contains("username")){
-                    error = error + "Username already in use ";
-                }
-                if(e.getMessage().contains("email")){
-                    error = error + "Email already in use ";
-                }
+                if(e.getMessage() != null){
+                    if(e.getMessage().contains("username")){
+                        error = error + "Username already in use ";
+                    }
+                    if(e.getMessage().contains("email")){
+                        error = error + "Email already in use ";
+                    }
 
-                model.addAttribute("userEdit", user);
-                returnStr = "redirect:/user/profile?error="+error;
+                    model.addAttribute("userEdit", user);
+                    returnStr = "redirect:/user/profile?error="+error;
+                }
             }
         }
 

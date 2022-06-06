@@ -64,15 +64,12 @@ public class ReservaController {
         reserva.setVisita(visita);
         reserva.setCantidad_personas(1);
 
-        if(reserva == null){
-            error += " Error inesperado";
-        }else{
-            model.addAttribute("reserva", reserva);
-            model.addAttribute("error", error);
-            int maxPersonas = 10 - RestController.RESTgetRequestHeaders("/reservas/count/"+visitaId, headers, Integer.class);
-            model.addAttribute("maximo", maxPersonas);
-            returnStr = "/reservation";
-        }
+        error += " Error inesperado";
+        model.addAttribute("reserva", reserva);
+        model.addAttribute("error", error);
+        int maxPersonas = 10 - RestController.RESTgetRequestHeaders("/reservas/count/"+visitaId, headers, Integer.class);
+        model.addAttribute("maximo", maxPersonas);
+        returnStr = "/reservation";
 
         return returnStr;
     }
@@ -89,7 +86,7 @@ public class ReservaController {
         // Compruebo si el usuario ya tiene alguna reserva para esa visita
         List<Reserva> reservas = RestController.RESTgetRequestListHeaders("/reservas/user", header, Reserva.class);
         for(Reserva r : reservas){
-            if(r.getVisita().getVisitaId() == reserva.getVisita().getVisitaId()){
+            if(r.getVisita().getVisitaId().equals(reserva.getVisita().getVisitaId())){
                 error = "Ya tienes una reserva para esta visita";
                 returnStr = "redirect:/reservas/visita/"+reserva.getVisita().getVisitaId()+"?error="+error;
                 return new ModelAndView(returnStr, new ModelMap(model));

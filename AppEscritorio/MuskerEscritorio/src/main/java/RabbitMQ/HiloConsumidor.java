@@ -97,7 +97,7 @@ public class HiloConsumidor extends Thread {
             Alerta alerta;
 
 
-            if (mensajeCorrecto) {
+            if (message != null && !message.equals("")){
                 //Ba bien
                 alerta = controllerJSON.generateAlerta(message, controladorAlertas);
                 controladorAlertas.alertaHandler(alerta);

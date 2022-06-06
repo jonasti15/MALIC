@@ -25,6 +25,10 @@ public class Animal {
     private TipoEstado estado;
 
     @ManyToOne
+    @JoinColumn(name = "estadoIa", nullable = false)
+    private TipoEstado estadoIa;
+
+    @ManyToOne
     @JoinColumn(name = "recinto_id", nullable = false)
     private Recinto recinto_id;
 
@@ -42,6 +46,14 @@ public class Animal {
         this.especie = especie;
         this.estado = estado;
         this.recinto_id = recinto_id;
+    }
+
+    public TipoEstado getEstadoIa() {
+        return estadoIa;
+    }
+
+    public void setEstadoIa(TipoEstado estadoIa) {
+        this.estadoIa = estadoIa;
     }
 
     public Long getAnimalId() {

@@ -1,0 +1,12 @@
+{
+  "latidos_min": 255,
+  "latidos_max": 10000,
+  "temperatura_min": 43,
+  "temperatura_max": 100,
+  "tens_arterial_min" : 167,
+  "tens_arterial_max" : 10000,
+  "frrespiracion_min" : 110,
+  "frrespiracion_max" : 1000,
+  "saturacionO2_min" : 92.06,
+  "saturacionO2_max" : 93.11
+}

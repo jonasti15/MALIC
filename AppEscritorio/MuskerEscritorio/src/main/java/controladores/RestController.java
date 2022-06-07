@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 public class RestController {
-    private static final String REST_SERVICE_URL = "http://localhost:8080/api";
+    private static final String REST_SERVICE_URL = "https://musker.duckdns.org/api";
     private static Client client;
 
     public static <T> T RESTgetRequest(String path, HashMap<String, Object> headers, Class<T> returnClass){

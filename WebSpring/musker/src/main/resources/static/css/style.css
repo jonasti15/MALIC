@@ -49,7 +49,6 @@ body {
     position: relative;
     width: 70px;
     height: 70px;
-    border-radius: 100%;
     z-index: 1;
     background: #e7d184;
     cursor: pointer

@@ -23,7 +23,7 @@ public class RestController {
 
     public static String getAccessToken(){
         try{
-            return "Bearer " + RestController.getRequest().getSession().getAttribute("access_token").toString();
+            return "Bearer " + Objects.requireNonNull(RestController.getRequest()).getSession().getAttribute("access_token").toString();
         }catch(NullPointerException e){
             return null;
         }
@@ -31,7 +31,7 @@ public class RestController {
 
     public static String getRefreshToken(){
         try{
-            return "Bearer " + RestController.getRequest().getSession().getAttribute("refresh_token").toString();
+            return "Bearer " + Objects.requireNonNull(RestController.getRequest()).getSession().getAttribute("refresh_token").toString();
         }catch(NullPointerException e){
             return null;
         }
@@ -39,7 +39,7 @@ public class RestController {
 
     public static void setAccessToken(String token){
         try{
-            RestController.getRequest().getSession().setAttribute("access_token", token);
+            Objects.requireNonNull(RestController.getRequest()).getSession().setAttribute("access_token", token);
         }catch(NullPointerException ignored){
 
         }
@@ -47,7 +47,7 @@ public class RestController {
 
     public static HttpServletRequest getRequest() {
         try{
-            return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
+            return ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes()))
                     .getRequest();
         }catch(NullPointerException e){
             return null;

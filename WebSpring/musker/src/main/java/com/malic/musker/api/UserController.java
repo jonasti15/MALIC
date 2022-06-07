@@ -17,6 +17,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.security.SecureRandom;
+import java.util.Objects;
 
 @Controller
 @RequestMapping(path="/user")
@@ -51,10 +52,10 @@ public class UserController {
                 user = RestController.RESTpostRequest(uri, new HttpHeaders(), user, User.class);
             }catch (HttpClientErrorException e){
                 try{
-                    if(e.getMessage().contains("username")){
+                    if(Objects.requireNonNull(e.getMessage()).contains("username")){
                         error = error + "Username already in use ";
                     }
-                    if(e.getMessage().contains("email")){
+                    if(Objects.requireNonNull(e.getMessage()).contains("email")){
                         error = error + "Email already in use ";
                     }
 
@@ -109,7 +110,7 @@ public class UserController {
             error = "Password mismatch";
             model.addAttribute("userEdit", user);
             returnStr = "redirect:/user/profile?error="+error;
-        }else if(getPassword(request, "password").equals("") && getPassword(request, "passwordRep").equals("")){
+        }else if(Objects.equals(getPassword(request, "password"), "") && Objects.equals(getPassword(request, "passwordRep"), "")){
             user.setPassword(bdUser.getPassword());
         }else{
             BCryptPasswordEncoder encrypt = new BCryptPasswordEncoder(SecurityConfiguration.ENCRYPT_STRENGTH);
@@ -131,10 +132,10 @@ public class UserController {
                 user = RestController.RESTpostRequest(uri, new HttpHeaders(), user, User.class);
             }catch (HttpClientErrorException e){
                 try{
-                    if(e.getMessage().contains("username")){
+                    if(Objects.requireNonNull(e.getMessage()).contains("username")){
                         error = error + "Username already in use ";
                     }
-                    if(e.getMessage().contains("email")){
+                    if(Objects.requireNonNull(e.getMessage()).contains("email")){
                         error = error + "Email already in use ";
                     }
 

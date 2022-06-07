@@ -3,6 +3,7 @@ package com.malic.musker.api;
 import com.malic.musker.entities.Reserva;
 import com.malic.musker.entities.User;
 import com.malic.musker.entities.Visita;
+import com.malic.musker.entitiesDTO.ReservaDTO;
 import org.springframework.boot.Banner;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.Authentication;
@@ -64,7 +65,6 @@ public class ReservaController {
         reserva.setVisita(visita);
         reserva.setCantidad_personas(1);
 
-        error += " Error inesperado";
         model.addAttribute("reserva", reserva);
         model.addAttribute("error", error);
         int maxPersonas = 10 - RestController.RESTgetRequestHeaders("/reservas/count/"+visitaId, headers, Integer.class);
@@ -76,9 +76,14 @@ public class ReservaController {
 
     @PostMapping(path="/add")
     public ModelAndView addNewReservation (Model model,
-                                           @ModelAttribute Reserva reserva) {
+                                           @ModelAttribute ReservaDTO reservaDto) {
         String error = "";
         String returnStr = "redirect:/";
+
+        Reserva reserva = new Reserva();
+        reserva.setVisita(reservaDto.getVisita());
+        reserva.setUser(reservaDto.getUser());
+        reserva.setCantidad_personas(reservaDto.getCantidad_personas());
 
         HttpHeaders header = new HttpHeaders();
         header.set(HttpHeaders.AUTHORIZATION, "Bearer " + RestController.getRequest().getSession().getAttribute("access_token").toString());

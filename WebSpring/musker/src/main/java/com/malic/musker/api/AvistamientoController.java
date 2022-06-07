@@ -141,7 +141,7 @@ public class AvistamientoController {
             avistamiento.setEspecie(especie);
             Avistamiento avistamientoCreado = RestController.RESTpostRequest("/avistamientos/add", new HttpHeaders(), avistamiento, Avistamiento.class);
 
-            //publisher.publishMessage(avistamientoCreado);
+            publisher.publishMessage(avistamientoCreado);
 
             returnStr = "redirect:/especies/especie/"+especie.getEspecieId();
         }else{

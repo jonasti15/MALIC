@@ -39,8 +39,12 @@ public class AnimalController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Animal> addAnimal(@RequestBody Animal animal,
+    public ResponseEntity<Animal> addAnimal(@RequestBody AnimalDTO animalDto,
                                           HttpServletResponse response) throws IOException {
+        Animal animal = new Animal();
+        animal.setEspecie(animalDto.getEspecie());
+        animal.setEstado(animalDto.getEstado());
+        animal.setRecinto_id(animalDto.getRecinto_id());
         try{
             animalDao.addAnimal(animal);
         }catch(Exception e){
@@ -57,8 +61,15 @@ public class AnimalController {
         return ResponseEntity.ok(animal);
     }
     @PostMapping("/edit")
-    public ResponseEntity<Animal> editAnimal(@RequestBody Animal animal,
+    public ResponseEntity<Animal> editAnimal(@RequestBody AnimalDTO animalDto,
                                             HttpServletResponse response) throws IOException {
+        Animal animal = new Animal();
+        animal.setAnimalId(animalDto.getAnimalId());
+        animal.setPath(animalDto.getPath());
+        animal.setEspecie(animalDto.getEspecie());
+        animal.setEstado(animalDto.getEstado());
+        animal.setEstadoIa(animalDto.getEstadoIa());
+        animal.setRecinto_id(animalDto.getRecinto_id());
         try{
             animalDao.editAnimal(animal);
         }catch(Exception e){

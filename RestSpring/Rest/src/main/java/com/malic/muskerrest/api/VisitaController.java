@@ -7,6 +7,7 @@ import com.malic.muskerrest.entities.Animal;
 import com.malic.muskerrest.entities.Reserva;
 import com.malic.muskerrest.entities.User;
 import com.malic.muskerrest.entities.Visita;
+import com.malic.muskerrest.entitiesDTO.VisitaDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -48,8 +49,13 @@ public class VisitaController {
         return ResponseEntity.ok(visitas);
     }
     @PostMapping("/edit")
-    public ResponseEntity<Visita> editAnimal(@RequestBody Visita visita,
+    public ResponseEntity<Visita> editVisita(@RequestBody VisitaDTO visitaDto,
                                              HttpServletResponse response) throws IOException {
+        Visita visita = new Visita();
+        visita.setVisitaId(visitaDto.getVisitaId());
+        visita.setGuia(visitaDto.getGuia());
+        visita.setDescripcion(visitaDto.getDescripcion());
+        visita.setFecha(visitaDto.getFecha());
         try{
             visitaDao.editVisita(visita);
         }catch(Exception e){
@@ -76,8 +82,12 @@ public class VisitaController {
         return ResponseEntity.ok(visita);
     }
     @PostMapping("/add")
-    public ResponseEntity<Visita> addVisita(@RequestBody Visita visita,
+    public ResponseEntity<Visita> addVisita(@RequestBody VisitaDTO visitaDto,
                                         HttpServletResponse response) throws IOException {
+        Visita visita = new Visita();
+        visita.setGuia(visitaDto.getGuia());
+        visita.setFecha(visitaDto.getFecha());
+        visita.setDescripcion(visitaDto.getDescripcion());
         try{
             visitaDao.addVisita(visita);
         }catch(Exception e){

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.malic.muskerrest.dao.estancia.EstanciaDao;
 import com.malic.muskerrest.entities.Animal;
 import com.malic.muskerrest.entities.Estancia;
+import com.malic.muskerrest.entitiesDTO.EstanciaDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,8 +29,18 @@ public class EstanciaController {
         return ResponseEntity.ok(estanciaDao.getAllEstancias());
     }
     @PostMapping("/add")
-    public ResponseEntity<Estancia> addEstancia(@RequestBody Estancia estancia,
+    public ResponseEntity<Estancia> addEstancia(@RequestBody EstanciaDTO estanciaDto,
                                             HttpServletResponse response) throws IOException {
+        Estancia estancia = new Estancia();
+        estancia.setAnimal(estanciaDto.getAnimal());
+        estancia.setFecha_entrada(estanciaDto.getFecha_entrada());
+        estancia.setMotivo_entrada(estanciaDto.getMotivo_entrada());
+        if(estanciaDto.getEstancia_id() != null){
+            estancia.setEstancia_id(estanciaDto.getEstancia_id());
+        }
+        if(estanciaDto.getFechaSalida() != null){
+            estancia.setFechaSalida(estanciaDto.getFechaSalida());
+        }
         try{
             estanciaDao.addEstancia(estancia);
         }catch(Exception e){

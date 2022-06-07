@@ -2,6 +2,7 @@ package com.malic.muskerrest.api;
 
 import com.malic.muskerrest.dao.constantes.ConstantesDao;
 import com.malic.muskerrest.entities.Constantes;
+import com.malic.muskerrest.entitiesDTO.ConstantesDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +28,14 @@ public class ConstantesController {
 
     @PostMapping("/post")
     @ResponseBody
-    public void postConstantes(@RequestBody Constantes constantes){
+    public void postConstantes(@RequestBody ConstantesDTO constantesDto){
+        Constantes constantes = new Constantes();
+        constantes.setAnimalId(constantesDto.getAnimalId());
+        constantes.setLatidos(constantesDto.getLatidos());
+        constantes.setTemperatura(constantesDto.getTemperatura());
+        constantes.setTensArterial(constantesDto.getTensArterial());
+        constantes.setFrrespiracion(constantesDto.getFrrespiracion());
+        constantes.setSaturacionO2(constantesDto.getSaturacionO2());
         System.out.println(constantes);
         constantesDao.addConstantes(constantes);
     }

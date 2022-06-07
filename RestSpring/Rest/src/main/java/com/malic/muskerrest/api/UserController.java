@@ -9,6 +9,7 @@ import com.malic.muskerrest.dao.user.UserDao;
 import com.malic.muskerrest.dao.userType.UserTypeDao;
 import com.malic.muskerrest.entities.User;
 import com.malic.muskerrest.entities.UserType;
+import com.malic.muskerrest.entitiesDTO.UserDTO;
 import org.hibernate.engine.jdbc.spi.SqlExceptionHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -66,8 +67,21 @@ public class UserController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<User> addUser(@RequestBody User user,
+    public ResponseEntity<User> addUser(@RequestBody UserDTO userDto,
                                             HttpServletResponse response) throws IOException {
+        User user = new User();
+        user.setNombre(userDto.getNombre());
+        user.setApellido(userDto.getApellido());
+        user.setUsername(userDto.getUsername());
+        user.setPassword(userDto.getPassword());
+        user.setEmail(userDto.getEmail());
+        user.setFecha_nacimiento(userDto.getFecha_nacimiento());
+        user.setProfileImg(userDto.getProfileImg());
+        user.setTipoUsuario(userDto.getTipoUsuario());
+        if(userDto.getUserId() != null){
+            user.setUserId(userDto.getUserId());
+        }
+
         try{
             userDao.addUser(user);
         }catch(Exception e){

@@ -5,6 +5,7 @@ import com.malic.muskerrest.dao.user.UserDao;
 import com.malic.muskerrest.dao.visita.VisitaDao;
 import com.malic.muskerrest.entities.Reserva;
 import com.malic.muskerrest.entities.User;
+import com.malic.muskerrest.entitiesDTO.ReservaDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -60,8 +61,13 @@ public class ReservaController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Reserva> addReserva(@RequestBody Reserva reserva,
+    public ResponseEntity<Reserva> addReserva(@RequestBody ReservaDTO reservaDto,
                                               HttpServletResponse response){
+
+        Reserva reserva = new Reserva();
+        reserva.setUser(reservaDto.getUser());
+        reserva.setVisita(reservaDto.getVisita());
+        reserva.setCantidad_personas(reservaDto.getCantidad_personas());
 
         reserva.setVisita(visitaDao.getVisita(reserva.getVisita().getVisitaId()));
 
@@ -70,9 +76,14 @@ public class ReservaController {
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<String> deleteReserva(@RequestBody Reserva reserva){
+    public ResponseEntity<String> deleteReserva(@RequestBody ReservaDTO reservaDto){
+        Reserva reserva = new Reserva();
+        reserva.setReserva_id(reservaDto.getReserva_id());
+        reserva.setUser(reservaDto.getUser());
+        reserva.setVisita(reservaDto.getVisita());
+        reserva.setCantidad_personas(reservaDto.getCantidad_personas());
 
-            reservaDao.deleteReserva(reserva.getReserva_id());
+        reservaDao.deleteReserva(reserva.getReserva_id());
 
         return ResponseEntity.ok("Reserva borrada");
     }

@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import com.malic.musker.comunication.MessagePublisher;
 import com.malic.musker.entities.Avistamiento;
 import com.malic.musker.entities.Especie;
+import com.malic.musker.entitiesDTO.AvistamientoDTO;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -111,10 +112,14 @@ public class AvistamientoController {
 
     @PostMapping(path="/add")
     public ModelAndView addAvistamiento(Model model,
-                                        @ModelAttribute Avistamiento avistamiento,
+                                        @ModelAttribute AvistamientoDTO avistamientoDTO,
                                         WebRequest request){
         String returnStr = "";
         String error = "";
+
+        Avistamiento avistamiento = new Avistamiento();
+        avistamiento.setDescripcion(avistamientoDTO.getDescripcion());
+        avistamiento.setLocalizacion(avistamientoDTO.getLocalizacion());
 
         if(avistamiento.getDescripcion().equals("")){
             error = "Debes introducir una descripción";
@@ -136,7 +141,7 @@ public class AvistamientoController {
             avistamiento.setEspecie(especie);
             Avistamiento avistamientoCreado = RestController.RESTpostRequest("/avistamientos/add", new HttpHeaders(), avistamiento, Avistamiento.class);
 
-            publisher.publishMessage(avistamientoCreado);
+            //publisher.publishMessage(avistamientoCreado);
 
             returnStr = "redirect:/especies/especie/"+especie.getEspecieId();
         }else{

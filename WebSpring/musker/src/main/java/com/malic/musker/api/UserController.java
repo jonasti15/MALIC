@@ -2,6 +2,7 @@ package com.malic.musker.api;
 
 import com.malic.musker.entities.User;
 import com.malic.musker.entities.UserType;
+import com.malic.musker.entitiesDTO.UserDTO;
 import com.malic.musker.security.SecurityConfiguration;
 import jdk.jfr.Frequency;
 import org.springframework.http.HttpHeaders;
@@ -25,10 +26,18 @@ public class UserController {
 
     @PostMapping(path="/add")
         public ModelAndView addNewUser (Model model,
-                                        @ModelAttribute User user,
+                                        @ModelAttribute UserDTO userDto,
                                         WebRequest request) {
         String returnStr = "register";
         String error = "";
+
+        User user = new User();
+        user.setNombre(userDto.getNombre());
+        user.setApellido(userDto.getApellido());
+        user.setFecha_nacimiento(userDto.getFecha_nacimiento());
+        user.setEmail(userDto.getEmail());
+        user.setUsername(userDto.getUsername());
+        user.setPassword(userDto.getPassword());
 
         BCryptPasswordEncoder encrypt = new BCryptPasswordEncoder(SecurityConfiguration.ENCRYPT_STRENGTH);
         user.setPassword(encrypt.encode(request.getParameter("password")));
@@ -95,11 +104,20 @@ public class UserController {
 
     @PostMapping(path="/edit")
     public ModelAndView userEdit(Model model,
-                                 @ModelAttribute User user,
+                                 @ModelAttribute UserDTO userDto,
                                  WebRequest request){
         String error = "";
         User bdUser;
         String returnStr = "redirect:/";
+
+        User user = new User();
+        user.setUserId(userDto.getUserId());
+        user.setNombre(userDto.getNombre());
+        user.setApellido(userDto.getApellido());
+        user.setFecha_nacimiento(userDto.getFecha_nacimiento());
+        user.setEmail(userDto.getEmail());
+        user.setUsername(userDto.getUsername());
+        user.setPassword(userDto.getPassword());
 
         HttpHeaders header = new HttpHeaders();
         header.set(HttpHeaders.AUTHORIZATION, "Bearer " + RestController.getRequest().getSession().getAttribute("access_token").toString());

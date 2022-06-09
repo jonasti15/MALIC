@@ -142,6 +142,33 @@ public class RestController {
         }
     }
 
+    public static <T, G> G RESTputRequest(String requestUrl, HttpHeaders headers, T objToSend, Class<G> returnClass) {
+        RestTemplate restTemplate = new RestTemplate();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<T> requestEntity = new HttpEntity<>(objToSend, headers);
+
+        String url = getPath() + requestUrl;
+        ResponseEntity<G> responseEntity = null;
+        try{
+            responseEntity = restTemplate.exchange(url, HttpMethod.PUT, requestEntity, returnClass);
+        }catch (Exception e){
+            if (e.getMessage().contains("Token has expired")) {
+                if(refreshAccessToken().equals("")){
+                    HttpHeaders newHeaders = new HttpHeaders();
+                    newHeaders.set(HttpHeaders.AUTHORIZATION, RestController.getAccessToken());
+                    return RESTputRequest(requestUrl, newHeaders, objToSend, returnClass);
+                }
+            }else{
+                throw new CustomException();
+            }
+        }
+        if (responseEntity != null) {
+            return responseEntity.getBody();
+        }else{
+            return null;
+        }
+    }
+
     public static <T, G> G RESTgetRequestIA(String requestUrl, T objToSend, Class<G> returnClass) {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();

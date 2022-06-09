@@ -145,9 +145,9 @@ public class UserController {
         user.setProfileImg(bdUser.getProfileImg());
 
         if(error.length() == 0){
-            String uri = "/user/add";
+            String uri = "/user/edit";
             try{
-                user = RestController.RESTpostRequest(uri, new HttpHeaders(), user, User.class);
+                RestController.RESTputRequest(uri, new HttpHeaders(), user, User.class);
             }catch (HttpClientErrorException e){
                 try{
                     if(Objects.requireNonNull(e.getMessage()).contains("username")){

@@ -48,7 +48,7 @@ public class VisitaController {
 
         return ResponseEntity.ok(visitas);
     }
-    @PostMapping("/edit")
+    @PutMapping("/edit")
     public ResponseEntity<Visita> editVisita(@RequestBody VisitaDTO visitaDto,
                                              HttpServletResponse response) throws IOException {
         Visita visita = new Visita();

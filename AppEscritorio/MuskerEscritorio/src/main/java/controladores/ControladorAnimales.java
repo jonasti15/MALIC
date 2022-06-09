@@ -64,7 +64,7 @@ public class ControladorAnimales  {
         java.util.Date hoy =new java.util.Date();
         Date hoySql=new Date(hoy.getTime());
         estancia.setFechaSalida(hoySql);
-        RestController.RESTpostRequest("/estancias/add", new HashMap<>(),estancia ,Estancia.class );
+        RestController.RESTputRequest("/estancias/edit", new HashMap<>(),estancia ,Estancia.class );
         panel.getControladorPantallaPrincipal().recargarAnimales();
 
     }
@@ -155,7 +155,7 @@ public class ControladorAnimales  {
             animal.setEstado(estado);
             animal.setRecinto_id(recinto);
             animal.setEstadoIa(animal.getEstadoIa());
-            Animal animalCreado = RestController.RESTpostRequest("/animals/edit", new HashMap<>(), animal, Animal.class);
+            Animal animalCreado = RestController.RESTputRequest("/animals/edit", new HashMap<>(), animal, Animal.class);
             panel.getControladorPantallaPrincipal().recargarAnimales();
             return animalCreado;
         }

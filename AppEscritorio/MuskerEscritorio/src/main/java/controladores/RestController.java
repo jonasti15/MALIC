@@ -158,7 +158,7 @@ public class RestController {
             String errorValue = String.valueOf(response.get("error"));
             if(errorValue.contains("Token has expired")){
                 if(refreshToken().equals("")){
-                    return RESTpostRequest(path, headers, objToSend, returnClass);
+                    return RESTputRequest(path, headers, objToSend, returnClass);
                 }else if(refreshToken().equals("expired")){
                     try {
                         MUsker.restartProgram();

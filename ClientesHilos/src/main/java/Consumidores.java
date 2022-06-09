@@ -4,29 +4,47 @@ import org.json.JSONObject;
 
 import javax.swing.*;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
+import java.util.*;
+import java.util.concurrent.*;
 
 public class Consumidores {
     public static String access_token = "";
     public static String refresh_token = "";
-    public static final int NUM_CLIENTE = 100;
+    public static final int NUM_CLIENTE = 0;
     ExecutorService executor;
+    List<HiloConsumidor> tareas;
+    List<Future<Double>> lista;
+    List<Double> maximos;
 
     public Consumidores() throws InterruptedException {
         login();
         executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
-
+        tareas= new ArrayList<>();
+        maximos=new ArrayList<>();
         for (int i = 0; i< NUM_CLIENTE; i++) {
-            executor.execute(new HiloConsumidor());
+            tareas.add(new HiloConsumidor());
         }
+
+        lista = executor.invokeAll(tareas) ;
         executor.shutdown();
+        for (Future<Double> item: lista){
 
+            try {
+                maximos.add(item.get());
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace();
+            }
+
+        }
         executor.awaitTermination(2000000, TimeUnit.SECONDS);
+        System.out.println("Tiempo medio esperado: "+ getAverage(maximos)+" ms");
 
 
+    }
+    private static double getAverage(List<Double> list) {
+        return list.stream()
+                .mapToDouble(a -> a)
+                .average().orElse(0);
     }
 
     private void login() {

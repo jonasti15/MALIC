@@ -34,6 +34,7 @@ public class ConstantesController {
         constantes.setLatidos(constantesDto.getLatidos());
         constantes.setTemperatura(constantesDto.getTemperatura());
         constantes.setTensArterial(constantesDto.getTensArterial());
+        constantes.setFecha(constantesDto.getFecha());
         constantes.setFrrespiracion(constantesDto.getFrrespiracion());
         constantes.setSaturacionO2(constantesDto.getSaturacionO2());
         System.out.println(constantes);

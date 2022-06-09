@@ -60,7 +60,8 @@ public class AnimalController {
 
         return ResponseEntity.ok(animal);
     }
-    @PostMapping("/edit")
+
+    @PutMapping("/edit")
     public ResponseEntity<Animal> editAnimal(@RequestBody AnimalDTO animalDto,
                                             HttpServletResponse response) throws IOException {
         Animal animal = new Animal();

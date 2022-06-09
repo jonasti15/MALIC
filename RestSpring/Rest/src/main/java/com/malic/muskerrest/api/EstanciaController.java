@@ -57,6 +57,35 @@ public class EstanciaController {
         return ResponseEntity.ok(estancia);
     }
 
+    @PutMapping("/edit")
+    public ResponseEntity<Estancia> editarEstancia(@RequestBody EstanciaDTO estanciaDto,
+                                                    HttpServletResponse response) throws IOException {
+        Estancia estancia = new Estancia();
+        estancia.setAnimal(estanciaDto.getAnimal());
+        estancia.setFecha_entrada(estanciaDto.getFecha_entrada());
+        estancia.setMotivo_entrada(estanciaDto.getMotivo_entrada());
+        if(estanciaDto.getEstancia_id() != null){
+            estancia.setEstancia_id(estanciaDto.getEstancia_id());
+        }
+        if(estanciaDto.getFechaSalida() != null){
+            estancia.setFechaSalida(estanciaDto.getFechaSalida());
+        }
+        try{
+            estanciaDao.addEstancia(estancia);
+        }catch(Exception e){
+            response.setHeader("error", e.getMessage());
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+
+            Map<String, String> error = new HashMap<>();
+            error.put("error_message", e.getMessage());
+
+            response.setContentType(APPLICATION_JSON_VALUE);
+            new ObjectMapper().writeValue(response.getOutputStream(), error);
+        }
+
+        return ResponseEntity.ok(estancia);
+    }
+
     @GetMapping("/estancia/{id}")
     public ResponseEntity<Estancia> getEstancia(@PathVariable long id) {
         return ResponseEntity.ok(estanciaDao.getEstancia(id));

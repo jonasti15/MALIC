@@ -98,6 +98,38 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
+    @PutMapping("/edit")
+    public ResponseEntity<User> editUser(@RequestBody UserDTO userDto,
+                                        HttpServletResponse response) throws IOException {
+        User user = new User();
+        user.setNombre(userDto.getNombre());
+        user.setApellido(userDto.getApellido());
+        user.setUsername(userDto.getUsername());
+        user.setPassword(userDto.getPassword());
+        user.setEmail(userDto.getEmail());
+        user.setFecha_nacimiento(userDto.getFecha_nacimiento());
+        user.setProfileImg(userDto.getProfileImg());
+        user.setTipoUsuario(userDto.getTipoUsuario());
+        if(userDto.getUserId() != null){
+            user.setUserId(userDto.getUserId());
+        }
+
+        try{
+            userDao.addUser(user);
+        }catch(Exception e){
+            response.setHeader("error", e.getMessage());
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+
+            Map<String, String> error = new HashMap<>();
+            error.put("error_message", e.getMessage());
+
+            response.setContentType(APPLICATION_JSON_VALUE);
+            new ObjectMapper().writeValue(response.getOutputStream(), error);
+        }
+
+        return ResponseEntity.ok(user);
+    }
+
     @GetMapping("/userType/{userTypeId}")
     public ResponseEntity<List<User>> getUserByUserType(@PathVariable("userTypeId") String id){
         List<User>user = userDao.getUsersByUserType(Integer.parseInt(id));

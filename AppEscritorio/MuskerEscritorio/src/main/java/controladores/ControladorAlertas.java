@@ -80,6 +80,6 @@ public class ControladorAlertas {
     }
     public void editarAnimal(Animal animal, TipoEstado estadoIa) {
         animal.setEstadoIa(estadoIa);
-        RestController.RESTpostRequest("/animals/edit", new HashMap<>(), animal, Animal.class);
+        RestController.RESTputRequest("/animals/edit", new HashMap<>(), animal, Animal.class);
     }
 }

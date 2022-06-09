@@ -137,6 +137,41 @@ public class RestController {
         return clientResponse.getEntity(returnClass);
     }
 
+    public static <T, G> G RESTputRequest(String path, HashMap<String, Object> headers, T objToSend, Class<G> returnClass){
+        ClientConfig clientConfig = new DefaultClientConfig();
+        clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);  // <----- set the json configuration POJO MAPPING for JSON reponse paring
+        client = Client.create(clientConfig);
+
+        headers.put("Authorization", "Bearer " + MUsker.access_token);
+
+        WebResource webResource = client.resource(REST_SERVICE_URL)
+                .path(path);
+
+        WebResource.Builder tmp = null;
+        for (Map.Entry<String, Object> entry : headers.entrySet()) {
+            tmp = webResource.header(entry.getKey(), entry.getValue());
+        }
+        ClientResponse clientResponse = tmp.type(MediaType.APPLICATION_JSON).put(ClientResponse.class, objToSend);
+        MultivaluedMap<String, String> response = clientResponse.getHeaders();
+
+        if(response.containsKey("error")){
+            String errorValue = String.valueOf(response.get("error"));
+            if(errorValue.contains("Token has expired")){
+                if(refreshToken().equals("")){
+                    return RESTpostRequest(path, headers, objToSend, returnClass);
+                }else if(refreshToken().equals("expired")){
+                    try {
+                        MUsker.restartProgram();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+
+        return clientResponse.getEntity(returnClass);
+    }
+
     public static void RESTdeleteRequest(String path, HashMap<String, String> headers){
         ClientConfig clientConfig = new DefaultClientConfig();
         clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);  // <----- set the json configuration POJO MAPPING for JSON reponse paring

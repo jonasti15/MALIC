@@ -75,7 +75,7 @@ public class ControladorVisitas {
         visita.setFecha(fecha);
         visita.setDescripcion(desc);
         visita.setGuia(guia);
-        RestController.RESTpostRequest("/visitas/edit", new HashMap<>(), visita, Visita.class);
+        RestController.RESTputRequest("/visitas/edit", new HashMap<>(), visita, Visita.class);
         panel.getControladorPantallaPrincipal().recargarVisitas();
 
     }

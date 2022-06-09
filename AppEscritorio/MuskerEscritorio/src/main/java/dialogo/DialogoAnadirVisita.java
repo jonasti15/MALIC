@@ -124,17 +124,20 @@ public class DialogoAnadirVisita extends JDialog implements ActionListener {
                 java.sql.Date datesql=new java.sql.Date(date.getTime());
                 if(desc.getText().equals("")||desc==null){
                     JOptionPane.showMessageDialog(null, "Tienes que rellenar todos los campos!","Error", JOptionPane.ERROR_MESSAGE);
-                    return;
+
+                }else{
+                    java.util.Date hoy=new java.util.Date();
+                    java.sql.Date hoySql=new java.sql.Date(hoy.getTime());
+                    if(date.before(hoySql)){
+                        JOptionPane.showMessageDialog(null, "La fecha no puede ser anterior a la de hoy!","Error", JOptionPane.ERROR_MESSAGE);
+                    }else{
+                        controlador.anadirVisita(datesql, (User) this.txUser.getSelectedItem(),desc.getText());
+                        this.ventana.repaint();
+                        this.dispose();
+                    }
                 }
-                java.util.Date hoy=new java.util.Date();
-                java.sql.Date hoySql=new java.sql.Date(hoy.getTime());
-                if(date.before(hoySql)){
-                    JOptionPane.showMessageDialog(null, "La fecha no puede ser anterior a la de hoy!","Error", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-                controlador.anadirVisita(datesql, (User) this.txUser.getSelectedItem(),desc.getText());
-                this.ventana.repaint();
-                this.dispose();
+
+
                 break;
 
         }

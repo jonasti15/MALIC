@@ -19,8 +19,8 @@ public class HiloConsumidor implements Callable<Double> {
             Long fin=System.currentTimeMillis();
             Long tiempo= fin-principio;
             listaTiempos.add(tiempo);
-            System.out.println("Tiempo: " +tiempo+" ms");
-            System.out.println(animal);
+            //System.out.println("Tiempo: " +tiempo+" ms");
+            //System.out.println(animal);
         }
         return getAverage(listaTiempos);
 

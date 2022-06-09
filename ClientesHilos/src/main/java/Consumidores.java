@@ -10,7 +10,7 @@ import java.util.concurrent.*;
 public class Consumidores {
     public static String access_token = "";
     public static String refresh_token = "";
-    public static final int NUM_CLIENTE = 0;
+    public static final int NUM_CLIENTE = 200;
     ExecutorService executor;
     List<HiloConsumidor> tareas;
     List<Future<Double>> lista;

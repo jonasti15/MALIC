@@ -64,6 +64,8 @@ public class Alerta {
         return estado;
     }
 
+
+
     public Recinto getRecinto_id() {
         return recinto_id;
     }

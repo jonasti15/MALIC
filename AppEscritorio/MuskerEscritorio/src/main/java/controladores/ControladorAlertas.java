@@ -78,13 +78,8 @@ public class ControladorAlertas {
     public TipoEstado getEstado(Long id) {
        return RestController.RESTgetRequest("/tipoestado/type/"+id, new HashMap<>(), TipoEstado.class);
     }
-    public void editarAnimal(Long animal_id, Especie especie, TipoEstado estado, Recinto recinto, TipoEstado estadoIa) {
-        Animal animal=new Animal();
-        animal.setAnimalId(animal_id);
-        animal.setEspecie(especie);
-        animal.setEstado(estado);
+    public void editarAnimal(Animal animal, TipoEstado estadoIa) {
         animal.setEstadoIa(estadoIa);
-        animal.setRecinto_id(recinto);
         RestController.RESTpostRequest("/animals/edit", new HashMap<>(), animal, Animal.class);
     }
 }

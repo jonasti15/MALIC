@@ -47,7 +47,7 @@ public class ControllerJSON {
             alerta.setEstadoNuevo(estadoactual);
             alerta.setRecinto_id(animal.getRecinto_id());
             alerta.setEspecie(animal.getEspecie());
-            controladorAlertas.editarAnimal(animal.getAnimalId(), animal.getEspecie(), animal.getEstado(), animal.getRecinto_id(), estadoactual);
+            controladorAlertas.editarAnimal(animal, estadoactual);
         } catch (JSONException e) {
             e.printStackTrace();
         }

@@ -166,6 +166,7 @@ public class ControladorAnimales  {
         Animal animal=new Animal();
         animal.setEspecie(especie);
         animal.setEstado(estado);
+        animal.setEstadoIa(estado);
         int ocupados= RestController.RESTgetRequest("/recintos/ocupacion/"+recinto.getRecinto_id(), new HashMap<>(), Integer.class);
         if(ocupados>=recinto.getCantidad_animales()){
             JOptionPane.showMessageDialog(null, "El recinto seleccionado esta lleno!","Error", JOptionPane.ERROR_MESSAGE);

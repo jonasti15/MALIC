@@ -10,8 +10,9 @@ import java.util.Random;
 public class Animal implements Runnable {
     final static String EXCHANGE_NAME = "animal";
     private static final int NUM_MAX_CONSTANTES = 10;
+    private static final int TIEMPO_ESPERA = 10000;
+    private static final int NUM_CAMBIO_ESTADO = 3;
     ConstantesMensaje constantes;
-    ConnectionFactory factory;
     Channel channel;
     Especie especie;
     Random random;
@@ -73,13 +74,13 @@ public class Animal implements Runnable {
     public void run() {
         try {
             while (end < NUM_MAX_CONSTANTES) {
-                if (cont > 3) cont = 0;
+                if (cont > NUM_CAMBIO_ESTADO) cont = 0;
                 String mensaje = crearMensaje();
                 mandarMensaje(mensaje);
                 System.out.println(mensaje);
                 cont++;
                 end++;
-                Thread.sleep(2000);
+                Thread.sleep(TIEMPO_ESPERA);
             }
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();

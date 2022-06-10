@@ -11,7 +11,7 @@
     <packaging>war</packaging>
     <groupId>com.malic</groupId>
     <artifactId>muskerRest</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0-RELEASE</version>
     <name>muskerRest</name>
     <description>muskerRest</description>
     <properties>

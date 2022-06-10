@@ -11,7 +11,7 @@
 	<packaging>war</packaging>
 	<groupId>com.malic</groupId>
 	<artifactId>musker</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0-RELEASE</version>
 	<name>musker</name>
 	<description>Musker project from Malic</description>
 	<properties>

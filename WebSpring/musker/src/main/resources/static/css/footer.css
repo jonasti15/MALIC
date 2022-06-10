@@ -1,0 +1,26 @@
+:root{
+    --mugreen-very-soft: #B1D8B7;
+    --mugreen-soft: #94C973;
+    --mugreen: #76B947;
+    --mugreen-hard: #2F5233;
+    --musalmon: #EE6C4D;
+}
+
+hr {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border: 0;
+    border-top: 2px solid var(--mugreen);
+}
+
+.footer2-div{
+    background-color: #C4C4C4;
+}
+
+.footer2 *{
+    color: var(--mugreen);
+}
+
+.fab{
+    color: white;
+}

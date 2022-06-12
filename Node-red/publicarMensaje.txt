@@ -1,2 +1,0 @@
-Para publicar mensaje en x queue:
-./rabbitmqadmin publish exchange=amq.default routing_key= -->test-queue<-- payload="hello, world"

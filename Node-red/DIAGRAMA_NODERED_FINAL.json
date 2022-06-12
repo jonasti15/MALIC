@@ -1,0 +1,648 @@
+[
+    {
+        "id": "150a53c6439465a5",
+        "type": "amqp in",
+        "z": "d910d6b169b53def",
+        "name": "",
+        "topic": "",
+        "iotype": "1",
+        "ioname": "animal",
+        "server": "a2972475b284ff1e",
+        "x": 175,
+        "y": 260,
+        "wires": [
+            [
+                "17d08627337bf37d"
+            ]
+        ],
+        "l": false
+    },
+    {
+        "id": "62e02dd809c98e3c",
+        "type": "http request",
+        "z": "d910d6b169b53def",
+        "name": "GUARDAR CONSTANTES",
+        "method": "POST",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "musker.duckdns.org/api/constantes/post",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "senderr": false,
+        "x": 1160,
+        "y": 260,
+        "wires": [
+            [
+                "280970db04681099"
+            ]
+        ]
+    },
+    {
+        "id": "4d16cdf2865a1a65",
+        "type": "amqp out",
+        "z": "d910d6b169b53def",
+        "name": "",
+        "routingkey": "",
+        "iotype": "1",
+        "ioname": "alarma",
+        "server": "a2972475b284ff1e",
+        "x": 1710,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "62d16273b290e4e5",
+        "type": "change",
+        "z": "d910d6b169b53def",
+        "name": "Tratar datos",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.fecha",
+                "pt": "msg",
+                "to": "",
+                "tot": "date"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 510,
+        "y": 260,
+        "wires": [
+            [
+                "ab0a1cc854c7a09f"
+            ]
+        ],
+        "info": "# Descripción \nPrimero le mete al mensaje el timestamp.\n---\nDespues pasa la especie de este al flow para guardarlo como una variable.\n---\nActo seguido este se borra y se pasa el objeto entero a una variable global."
+    },
+    {
+        "id": "85d9c86c4950eb22",
+        "type": "http request",
+        "z": "d910d6b169b53def",
+        "name": "PETICION DE ANIMAL",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "musker.duckdns.org/api/animals/animal/{{{param}}}",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "senderr": false,
+        "x": 950,
+        "y": 480,
+        "wires": [
+            [
+                "41ffe7cbed28c606"
+            ]
+        ]
+    },
+    {
+        "id": "7cb0565e9228c793",
+        "type": "function",
+        "z": "d910d6b169b53def",
+        "name": "Construir alarma",
+        "func": "node.warn(msg.payload.estado.estado_id);\nnode.warn(msg.payload.estadoIa.estado_id)\nif((msg.estadoActual != msg.payload.estado.estado_id)&& (msg.estadoActual != msg.payload.estadoIa.estado_id)){\n    var obj = {\n        animalId: msg.payload.animalId,\n        estadoActual: msg.estadoActual,\n        estadoAnterior: msg.payload.estado.estado_id,\n        maxIntentos: 5\n    };\n    \n    flow.set(msg._msgid, obj);    \n    msg.payload = flow.get(msg._msgid);\n    msg.payload._msgid=msg._msgid;\n    return msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1460,
+        "y": 480,
+        "wires": [
+            [
+                "4d16cdf2865a1a65"
+            ]
+        ]
+    },
+    {
+        "id": "c68c56f348a077b3",
+        "type": "change",
+        "z": "d910d6b169b53def",
+        "name": "Parametro de request",
+        "rules": [
+            {
+                "t": "set",
+                "p": "param",
+                "pt": "msg",
+                "to": "myNum",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1080,
+        "y": 580,
+        "wires": [
+            [
+                "fc6b1b5d8343029d"
+            ]
+        ]
+    },
+    {
+        "id": "e0a519a51d110d14",
+        "type": "http request",
+        "z": "d910d6b169b53def",
+        "name": "LOGIN",
+        "method": "POST",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "musker.duckdns.org/api/login",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "senderr": false,
+        "x": 1540,
+        "y": 420,
+        "wires": [
+            [
+                "e8aa2864c07089b6"
+            ]
+        ]
+    },
+    {
+        "id": "66652aee5f0aadc9",
+        "type": "function",
+        "z": "d910d6b169b53def",
+        "name": "Establecer header content-type",
+        "func": "msg.headers = {\n'content-type':'application/x-www-form-urlencoded'\n}\nmsg.payload = {username : \"node\",password:\"node\"}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1310,
+        "y": 420,
+        "wires": [
+            [
+                "e0a519a51d110d14"
+            ]
+        ]
+    },
+    {
+        "id": "e8aa2864c07089b6",
+        "type": "change",
+        "z": "d910d6b169b53def",
+        "name": "Variables tokens ",
+        "rules": [
+            {
+                "t": "set",
+                "p": "access_token",
+                "pt": "flow",
+                "to": "payload.access_token",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "refresh_token",
+                "pt": "flow",
+                "to": "payload.refresh_token",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1740,
+        "y": 420,
+        "wires": [
+            [
+                "6f6ec05bc3f52bdb"
+            ]
+        ]
+    },
+    {
+        "id": "6f6ec05bc3f52bdb",
+        "type": "function",
+        "z": "d910d6b169b53def",
+        "name": "Obtener token del flow",
+        "func": "msg.headers = {};\nmsg.headers['Authorization'] = \"Bearer \" + flow.get(\"access_token\");\nmsg.payload = flow.get(msg.myNum);\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 920,
+        "y": 260,
+        "wires": [
+            [
+                "62e02dd809c98e3c"
+            ]
+        ]
+    },
+    {
+        "id": "280970db04681099",
+        "type": "switch",
+        "z": "d910d6b169b53def",
+        "name": "Comprobar error",
+        "property": "headers",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "hask",
+                "v": "error",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1400,
+        "y": 260,
+        "wires": [
+            [
+                "5340cd7c0d799da5"
+            ],
+            [
+                "97c2cb317093b9a2"
+            ]
+        ]
+    },
+    {
+        "id": "5340cd7c0d799da5",
+        "type": "function",
+        "z": "d910d6b169b53def",
+        "name": "Establecer headers",
+        "func": "msg.headers = {};\nmsg.headers['Authorization'] = \"Bearer \" + flow.get(\"refresh_token\");\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1630,
+        "y": 260,
+        "wires": [
+            [
+                "6bf2483ce15a73db"
+            ]
+        ]
+    },
+    {
+        "id": "6bf2483ce15a73db",
+        "type": "http request",
+        "z": "d910d6b169b53def",
+        "name": "Refresh",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "musker.duckdns.org/api/user/refresh",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "senderr": false,
+        "x": 1820,
+        "y": 260,
+        "wires": [
+            [
+                "a20fc98ce53a3b80"
+            ]
+        ]
+    },
+    {
+        "id": "a20fc98ce53a3b80",
+        "type": "switch",
+        "z": "d910d6b169b53def",
+        "name": "Comprobar error",
+        "property": "headers",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "hask",
+                "v": "error",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1040,
+        "y": 420,
+        "wires": [
+            [
+                "66652aee5f0aadc9"
+            ],
+            [
+                "1902bb78b0c3ae0e"
+            ]
+        ]
+    },
+    {
+        "id": "1902bb78b0c3ae0e",
+        "type": "change",
+        "z": "d910d6b169b53def",
+        "name": "Token de acceso",
+        "rules": [
+            {
+                "t": "set",
+                "p": "access_token",
+                "pt": "flow",
+                "to": "payload.access_token",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 590,
+        "y": 340,
+        "wires": [
+            [
+                "6f6ec05bc3f52bdb"
+            ]
+        ]
+    },
+    {
+        "id": "fc6b1b5d8343029d",
+        "type": "function",
+        "z": "d910d6b169b53def",
+        "name": "Obtener token del flow",
+        "func": "msg.headers = {};\nmsg.headers['Authorization'] = \"Bearer \" + flow.get(\"access_token\");\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1320,
+        "y": 580,
+        "wires": [
+            [
+                "85d9c86c4950eb22"
+            ]
+        ]
+    },
+    {
+        "id": "3a03732967dc87f6",
+        "type": "file in",
+        "z": "d910d6b169b53def",
+        "name": "Leer Animals.xml",
+        "filename": "/usr/share/Animals.xml",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 310,
+        "y": 580,
+        "wires": [
+            [
+                "897c84f8b2c63029"
+            ]
+        ]
+    },
+    {
+        "id": "897c84f8b2c63029",
+        "type": "xml",
+        "z": "d910d6b169b53def",
+        "name": "",
+        "property": "payload",
+        "attr": "att",
+        "chr": "",
+        "x": 470,
+        "y": 580,
+        "wires": [
+            [
+                "a22af4d96ec10310"
+            ]
+        ]
+    },
+    {
+        "id": "a22af4d96ec10310",
+        "type": "function",
+        "z": "d910d6b169b53def",
+        "name": "Get rango XML",
+        "func": "var array = msg.payload.especies.especie;\nvar i = 0, end = 0;\nvar animal = flow.get(msg.myNum);\nwhile(i < array.length || end != 1){\n    if(parseInt(array[i].att.id) == animal.especie) {\n        msg.payload = array[i];\n        end = 1\n    }\n    i++;\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 640,
+        "y": 580,
+        "wires": [
+            [
+                "efd511c1a03738c0"
+            ]
+        ]
+    },
+    {
+        "id": "efd511c1a03738c0",
+        "type": "function",
+        "z": "d910d6b169b53def",
+        "name": "Selector de estado",
+        "func": "if((msg.payload.temperatura[0].mg[0].min[0] <  msg.objeto.temperatura && msg.payload.temperatura[0].mg[0].max[0] > msg.objeto.temperatura) ||\n    (msg.payload.ECP[0].mg[0].min[0] < msg.objeto.latidos && msg.payload.ECP[0].mg[0].max[0] > msg.payload.objeto.latidos) ||\n    (msg.payload.tension_arterial[0].mg[0].min[0] < msg.objeto.tens_arterial && msg.payload.tension_arterial[0].mg[0].max[0] > msg.objeto.tens_arterial) ||\n    (msg.payload.frrespiratoria[0].mg[0].min[0] < msg.objeto.frrespiracion && msg.payload.frrespiratoria[0].mg[0].max[0] > msg.objeto.frrespiracion) ||\n    (msg.payload.saturacionO2[0].mg[0].min[0] < msg.objeto.saturacionO2 && msg.payload.saturacionO2[0].mg[0].max[0] > msg.objeto.saturacionO2)){\n    msg.estadoActual = 4;\n    node.warn(\"Animal \"+ msg.objeto.animalId + \": Estado muy grave\");\n}else if((msg.payload.temperatura[0].g[0].min[0] <  msg.objeto.temperatura && msg.payload.temperatura[0].g[0].max[0] > msg.objeto.temperatura) ||\n    (msg.payload.ECP[0].g[0].min[0] < msg.objeto.latidos && msg.payload.ECP[0].g[0].max[0] > msg.payload.objeto.latidos) ||\n    (msg.payload.tension_arterial[0].g[0].min[0] < msg.objeto.tens_arterial && msg.payload.tension_arterial[0].g[0].max[0] > msg.objeto.tens_arterial) ||\n    (msg.payload.frrespiratoria[0].g[0].min[0] < msg.objeto.frrespiracion && msg.payload.frrespiratoria[0].g[0].max[0] > msg.objeto.frrespiracion) ||\n    (msg.payload.saturacionO2[0].g[0].min[0] < msg.objeto.saturacionO2 && msg.payload.saturacionO2[0].g[0].max[0] > msg.objeto.saturacionO2)){\n    msg.estadoActual = 3;\n    node.warn(\"Animal \"+ msg.objeto.animalId + \": Estado grave\");\n\n}else if((msg.payload.temperatura[0].b[0].min[0] <  msg.objeto.temperatura && msg.payload.temperatura[0].b[0].max[0] > msg.objeto.temperatura) ||\n    (msg.payload.ECP[0].b[0].min[0] < msg.objeto.latidos && msg.payload.ECP[0].b[0].max[0] > msg.objeto.latidos) ||\n    (msg.payload.tension_arterial[0].b[0].min[0] < msg.objeto.tens_arterial && msg.payload.tension_arterial[0].b[0].max[0] > msg.objeto.tens_arterial) ||\n    (msg.payload.frrespiratoria[0].b[0].min[0] < msg.objeto.frrespiracion && msg.payload.frrespiratoria[0].b[0].max[0] > msg.objeto.frrespiracion) ||\n    (msg.payload.saturacionO2[0].b[0].min[0] < msg.objeto.saturacionO2 && msg.payload.saturacionO2[0].b[0].max[0] > msg.objeto.saturacionO2)){\n    msg.estadoActual = 2;\n    node.warn(\"Animal \"+ msg.objeto.animalId + \": Estado bueno\");\n} else {\n    msg.estadoActual = 1;\n    node.warn(\"Animal \"+ msg.objeto.animalId + \": Estado liberable\");\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 850,
+        "y": 580,
+        "wires": [
+            [
+                "c68c56f348a077b3"
+            ]
+        ]
+    },
+    {
+        "id": "7994180be83b1908",
+        "type": "amqp in",
+        "z": "d910d6b169b53def",
+        "name": "",
+        "topic": "",
+        "iotype": "4",
+        "ioname": "dlx_alarma",
+        "server": "a2972475b284ff1e",
+        "x": 1015,
+        "y": 680,
+        "wires": [
+            [
+                "5483e6e867b6b27c"
+            ]
+        ],
+        "l": false
+    },
+    {
+        "id": "17d08627337bf37d",
+        "type": "json",
+        "z": "d910d6b169b53def",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 350,
+        "y": 260,
+        "wires": [
+            [
+                "62d16273b290e4e5"
+            ]
+        ]
+    },
+    {
+        "id": "5483e6e867b6b27c",
+        "type": "json",
+        "z": "d910d6b169b53def",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 1110,
+        "y": 680,
+        "wires": [
+            [
+                "7aead681e12d9f11"
+            ]
+        ]
+    },
+    {
+        "id": "7aead681e12d9f11",
+        "type": "function",
+        "z": "d910d6b169b53def",
+        "name": "Decrementar numero intentos",
+        "func": "var obj = flow.get(msg.payload._msgid);\nif(msg.payload.maxIntentos > 0){\n    obj.maxIntentos = msg.payload.maxIntentos - 1;\n    flow.set(msg.payload._msgid, obj);\n    var id = msg.payload._msgid;\n    msg.payload = obj;\n    msg.payload._msgid = id;\n    return msg; \n}else{\n    msg.payload =null;\n    return msg;\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1310,
+        "y": 680,
+        "wires": [
+            [
+                "4cda7bf3a0af45c9"
+            ]
+        ]
+    },
+    {
+        "id": "4cda7bf3a0af45c9",
+        "type": "switch",
+        "z": "d910d6b169b53def",
+        "name": "If null",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "nnull"
+            },
+            {
+                "t": "null"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1530,
+        "y": 680,
+        "wires": [
+            [
+                "4d16cdf2865a1a65"
+            ],
+            [
+                "01221b5460b0a86b"
+            ]
+        ]
+    },
+    {
+        "id": "01221b5460b0a86b",
+        "type": "function",
+        "z": "d910d6b169b53def",
+        "name": "Null",
+        "func": "node.warn(\"Superado el maximo de intentos\");\n",
+        "outputs": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1670,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "41ffe7cbed28c606",
+        "type": "json",
+        "z": "d910d6b169b53def",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 1170,
+        "y": 480,
+        "wires": [
+            [
+                "7cb0565e9228c793"
+            ]
+        ]
+    },
+    {
+        "id": "ab0a1cc854c7a09f",
+        "type": "function",
+        "z": "d910d6b169b53def",
+        "name": "Guardar constante",
+        "func": "msg.myNum = String(msg.payload.animalId);\nflow.set(msg.myNum, msg.payload);\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 690,
+        "y": 260,
+        "wires": [
+            [
+                "6f6ec05bc3f52bdb"
+            ]
+        ]
+    },
+    {
+        "id": "97c2cb317093b9a2",
+        "type": "function",
+        "z": "d910d6b169b53def",
+        "name": "Set objeto",
+        "func": "msg.objeto = flow.get(msg.myNum);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 460,
+        "wires": [
+            [
+                "3a03732967dc87f6"
+            ]
+        ]
+    },
+    {
+        "id": "a2972475b284ff1e",
+        "type": "amqp-server",
+        "host": "musker.duckdns.org",
+        "port": "5672",
+        "vhost": "",
+        "keepalive": "30",
+        "usetls": false,
+        "verifyservercert": true,
+        "useca": false,
+        "ca": "",
+        "usetopology": false,
+        "topology": "{\n\t\"exchanges\": [\n\t\t{\"name\": \"exchange1\", \"type\": \"direct\", \"options\": {\"durable\": false}},\n\t\t{\"name\": \"exchange2\"}\n\t],\n\t\"queues\": [\n\t\t{\"name\": \"queue1\", \"options\": {\"messageTtl\": 60000}},\n\t\t{\"name\": \"queue2\"}\n\t],\n\t\"bindings\": [\n\t\t{\"source\": \"exchange1\", \"queue\": \"queue1\", \"pattern\": \"debug\", \"args\": {}},\n\t\t{\"source\": \"exchange1\", \"exchange\": \"exchange2\", \"pattern\": \"error\"},\n\t\t{\"source\": \"exchange2\", \"queue\": \"queue2\"}\n\t]\n}"
+    }
+]
